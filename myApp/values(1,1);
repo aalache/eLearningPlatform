@@ -1,0 +1,547 @@
+    -> insert into job_tag ("App\Models\Job","App\Models\Tag") values(1,1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '\Models\Job,App\Models
+insert into job_tag ("App\Models\Job","App\Models\Tag"...' at line 1
+MariaDB [eLearningDB]> insert into job_tag (App\Models\Job,App\Models insert into job_tag ("App\Models\Job","App\Models\Tag") values(1,1);
+ERROR: Unknown command '\M'.
+ERROR: Unknown command '\J'.
+ERROR: Unknown command '\M'.
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '\Models\Job,App\Models insert into job_tag ("App\Models\Job","App\Models\Tag"...' at line 1
+MariaDB [eLearningDB]> select * from job; select * from tags; select * from job_tag;desc job_tag;
+Empty set (0.000 sec)
+
+Empty set (0.000 sec)
+
+Empty set (0.027 sec)
+
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| job_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| tag_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+5 rows in set (0.001 sec)
+
+MariaDB [eLearningDB]> select * from job; select * from tags; select * from job_tag;desc job_tag;
++----+-------------+------------------------------------+---------+---------------------+---------------------+
+| id | employer_id | title                              | salary  | created_at          | updated_at          |
++----+-------------+------------------------------------+---------+---------------------+---------------------+
+|  1 |           1 | Parking Enforcement Worker         | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  2 |           2 | Gas Processing Plant Operator      | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  3 |           3 | Food Cooking Machine Operators     | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  4 |           4 | Industrial Equipment Maintenance   | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  5 |           5 | Jewelry Model OR Mold Makers       | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  6 |           6 | Administrative Services Manager    | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  7 |           7 | Medical Secretary                  | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  8 |           8 | Preschool Education Administrators | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  9 |           9 | Pipefitter                         | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+| 10 |          10 | Cartographer                       | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
++----+-------------+------------------------------------+---------+---------------------+---------------------+
+10 rows in set (0.000 sec)
+
++----+-------------+---------------------+---------------------+
+| id | name        | created_at          | updated_at          |
++----+-------------+---------------------+---------------------+
+|  1 | Programming | 2024-08-01 19:15:57 | 2024-08-01 19:15:57 |
++----+-------------+---------------------+---------------------+
+1 row in set (0.000 sec)
+
+Empty set (0.000 sec)
+
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| job_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| tag_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+5 rows in set (0.001 sec)
+
+MariaDB [eLearningDB]> insert into job_tag (job_id,tag_id) values(1,1);
+Query OK, 1 row affected (0.013 sec)
+
+MariaDB [eLearningDB]> select * from job; select * from tags; select * from job_tag;desc job_tag;
++----+-------------+------------------------------------+---------+---------------------+---------------------+
+| id | employer_id | title                              | salary  | created_at          | updated_at          |
++----+-------------+------------------------------------+---------+---------------------+---------------------+
+|  1 |           1 | Parking Enforcement Worker         | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  2 |           2 | Gas Processing Plant Operator      | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  3 |           3 | Food Cooking Machine Operators     | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  4 |           4 | Industrial Equipment Maintenance   | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  5 |           5 | Jewelry Model OR Mold Makers       | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  6 |           6 | Administrative Services Manager    | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  7 |           7 | Medical Secretary                  | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  8 |           8 | Preschool Education Administrators | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  9 |           9 | Pipefitter                         | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+| 10 |          10 | Cartographer                       | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
++----+-------------+------------------------------------+---------+---------------------+---------------------+
+10 rows in set (0.001 sec)
+
++----+-------------+---------------------+---------------------+
+| id | name        | created_at          | updated_at          |
++----+-------------+---------------------+---------------------+
+|  1 | Programming | 2024-08-01 19:15:57 | 2024-08-01 19:15:57 |
++----+-------------+---------------------+---------------------+
+1 row in set (0.000 sec)
+
++----+--------+--------+------------+------------+
+| id | job_id | tag_id | created_at | updated_at |
++----+--------+--------+------------+------------+
+|  1 |      1 |      1 | NULL       | NULL       |
++----+--------+--------+------------+------------+
+1 row in set (0.000 sec)
+
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| job_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| tag_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+5 rows in set (0.001 sec)
+
+MariaDB [eLearningDB]> select * from job; select * from tags; select * from job_tag;desc job_tag;
++----+-------------+------------------------------------+---------+---------------------+---------------------+
+| id | employer_id | title                              | salary  | created_at          | updated_at          |
++----+-------------+------------------------------------+---------+---------------------+---------------------+
+|  1 |           1 | Parking Enforcement Worker         | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  2 |           2 | Gas Processing Plant Operator      | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  3 |           3 | Food Cooking Machine Operators     | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  4 |           4 | Industrial Equipment Maintenance   | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  5 |           5 | Jewelry Model OR Mold Makers       | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  6 |           6 | Administrative Services Manager    | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  7 |           7 | Medical Secretary                  | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  8 |           8 | Preschool Education Administrators | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  9 |           9 | Pipefitter                         | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+| 10 |          10 | Cartographer                       | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
++----+-------------+------------------------------------+---------+---------------------+---------------------+
+10 rows in set (0.001 sec)
+
+Empty set (0.000 sec)
+
+Empty set (0.000 sec)
+
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| job_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| tag_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+5 rows in set (0.001 sec)
+
+MariaDB [eLearningDB]> select * from job_tag
+    -> ;
+Empty set (0.001 sec)
+
+MariaDB [eLearningDB]> select * from job_tags; select * from tags;
+ERROR 1146 (42S02): Table 'eLearningDB.job_tags' doesn't exist
+Empty set (0.001 sec)
+
+MariaDB [eLearningDB]> select * from job_tag; select * from tags;
+Empty set (0.001 sec)
+
+Empty set (0.000 sec)
+
+MariaDB [eLearningDB]> insert into job_tag (job_id,tag_id) values(1,2);
+Query OK, 1 row affected (0.021 sec)
+
+MariaDB [eLearningDB]> select * from job_tag; select * from tags;
++----+--------+--------+------------+------------+
+| id | job_id | tag_id | created_at | updated_at |
++----+--------+--------+------------+------------+
+|  2 |      1 |      2 | NULL       | NULL       |
++----+--------+--------+------------+------------+
+1 row in set (0.001 sec)
+
++----+-------------+---------------------+---------------------+
+| id | name        | created_at          | updated_at          |
++----+-------------+---------------------+---------------------+
+|  2 | Programming | 2024-08-01 19:18:59 | 2024-08-01 19:18:59 |
++----+-------------+---------------------+---------------------+
+1 row in set (0.001 sec)
+
+MariaDB [eLearningDB]> delete from job where id =1;
+Query OK, 1 row affected (0.022 sec)
+
+MariaDB [eLearningDB]> select * from job_tag; select * from tags;
+Empty set (0.000 sec)
+
++----+-------------+---------------------+---------------------+
+| id | name        | created_at          | updated_at          |
++----+-------------+---------------------+---------------------+
+|  2 | Programming | 2024-08-01 19:18:59 | 2024-08-01 19:18:59 |
++----+-------------+---------------------+---------------------+
+1 row in set (0.000 sec)
+
+MariaDB [eLearningDB]> insert into job_tag (job_id,tag_id) values(2,2);
+Query OK, 1 row affected (0.043 sec)
+
+MariaDB [eLearningDB]> select * from job_tag; select * from tags;
++----+--------+--------+------------+------------+
+| id | job_id | tag_id | created_at | updated_at |
++----+--------+--------+------------+------------+
+|  3 |      2 |      2 | NULL       | NULL       |
++----+--------+--------+------------+------------+
+1 row in set (0.001 sec)
+
++----+-------------+---------------------+---------------------+
+| id | name        | created_at          | updated_at          |
++----+-------------+---------------------+---------------------+
+|  2 | Programming | 2024-08-01 19:18:59 | 2024-08-01 19:18:59 |
++----+-------------+---------------------+---------------------+
+1 row in set (0.000 sec)
+
+MariaDB [eLearningDB]> select * from job_tag; select * from tags;
++----+--------+--------+------------+------------+
+| id | job_id | tag_id | created_at | updated_at |
++----+--------+--------+------------+------------+
+|  3 |      2 |      2 | NULL       | NULL       |
++----+--------+--------+------------+------------+
+1 row in set (0.001 sec)
+
++----+-------------+---------------------+---------------------+
+| id | name        | created_at          | updated_at          |
++----+-------------+---------------------+---------------------+
+|  2 | Programming | 2024-08-01 19:18:59 | 2024-08-01 19:18:59 |
+|  3 | AI          | 2024-08-01 19:23:38 | 2024-08-01 19:23:38 |
++----+-------------+---------------------+---------------------+
+2 rows in set (0.000 sec)
+
+MariaDB [eLearningDB]> insert into job_tag (job_id,tag_id) values(2,3);
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [eLearningDB]> select * from job_tag; select * from tags;
++----+--------+--------+------------+------------+
+| id | job_id | tag_id | created_at | updated_at |
++----+--------+--------+------------+------------+
+|  3 |      2 |      2 | NULL       | NULL       |
+|  4 |      2 |      3 | NULL       | NULL       |
++----+--------+--------+------------+------------+
+2 rows in set (0.001 sec)
+
++----+-------------+---------------------+---------------------+
+| id | name        | created_at          | updated_at          |
++----+-------------+---------------------+---------------------+
+|  2 | Programming | 2024-08-01 19:18:59 | 2024-08-01 19:18:59 |
+|  3 | AI          | 2024-08-01 19:23:38 | 2024-08-01 19:23:38 |
++----+-------------+---------------------+---------------------+
+2 rows in set (0.000 sec)
+
+MariaDB [eLearningDB]> select * from job;
++----+-------------+------------------------------------+---------+---------------------+---------------------+
+| id | employer_id | title                              | salary  | created_at          | updated_at          |
++----+-------------+------------------------------------+---------+---------------------+---------------------+
+|  2 |           2 | Gas Processing Plant Operator      | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  3 |           3 | Food Cooking Machine Operators     | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  4 |           4 | Industrial Equipment Maintenance   | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  5 |           5 | Jewelry Model OR Mold Makers       | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  6 |           6 | Administrative Services Manager    | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  7 |           7 | Medical Secretary                  | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  8 |           8 | Preschool Education Administrators | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+|  9 |           9 | Pipefitter                         | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
+| 10 |          10 | Cartographer                       | $50,000 | 2024-08-01 19:15:52 | 2024-08-01 19:15:52 |
++----+-------------+------------------------------------+---------+---------------------+---------------------+
+9 rows in set (0.001 sec)
+
+MariaDB [eLearningDB]> select * from job_tag; select * from tags;
++----+--------+--------+------------+------------+
+| id | job_id | tag_id | created_at | updated_at |
++----+--------+--------+------------+------------+
+|  3 |      2 |      2 | NULL       | NULL       |
+|  4 |      2 |      3 | NULL       | NULL       |
+|  5 |      7 |      2 | NULL       | NULL       |
+|  6 |     10 |      2 | NULL       | NULL       |
+|  7 |     10 |      2 | NULL       | NULL       |
++----+--------+--------+------------+------------+
+5 rows in set (0.001 sec)
+
++----+-------------+---------------------+---------------------+
+| id | name        | created_at          | updated_at          |
++----+-------------+---------------------+---------------------+
+|  2 | Programming | 2024-08-01 19:18:59 | 2024-08-01 19:18:59 |
+|  3 | AI          | 2024-08-01 19:23:38 | 2024-08-01 19:23:38 |
++----+-------------+---------------------+---------------------+
+2 rows in set (0.000 sec)
+
+MariaDB [eLearningDB]> select * from job_tag; select * from tags;
+Empty set (0.034 sec)
+
+Empty set (0.001 sec)
+
+MariaDB [eLearningDB]> desc tags ; desc job_tag;
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| name       | varchar(255)        | NO   |     | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+4 rows in set (0.002 sec)
+
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| job_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| tag_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+5 rows in set (0.002 sec)
+
+MariaDB [eLearningDB]> desc posts; desc post_tag;
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| author     | varchar(255)        | NO   |     | NULL    |                |
+| title      | varchar(255)        | NO   |     | NULL    |                |
+| body       | text                | NO   |     | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+6 rows in set (0.001 sec)
+
++----------------+---------------------+------+-----+---------+----------------+
+| Field          | Type                | Null | Key | Default | Extra          |
++----------------+---------------------+------+-----+---------+----------------+
+| id             | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| post_id        | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| App\Models\Tag | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| created_at     | timestamp           | YES  |     | NULL    |                |
+| updated_at     | timestamp           | YES  |     | NULL    |                |
++----------------+---------------------+------+-----+---------+----------------+
+5 rows in set (0.023 sec)
+
+MariaDB [eLearningDB]> desc posts; desc post_tag;
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| author     | varchar(255)        | NO   |     | NULL    |                |
+| title      | varchar(255)        | NO   |     | NULL    |                |
+| body       | text                | NO   |     | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+6 rows in set (0.001 sec)
+
++----------------+---------------------+------+-----+---------+----------------+
+| Field          | Type                | Null | Key | Default | Extra          |
++----------------+---------------------+------+-----+---------+----------------+
+| id             | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| post_id        | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| App\Models\Tag | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| created_at     | timestamp           | YES  |     | NULL    |                |
+| updated_at     | timestamp           | YES  |     | NULL    |                |
++----------------+---------------------+------+-----+---------+----------------+
+5 rows in set (0.001 sec)
+
+MariaDB [eLearningDB]> desc posts; desc post_tag;
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| author     | varchar(255)        | NO   |     | NULL    |                |
+| title      | varchar(255)        | NO   |     | NULL    |                |
+| body       | text                | NO   |     | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+6 rows in set (0.002 sec)
+
++----------------+---------------------+------+-----+---------+----------------+
+| Field          | Type                | Null | Key | Default | Extra          |
++----------------+---------------------+------+-----+---------+----------------+
+| id             | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| post_id        | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| App\Models\Tag | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| created_at     | timestamp           | YES  |     | NULL    |                |
+| updated_at     | timestamp           | YES  |     | NULL    |                |
++----------------+---------------------+------+-----+---------+----------------+
+5 rows in set (0.050 sec)
+
+MariaDB [eLearningDB]> desc posts; desc post_tag;
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| author     | varchar(255)        | NO   |     | NULL    |                |
+| title      | varchar(255)        | NO   |     | NULL    |                |
+| body       | text                | NO   |     | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+6 rows in set (0.002 sec)
+
++----------------+---------------------+------+-----+---------+----------------+
+| Field          | Type                | Null | Key | Default | Extra          |
++----------------+---------------------+------+-----+---------+----------------+
+| id             | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| post_id        | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| App\Models\Tag | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| created_at     | timestamp           | YES  |     | NULL    |                |
+| updated_at     | timestamp           | YES  |     | NULL    |                |
++----------------+---------------------+------+-----+---------+----------------+
+5 rows in set (0.001 sec)
+
+MariaDB [eLearningDB]> desc posts; desc post_tag;
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| author     | varchar(255)        | NO   |     | NULL    |                |
+| title      | varchar(255)        | NO   |     | NULL    |                |
+| body       | text                | NO   |     | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+6 rows in set (0.002 sec)
+
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| post_id    | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| tag_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+5 rows in set (0.059 sec)
+
+MariaDB [eLearningDB]> desc tags ; desc job_tag;
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| name       | varchar(255)        | NO   |     | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+4 rows in set (0.002 sec)
+
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| job_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| tag_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+5 rows in set (0.025 sec)
+
+MariaDB [eLearningDB]> select * from tags ; select * job_tag;
++----+-------------+---------------------+---------------------+
+| id | name        | created_at          | updated_at          |
++----+-------------+---------------------+---------------------+
+|  1 | AI          | 2024-08-01 20:04:57 | 2024-08-01 20:04:57 |
+|  2 | programming | 2024-08-01 20:05:06 | 2024-08-01 20:05:06 |
+|  3 | Data        | 2024-08-01 20:05:22 | 2024-08-01 20:05:22 |
++----+-------------+---------------------+---------------------+
+3 rows in set (0.001 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'job_tag' at line 1
+MariaDB [eLearningDB]> select * from tags ; select * from job_tag;
++----+-------------+---------------------+---------------------+
+| id | name        | created_at          | updated_at          |
++----+-------------+---------------------+---------------------+
+|  1 | AI          | 2024-08-01 20:04:57 | 2024-08-01 20:04:57 |
+|  2 | programming | 2024-08-01 20:05:06 | 2024-08-01 20:05:06 |
+|  3 | Data        | 2024-08-01 20:05:22 | 2024-08-01 20:05:22 |
++----+-------------+---------------------+---------------------+
+3 rows in set (0.000 sec)
+
+Empty set (0.000 sec)
+
+MariaDB [eLearningDB]> select * from tags ; select * from post_tag;
++----+-------------+---------------------+---------------------+
+| id | name        | created_at          | updated_at          |
++----+-------------+---------------------+---------------------+
+|  1 | AI          | 2024-08-01 20:04:57 | 2024-08-01 20:04:57 |
+|  2 | programming | 2024-08-01 20:05:06 | 2024-08-01 20:05:06 |
+|  3 | Data        | 2024-08-01 20:05:22 | 2024-08-01 20:05:22 |
++----+-------------+---------------------+---------------------+
+3 rows in set (0.001 sec)
+
++----+---------+--------+------------+------------+
+| id | post_id | tag_id | created_at | updated_at |
++----+---------+--------+------------+------------+
+|  1 |       1 |      1 | NULL       | NULL       |
+|  2 |       1 |      2 | NULL       | NULL       |
+|  3 |       2 |      3 | NULL       | NULL       |
+|  4 |       1 |      3 | NULL       | NULL       |
++----+---------+--------+------------+------------+
+4 rows in set (0.000 sec)
+
+MariaDB [eLearningDB]> select * from tags ; desc post_tag;
++----+-------------+---------------------+---------------------+
+| id | name        | created_at          | updated_at          |
++----+-------------+---------------------+---------------------+
+|  1 | AI          | 2024-08-01 20:04:57 | 2024-08-01 20:04:57 |
+|  2 | programming | 2024-08-01 20:05:06 | 2024-08-01 20:05:06 |
+|  3 | Data        | 2024-08-01 20:05:22 | 2024-08-01 20:05:22 |
++----+-------------+---------------------+---------------------+
+3 rows in set (0.001 sec)
+
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| post_id    | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| tag_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+5 rows in set (0.002 sec)
+
+MariaDB [eLearningDB]> select * from tags ; select * from post_tag;
++----+-------------+---------------------+---------------------+
+| id | name        | created_at          | updated_at          |
++----+-------------+---------------------+---------------------+
+|  1 | AI          | 2024-08-01 20:04:57 | 2024-08-01 20:04:57 |
+|  2 | programming | 2024-08-01 20:05:06 | 2024-08-01 20:05:06 |
+|  3 | Data        | 2024-08-01 20:05:22 | 2024-08-01 20:05:22 |
++----+-------------+---------------------+---------------------+
+3 rows in set (0.001 sec)
+
++----+---------+--------+------------+------------+
+| id | post_id | tag_id | created_at | updated_at |
++----+---------+--------+------------+------------+
+|  1 |       1 |      1 | NULL       | NULL       |
+|  2 |       1 |      2 | NULL       | NULL       |
+|  3 |       2 |      3 | NULL       | NULL       |
+|  4 |       1 |      3 | NULL       | NULL       |
++----+---------+--------+------------+------------+
+4 rows in set (0.000 sec)
+
+MariaDB [eLearningDB]> delete from posts where id = 1;
+Query OK, 1 row affected (0.017 sec)
+
+MariaDB [eLearningDB]> select * from tags ; select * from post_tag;
++----+-------------+---------------------+---------------------+
+| id | name        | created_at          | updated_at          |
++----+-------------+---------------------+---------------------+
+|  1 | AI          | 2024-08-01 20:04:57 | 2024-08-01 20:04:57 |
+|  2 | programming | 2024-08-01 20:05:06 | 2024-08-01 20:05:06 |
+|  3 | Data        | 2024-08-01 20:05:22 | 2024-08-01 20:05:22 |
++----+-------------+---------------------+---------------------+
+3 rows in set (0.000 sec)
+
++----+---------+--------+------------+------------+
+| id | post_id | tag_id | created_at | updated_at |
++----+---------+--------+------------+------------+
+|  3 |       2 |      3 | NULL       | NULL       |
++----+---------+--------+------------+------------+
+1 row in set (0.000 sec)
+
