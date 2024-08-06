@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\HomeController;
 
 
 // Route::view('/home', 'elearning.home');
@@ -42,15 +43,24 @@ Route::resource('jobs', JobController::class, [
     'only' => ['index', 'create', 'show', 'update', 'store', 'destroy', 'edit']
 ]);
 
-// ? auth
 
 
-Route::get('/register2', [RegisteredUserController::class, 'create']);
-Route::post('/register2', [RegisteredUserController::class, 'store']);
+// ? Main  Routing 
 
-Route::get('/login2', [SessionController::class, 'create']);
-Route::post('/login2', [SessionController::class, 'store']);
-Route::post('/logout2', [SessionController::class, 'destroy']);
+// student Route
+Route::middleware(['auth', 'user-role:student'])->group(function () {
+    Route::get('/home', [HomeController::class, 'studentHome'])->name('home');
+});
+
+// instructor Route
+Route::middleware(['auth', 'user-role:insturctor'])->group(function () {
+    Route::get('/instructor/home', [HomeController::class, 'instructorHome'])->name('home.instructor');
+});
+
+// Admin Route
+Route::middleware(['auth', 'user-role:admin'])->group(function () {
+    Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('home.admin');
+});
 
 
 // #######################################endregion

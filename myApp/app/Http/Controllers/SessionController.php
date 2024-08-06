@@ -10,7 +10,7 @@ class SessionController extends Controller
 {
     public function create()
     {
-        return view('auth2.login');
+        return view('auth.login');
     }
 
     public function store(Request $request)
@@ -31,7 +31,7 @@ class SessionController extends Controller
         //regenerate session token
         $request->session()->regenerateToken();
         //redirect
-        return redirect('/jobs');
+        return redirect('/');
     }
 
     public function destroy()

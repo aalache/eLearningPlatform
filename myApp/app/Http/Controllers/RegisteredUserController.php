@@ -12,7 +12,7 @@ class RegisteredUserController extends Controller
 {
     public function create(): View
     {
-        return view('auth2.signUp');
+        return view('auth.register');
     }
 
     public function store(Request $request)
@@ -28,6 +28,6 @@ class RegisteredUserController extends Controller
         //login
         Auth::login($user);
         //redirect
-        return redirect('/jobs');
+        return redirect('/contact');
     }
 }

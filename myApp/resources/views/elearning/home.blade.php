@@ -30,6 +30,8 @@
                 <button type="submit" class="fas fa-search"></button>
             </form>
 
+
+
             <div class="icons">
                 <div id="menu-btn" class="fas fa-bars"></div>
                 <div id="search-btn" class="fas fa-search"></div>
