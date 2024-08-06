@@ -11,15 +11,18 @@ class UserRoleMiddleware
 {
     /**
      * Handle an incoming request.
-     *
+     * 
+     * 
+     *@param 
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle(Request $request, Closure $next, string $role): Response
     {
-        if (Auth::check() && Auth::user()->roles->first() == $role) {
-            return $next($request);
+        if (!auth()->check() || !auth()->user()->hasRole($role)) {
+            return redirect('/home');
         }
 
-        return abort(403);
+
+        return $next($request);
     }
 }

@@ -4,8 +4,9 @@ use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
-use App\Http\Controllers\SessionController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CoachController;
+use App\Http\Controllers\StudentController;
 
 
 // Route::view('/home', 'elearning.home');
@@ -45,29 +46,29 @@ Route::resource('jobs', JobController::class, [
 
 
 
-// ? Main  Routing 
+// ? dashboard Routing using the Role Middleware
 
-// student Route
-Route::middleware(['auth', 'user-role:student'])->group(function () {
-    Route::get('/home', [HomeController::class, 'studentHome'])->name('home');
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 });
 
-// instructor Route
-Route::middleware(['auth', 'user-role:insturctor'])->group(function () {
-    Route::get('/instructor/home', [HomeController::class, 'instructorHome'])->name('home.instructor');
+Route::middleware(['auth', 'role:instructor'])->group(function () {
+    Route::get('/coach/dashboard', [CoachController::class, 'index'])->name('coach.dashboard');
 });
 
-// Admin Route
-Route::middleware(['auth', 'user-role:admin'])->group(function () {
-    Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('home.admin');
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::get('/user/dashboard', [StudentController::class, 'index'])->name('user.dashboard');
 });
 
 
 // #######################################endregion
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// ? Dashboard  Routing
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+// ? Profile Routing
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -76,3 +77,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+// ?

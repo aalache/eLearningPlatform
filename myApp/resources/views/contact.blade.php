@@ -7,4 +7,6 @@
     {{ Auth::user()->name }}
     <br>
     {{ Auth::check() }}
+    <br>
+    {{ $msg }}
 </x-page>

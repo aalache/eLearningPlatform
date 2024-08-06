@@ -41,7 +41,7 @@
                             @endguest
 
                             @auth
-                                <form action="/logout2" method="POST">
+                                <form action="/logout" method="POST">
                                     @csrf
                                     <x-form-button>Logout</x-form-button>
                                 </form>
