@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\RegisteredUserController;
+
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CoachController;
 use App\Http\Controllers\StudentController;
-
+use App\Http\Controllers\VideoController;
 
 Route::view('/home', 'elearning.home');
 // Route::view('/about', 'elearning.about');
@@ -18,8 +18,8 @@ Route::view('/home', 'elearning.home');
 // Route::view('/teacher_profile', 'elearning.teacher_profile');
 // Route::view('/teachers', 'elearning.teachers');
 // Route::view('/courses', 'elearning.courses');
-// Route::view('/playlist', 'elearning.playlist');
-// Route::view('/watch-video', 'elearning.watch-video');
+Route::view('/playlist', 'elearning.playlist');
+Route::view('/watch-video', 'elearning.watch-video');
 // Route::view('/update', 'elearning.update');
 
 // ?
@@ -71,8 +71,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 // ?
 
+// Route::resource('videos', VideoController::class);
 
-
+Route::controller(VideoController::class)->group(function () {
+    Route::get('/videos', 'index')->name('videos.index');
+    Route::get('/videos/create', 'create')->name('videos.create');
+    Route::get('/videos/{video}', 'show')->name('videos.show');
+    Route::post('/videos', 'store')->name('videos.store');
+    Route::get('/videos/{video}/edit', 'edit')->name('videos.edit');
+    Route::patch('/videos/{video}', 'update')->name('videos.update');
+    Route::delete('/videos/{video}', 'destroy')->name('videos.destroy');
+});
 
 // #######################################endregion
 

@@ -17,13 +17,18 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'Omar',
             'email' => 'test@example.com',
             'password' => Hash::make('123456'),
         ]);
 
-
         $this->call(RolesTableSeeder::class);
+
+        $user->roles()->attach(1);
+        $user->roles()->attach(2);
+        $user->roles()->attach(3);
+
+        $this->call(VideosSeeder::class);
     }
 }
