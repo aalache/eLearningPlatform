@@ -9,7 +9,7 @@ use App\Http\Controllers\CoachController;
 use App\Http\Controllers\StudentController;
 
 
-// Route::view('/home', 'elearning.home');
+Route::view('/home', 'elearning.home');
 // Route::view('/about', 'elearning.about');
 // Route::view('/contact', 'elearning.contact');
 // Route::view('/register3', 'elearning.register');
@@ -22,10 +22,11 @@ use App\Http\Controllers\StudentController;
 // Route::view('/watch-video', 'elearning.watch-video');
 // Route::view('/update', 'elearning.update');
 
+// ?
 
 // ? 
 Route::view('/', 'welcome');
-Route::view('/home', 'home');
+// Route::view('/home', 'home');
 Route::view('/contact', 'contact');
 
 // ? Jobs routing pages
@@ -48,17 +49,29 @@ Route::resource('jobs', JobController::class, [
 
 // ? dashboard Routing using the Role Middleware
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-});
-
-Route::middleware(['auth', 'role:instructor'])->group(function () {
-    Route::get('/coach/dashboard', [CoachController::class, 'index'])->name('coach.dashboard');
-});
-
+// Student Role routes mapping
 Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/user/dashboard', [StudentController::class, 'index'])->name('user.dashboard');
+    Route::get('/user/enrollement', [StudentController::class, 'enrollement'])->name('user.enrollement');
+    Route::get('/user/courses', [StudentController::class, 'courses'])->name('user.courses');
 });
+
+// Instructor Role routes mapping
+Route::middleware(['auth', 'role:instructor'])->group(function () {
+    Route::get('/coach/dashboard', [CoachController::class, 'index'])->name('coach.dashboard');
+    Route::get('/coach/courses', [CoachController::class, 'courses'])->name('coach.courses');
+});
+
+// Admin Role routes mapping
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/courses', [AdminController::class, 'courses'])->name('admin.courses');
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+});
+
+// ?
+
+
 
 
 // #######################################endregion

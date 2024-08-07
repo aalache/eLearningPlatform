@@ -1,3 +1,13 @@
+@php
+    $isAdmin = Auth::user()->hasRole('admin'); // if user have admin role
+    $isStudent = Auth::user()->hasRole('student'); // if user have student role
+    $isInstructor = Auth::user()->hasRole('instructor'); // if user have instructor role
+    $currentPath = Route::currentRouteName(); // return the current route path
+    $isAdminPath = str_starts_with($currentPath, 'admin'); // test if the current route is an admin route
+    $isCoachPath = str_starts_with($currentPath, 'coach'); // test if the current route is an coach route
+    $isUserPath = str_starts_with($currentPath, 'user'); // test if the current route is an user route
+@endphp
+
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,9 +22,48 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route(Route::currentRouteName())" :active="request()->routeIs(Route::currentRouteName())">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+
+                    {{-- ? Links for student  --}}
+                    @if ($isStudent && $isUserPath)
+                        <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('user.enrollement')" :active="request()->routeIs('user.enrollement')">
+                            {{ __('Enrollement') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('user.courses')" :active="request()->routeIs('user.courses')">
+                            {{ __('Courses') }}
+                        </x-nav-link>
+                    @endif
+
+                    {{-- ? Links for Coach  --}}
+                    @if ($isInstructor && $isCoachPath)
+                        <x-nav-link :href="route('coach.dashboard')" :active="request()->routeIs('coach.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('coach.courses')" :active="request()->routeIs('coach.courses')">
+                            {{ __('Courses') }}
+                        </x-nav-link>
+                    @endif
+
+                    {{-- ? Links for Admin  --}}
+                    @if ($isAdmin && $isAdminPath)
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('admin.courses')" :active="request()->routeIs('admin.courses')">
+                            {{ __('Courses') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">
+                            {{ __('Users') }}
+                        </x-nav-link>
+                    @endif
+
                 </div>
             </div>
 
