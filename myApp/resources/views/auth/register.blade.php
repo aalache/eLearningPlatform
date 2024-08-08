@@ -5,52 +5,52 @@
         @csrf
 
         <!-- Name -->
-        <x-form-field>
-            <x-form-label for="first_name">
-                Name</x-form-label>
+        <x-formComponents.form-field>
+            <x-formComponents.form-label for="first_name">
+                Name</x-formComponents.form-label>
 
             <div class="mt-2">
-                <x-form-input id="name" type="text" name="name" :value="old('name')" autofocus autocomplete="name"
-                    placeholder="Joe" />
-                <x-form-error name="name" />
+                <x-formComponents.form-input id="name" type="text" name="name" :value="old('name')" autofocus
+                    autocomplete="name" placeholder="Joe" />
+                <x-formComponents.form-error name="name" />
             </div>
-        </x-form-field>
+        </x-formComponents.form-field>
 
         <!-- Email Address -->
-        <x-form-field>
-            <x-form-label for="email">Email</x-form-label>
+        <x-formComponents.form-field>
+            <x-formComponents.form-label for="email">Email</x-formComponents.form-label>
 
             <div class="mt-2">
-                <x-form-input id="email" type="email" name="email" :value="old('email')" autocomplete="username"
-                    placeholder="something@exemple.com" />
-                <x-form-error name="email" />
+                <x-formComponents.form-input id="email" type="email" name="email" :value="old('email')"
+                    autocomplete="username" placeholder="something@exemple.com" />
+                <x-formComponents.form-error name="email" />
             </div>
-        </x-form-field>
+        </x-formComponents.form-field>
 
         <!-- Password -->
-        <x-form-field>
-            <x-form-label for="password">Password</x-form-label>
+        <x-formComponents.form-field>
+            <x-formComponents.form-label for="password">Password</x-formComponents.form-label>
 
             <div class="mt-2">
-                <x-form-input id="password" type="password" name="password" autocomplete="new-password"
+                <x-formComponents.form-input id="password" type="password" name="password" autocomplete="new-password"
                     placeholder="*****" />
-                <x-form-error name="password" />
+                <x-formComponents.form-error name="password" />
             </div>
-        </x-form-field>
+        </x-formComponents.form-field>
 
         <!-- Confirm Password -->
-        <x-form-field>
-            <x-form-label for="password_confirmation">Confirm Password</x-form-label>
+        <x-formComponents.form-field>
+            <x-formComponents.form-label for="password_confirmation">Confirm Password</x-formComponents.form-label>
 
             <div class="mt-2">
-                <x-form-input id="password_confirmation" class="block mt-1 w-full" type="password"
+                <x-formComponents.form-input id="password_confirmation" class="block mt-1 w-full" type="password"
                     name="password_confirmation" autocomplete="new-password" />
-                <x-form-error name="password_confirmation" />
+                <x-formComponents.form-error name="password_confirmation" />
             </div>
-        </x-form-field>
+        </x-formComponents.form-field>
 
         <div>
-            <x-form-button type="submit">Sign Up</x-form-button>
+            <x-formComponents.form-button type="submit">Sign Up</x-formComponents.form-button>
         </div>
 
         <p class="mt-5 text-center text-sm text-gray-400">

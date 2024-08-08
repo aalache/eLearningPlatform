@@ -22,32 +22,33 @@
                         @csrf
 
                         {{-- Title field --}}
-                        <x-form-field>
-                            <x-form-label for="title">Title</x-form-label>
-                            <x-form-input type="text" id="title" name="title" placeholder="Video title"
-                                required></x-form-input>
-                            <x-form-error name="title" />
-                        </x-form-field>
+                        <x-formComponents.form-field>
+                            <x-formComponents.form-label for="title">Title</x-formComponents.form-label>
+                            <x-formComponents.form-input type="text" id="title" name="title"
+                                placeholder="Video title" required></x-formComponents.form-input>
+                            <x-formComponents.form-error name="title" />
+                        </x-formComponents.form-field>
 
 
 
                         {{-- duration field --}}
-                        <x-form-field>
-                            <x-form-label for="duration">Duration</x-form-label>
-                            <x-form-input type="text" id="duration" name="duration"
-                                placeholder="Video duration in minite" required></x-form-input>
-                            <x-form-error name="duration" />
-                        </x-form-field>
+                        <x-formComponents.form-field>
+                            <x-formComponents.form-label for="duration">Duration</x-formComponents.form-label>
+                            <x-formComponents.form-input type="text" id="duration" name="duration"
+                                placeholder="Video duration in minite" required></x-formComponents.form-input>
+                            <x-formComponents.form-error name="duration" />
+                        </x-formComponents.form-field>
 
                         {{-- Video file upload field --}}
-                        <x-form-field>
-                            <x-form-label for="video"></x-form-label>
-                            <x-form-input type="file" id="video" name="video" required></x-form-input>
-                            <x-form-error name="video" />
-                        </x-form-field>
+                        <x-formComponents.form-field>
+                            <x-formComponents.form-label for="video"></x-formComponents.form-label>
+                            <x-formComponents.form-input type="file" id="video" name="video"
+                                required></x-formComponents.form-input>
+                            <x-formComponents.form-error name="video" />
+                        </x-formComponents.form-field>
 
                         {{--  upload button --}}
-                        <x-form-button>Upload</x-form-button>
+                        <x-formComponents.form-button>Upload</x-formComponents.form-button>
 
                     </form>
 

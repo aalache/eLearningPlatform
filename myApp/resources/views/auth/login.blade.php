@@ -6,21 +6,19 @@
         @csrf
 
         <!-- Email Address -->
-        <x-form-field>
-            <x-form-label for="email">
-                Email</x-form-label>
+        <x-formComponents.form-field>
+            <x-formComponents.form-label for="email">Email</x-formComponents.form-label>
 
             <div class="mt-2">
-                <x-form-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                    required autofocus autocomplete="username" />
-                <x-form-error name="email" />
+                <x-formComponents.form-input id="email" class="block mt-1 w-full" type="email" name="email"
+                    :value="old('email')" required autofocus autocomplete="username" />
+                <x-formComponents.form-error name="email" />
             </div>
-
-        </x-form-field>
+        </x-formComponents.form-field>
 
         <div>
             <div class="flex items-center justify-between">
-                <x-form-label for="password">Password</x-form-label>
+                <x-formComponents.form-label for="password">Password</x-formComponents.form-label>
                 <div class="text-sm">
                     @if (Route::has('password.request'))
                         <a class="font-semibold text-indigo-500 hover:text-indigo-400"
@@ -31,9 +29,9 @@
                 </div>
             </div>
             <div class="mt-2">
-                <x-form-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                    autocomplete="current-password" />
-                <x-form-error name="password" />
+                <x-formComponents.form-input id="password" class="block mt-1 w-full" type="password" name="password"
+                    required autocomplete="current-password" />
+                <x-formComponents.form-error name="password" />
             </div>
         </div>
 
@@ -47,7 +45,7 @@
         </div>
 
         <div>
-            <x-form-button>Login</x-form-button>
+            <x-formComponents.form-button>Login</x-formComponents.form-button>
         </div>
 
         <p class="mt-10 text-center text-sm text-gray-400">

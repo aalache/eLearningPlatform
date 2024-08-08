@@ -34,11 +34,28 @@
         </h2>
     </x-slot>
 
-    @if ($$isStudent && $isUserPath)
-        <x-userComponents.user-dashboard>
-            <x-slot:msg>{{ $msg }}</x-slot:msg>
-        </x-userComponents.user-dashboard>
+    {{-- ? User interface --}}
+    @if ($isStudent && $isUserPath)
+
+        @if (request()->routeIs('user.dashboard'))
+            <x-userComponents.user-dashboard>
+                <x-slot:msg>{{ $msg }}</x-slot:msg>
+            </x-userComponents.user-dashboard>
+        @endif
+
+        @if (request()->routeIs('user.enrollement'))
+            <x-userComponents.user-enrollement>
+                <x-slot:msg>{{ $msg }}</x-slot:msg>
+            </x-userComponents.user-enrollement>
+        @endif
+
+        @if (request()->routeIs('user.courses'))
+            <x-userComponents.user-courses>
+                <x-slot:msg>{{ $msg }}</x-slot:msg>
+            </x-userComponents.user-courses>
+        @endif
     @endif
+    {{-- ? --}}
 
 
     @if ($isInstructor && $isCoachPath)

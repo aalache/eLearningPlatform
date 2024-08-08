@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CoachController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\PlaylistController;
 
 Route::view('/home', 'elearning.home');
 // Route::view('/about', 'elearning.about');
@@ -29,21 +30,11 @@ Route::view('/', 'welcome');
 // Route::view('/home', 'home');
 Route::view('/contact', 'contact');
 
-// ? Jobs routing pages
 
-// Route::controller(JobController::class)->group(function () {
-//     Route::get('/jobs', 'index');
-//     Route::get('/jobs/create', 'create');
-//     Route::get('/jobs/{job}', 'show');
-//     Route::post('/jobs', 'store');
-//     Route::get('/jobs/{job}/edit', 'edit');
-//     Route::patch('/jobs/{job}', 'update');
-//     Route::delete('/jobs/{job}', 'destroy');
-// });
 
-Route::resource('jobs', JobController::class, [
-    'only' => ['index', 'create', 'show', 'update', 'store', 'destroy', 'edit']
-]);
+// Route::resource('jobs', JobController::class, [
+//     'only' => ['index', 'create', 'show', 'update', 'store', 'destroy', 'edit']
+// ]);
 
 
 
@@ -69,7 +60,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
 });
 
-// ?
+// ? Videos Routing
 
 // Route::resource('videos', VideoController::class);
 
@@ -83,6 +74,17 @@ Route::controller(VideoController::class)->group(function () {
     Route::delete('/videos/{video}', 'destroy')->name('videos.destroy');
 });
 
+// ? Playlist Routing
+
+Route::controller(PlaylistController::class)->group(function () {
+    Route::get('/playlists', 'index')->name('playlists.index');
+    Route::get('/playlists/create', 'create')->name('playlists.create');
+    Route::get('/playlists/{playlist}', 'show')->name('playlists.show');
+    Route::post('/playlists', 'store')->name('playlists.store');
+    Route::get('/playlists/{playlist}/edit', 'edit')->name('playlists.edit');
+    Route::patch('/playlists/{playlist}', 'update')->name('playlists.update');
+    Route::delete('/playlists/{playlist}', 'destroy')->name('playlists.destroy');
+});
 // #######################################endregion
 
 // ? Dashboard  Routing

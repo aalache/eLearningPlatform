@@ -24,36 +24,37 @@
                         @method('PATCH')
 
                         {{-- Title field --}}
-                        <x-form-field>
-                            <x-form-label for="title">Title</x-form-label>
-                            <x-form-input type="text" id="title" name="title" placeholder="Video title"
-                                required value="{{ $video->title }}"></x-form-input>
-                            <x-form-error name="title" />
-                        </x-form-field>
+                        <x-formComponents.form-field>
+                            <x-formComponents.form-label for="title">Title</x-formComponents.form-label>
+                            <x-formComponents.form-input type="text" id="title" name="title"
+                                placeholder="Video title" required
+                                value="{{ $video->title }}"></x-formComponents.form-input>
+                            <x-formComponents.form-error name="title" />
+                        </x-formComponents.form-field>
 
 
 
                         {{-- duration field --}}
-                        <x-form-field>
-                            <x-form-label for="duration">Duration</x-form-label>
-                            <x-form-input type="text" id="duration" name="duration"
+                        <x-formComponents.form-field>
+                            <x-formComponents.form-label for="duration">Duration</x-formComponents.form-label>
+                            <x-formComponents.form-input type="text" id="duration" name="duration"
                                 placeholder="Video duration in minite" required
-                                value="{{ $video->duration }}"></x-form-input>
-                            <x-form-error name="duration" />
-                        </x-form-field>
+                                value="{{ $video->duration }}"></x-formComponents.form-input>
+                            <x-formComponents.form-error name="duration" />
+                        </x-formComponents.form-field>
 
                         {{-- Video file upload field --}}
-                        {{-- <x-form-field>
-                            <x-form-label for="video"></x-form-label>
-                            <x-form-input type="file" id="video" name="video" value="{{ $video->video }}"
-                                required></x-form-input>
-                            <x-form-error name="video" />
-                        </x-form-field> --}}
+                        {{-- <x-formComponents.form-field>
+                            <x-formComponents.form-label for="video"></x-formComponents.form-label>
+                            <x-formComponents.form-input type="file" id="video" name="video" value="{{ $video->video }}"
+                                required></x-formComponents.form-input>
+                            <x-formComponents.form-error name="video" />
+                        </x-formComponents.form-field> --}}
 
                         {{--  upload button --}}
                         <div class="flex justify-between items-center space-x-1">
-                            <x-form-button>Update</x-form-button>
-                            <x-form-button form="delete-video-form">Delete</x-form-button>
+                            <x-formComponents.form-button>Update</x-formComponents.form-button>
+                            <x-formComponents.form-button form="delete-video-form">Delete</x-formComponents.form-button>
                         </div>
 
                     </form>
