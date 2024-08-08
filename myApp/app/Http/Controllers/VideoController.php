@@ -9,12 +9,7 @@ use App\Services\VideoService;
 class VideoController extends Controller
 {
 
-    // protected $videoService;
-
-    // public function __construct(VideoService $videoService)
-    // {
-    //     $this->videoService = $videoService;
-    // }
+    //
 
 
     /**
@@ -42,14 +37,19 @@ class VideoController extends Controller
         $attributes = $request->validate(
             [
                 'title' => ['required', 'max:256'],
-                'url' => ['required', 'url'],
-                'duration' => ['required']
+                'duration' => ['required'],
+                'video' => ['required', 'mimes:mp4,ogx,oga,ogv,ogg,webm'],
             ]
         );
-        // create video
-        $video = Video::create($attributes);
 
-        redirect('/videos');
+        $file = $request->file('video');
+        $file->move('upload', $file->getClientOriginalName());
+        $attributes['video'] = $file->getClientOriginalName();
+        $video = Video::create($attributes);
+        // return redirect()->route('videos.show', $video->id);
+
+
+        return redirect('/videos');
     }
 
     /**

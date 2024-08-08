@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('url');
+            $table->string('video');
             $table->integer('duration'); // duration in minutes
             $table->foreignId('playlist_id')->nullable();
             $table->timestamps();

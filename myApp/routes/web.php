@@ -17,7 +17,7 @@ Route::view('/home', 'elearning.home');
 // Route::view('/profile', 'elearning.profile');
 // Route::view('/teacher_profile', 'elearning.teacher_profile');
 // Route::view('/teachers', 'elearning.teachers');
-// Route::view('/courses', 'elearning.courses');
+Route::view('/courses', 'elearning.courses');
 Route::view('/playlist', 'elearning.playlist');
 Route::view('/watch-video', 'elearning.watch-video');
 // Route::view('/update', 'elearning.update');

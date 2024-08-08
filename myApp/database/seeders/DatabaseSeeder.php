@@ -29,6 +29,6 @@ class DatabaseSeeder extends Seeder
         $user->roles()->attach(2);
         $user->roles()->attach(3);
 
-        $this->call(VideosSeeder::class);
+        // $this->call(VideosSeeder::class);
     }
 }

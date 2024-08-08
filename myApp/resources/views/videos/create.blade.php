@@ -23,33 +23,28 @@
 
                         {{-- Title field --}}
                         <x-form-field>
-                            <x-form-label for="title"></x-form-label>
+                            <x-form-label for="title">Title</x-form-label>
                             <x-form-input type="text" id="title" name="title" placeholder="Video title"
                                 required></x-form-input>
                             <x-form-error name="title" />
                         </x-form-field>
 
-                        {{-- Title field --}}
-                        <x-form-field>
-                            <x-form-label for="url"></x-form-label>
-                            <x-form-input type="text" id="url" name="url" placeholder="Video url"
-                                required></x-form-input>
-                            <x-form-error name="url" />
-                        </x-form-field>
+
 
                         {{-- duration field --}}
                         <x-form-field>
-                            <x-form-label for="duration"></x-form-label>
+                            <x-form-label for="duration">Duration</x-form-label>
                             <x-form-input type="text" id="duration" name="duration"
                                 placeholder="Video duration in minite" required></x-form-input>
                             <x-form-error name="duration" />
                         </x-form-field>
 
                         {{-- Video file upload field --}}
-                        {{-- <x-form-field>
+                        <x-form-field>
                             <x-form-label for="video"></x-form-label>
                             <x-form-input type="file" id="video" name="video" required></x-form-input>
-                        </x-form-field> --}}
+                            <x-form-error name="video" />
+                        </x-form-field>
 
                         {{--  upload button --}}
                         <x-form-button>Upload</x-form-button>
