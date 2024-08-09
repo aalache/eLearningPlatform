@@ -68,7 +68,7 @@ Route::controller(VideoController::class)->group(function () {
     Route::get('/videos', 'index')->name('videos.index');
     Route::get('/videos/create', 'create')->name('videos.create');
     Route::get('/videos/{video}', 'show')->name('videos.show');
-    Route::post('/videos', 'store')->name('videos.store');
+    Route::post('/videos/{playlist}', 'store')->name('videos.store');
     Route::get('/videos/{video}/edit', 'edit')->name('videos.edit');
     Route::patch('/videos/{video}', 'update')->name('videos.update');
     Route::delete('/videos/{video}', 'destroy')->name('videos.destroy');
@@ -84,6 +84,8 @@ Route::controller(PlaylistController::class)->group(function () {
     Route::get('/playlists/{playlist}/edit', 'edit')->name('playlists.edit');
     Route::patch('/playlists/{playlist}', 'update')->name('playlists.update');
     Route::delete('/playlists/{playlist}', 'destroy')->name('playlists.destroy');
+
+    // Route::post('/playlists/{playlist}/add-video', 'addToPlaylist')->name('playlists.addVideo');
 });
 // #######################################endregion
 

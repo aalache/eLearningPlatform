@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Playlist;
+use App\Http\Controllers\VideoController;
 
 class PlaylistController extends Controller
 {
@@ -73,6 +74,18 @@ class PlaylistController extends Controller
      */
     public function destroy(Playlist $playlist)
     {
-        //
+        $playlist->delete();
+        return redirect()->route('playlists.index');
     }
+
+    // public function addToPlaylist(Playlist $playlist, Video $video)
+    // {
+
+    //     $playlist->videos()->attach($video);
+    // }
+
+    // public function removeFromPlaylist(Request $request, Playlist $playlist, Video $video)
+    // {
+    //     $playlist->videos()->detach($video);
+    // }
 }

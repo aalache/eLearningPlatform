@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('video');
             $table->integer('duration'); // duration in minutes
-            $table->foreignId('playlist_id');
             $table->timestamps();
         });
     }

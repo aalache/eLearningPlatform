@@ -15,8 +15,8 @@ class Video extends Model
         'duration',
     ];
 
-    public function playlist()
+    public function playlists()
     {
-        $this->belongsTo(Playlist::class);
+        $this->belongsToMany(Playlist::class);
     }
 }

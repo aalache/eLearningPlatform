@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Playlist;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use App\Services\VideoService;
@@ -29,11 +30,10 @@ class VideoController extends Controller
         return view('videos.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    public static function upload(Request $request)
     {
+
         $attributes = $request->validate(
             [
                 'title' => ['required', 'max:256'],
@@ -46,10 +46,24 @@ class VideoController extends Controller
         $file->move('upload', $file->getClientOriginalName());
         $attributes['video'] = $file->getClientOriginalName();
         $video = Video::create($attributes);
-        // return redirect()->route('videos.show', $video->id);
+
+        return $video;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request, Playlist $playlist)
+    {
+        $video = $this->upload($request);
+
+        $this->addToPlaylist($playlist, $video);
 
 
-        return redirect('/videos');
+        return redirect()->route('playlists.show', $playlist->id);
+
+
+        // return redirect('/videos');
     }
 
     /**
@@ -93,5 +107,12 @@ class VideoController extends Controller
     {
         $video->delete();
         return redirect('/videos');
+    }
+
+    // helpers functions
+
+    public function addToPlaylist(Playlist $playlist, Video $video)
+    {
+        return $playlist->videos()->attach($video);
     }
 }

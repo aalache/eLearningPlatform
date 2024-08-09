@@ -17,6 +17,13 @@ return new class extends Migration
             $table->foreignId('course_id')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('playlist_video', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('playlist_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('video_id')->constrained()->cascadeOnDelete();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -25,5 +32,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('playlists');
+        Schema::dropIfExists('playlist_video');
     }
 };
