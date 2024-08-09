@@ -57,13 +57,7 @@ class VideoController extends Controller
     {
         $video = $this->upload($request);
 
-        $this->addToPlaylist($playlist, $video);
-
-
-        return redirect()->route('playlists.show', $playlist->id);
-
-
-        // return redirect('/videos');
+        return redirect('/videos');
     }
 
     /**
@@ -109,10 +103,31 @@ class VideoController extends Controller
         return redirect('/videos');
     }
 
-    // helpers functions
 
-    public function addToPlaylist(Playlist $playlist, Video $video)
+    /**
+     * add & upload video to specified playlist
+     * @param $playlist  specified playlist where the video will be added
+     */
+
+    public function addToPlaylist(Request $request, Playlist $playlist)
     {
-        return $playlist->videos()->attach($video);
+        $video = $this->upload($request);
+
+        $playlist->videos()->attach($video);
+
+        return redirect()->route('playlists.show', $playlist->id);
+    }
+
+    /**
+     * remove a video from  a specified playlist
+     * @param $playlist  specified playlist where the action will take place
+     * @param $video    the video that will be removed from specified playlist
+     */
+    public function removeFromPlaylist(Playlist $playlist, Video $video)
+    {
+        $video = Video::findorfail($video->id);
+        $playlist->videos()->detach($video->id);
+
+        return redirect()->route('playlists.show', $playlist->id);
     }
 }

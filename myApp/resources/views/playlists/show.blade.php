@@ -7,6 +7,11 @@
             <video height="500px" width="600px" controls autoplay loop>
                 <source src="{{ asset('upload') }}/{{ $video->video }}" type="video/mp4" />
             </video>
+            <form action="{{ route('videos.removeFromPlaylist', ['playlist' => $playlist->id, 'video' => $video->id]) }}"
+                method="POST">
+                @csrf
+                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white">remove</button>
+            </form>
         </div>
     @endforeach
 </x-page-layout>

@@ -77,15 +77,4 @@ class PlaylistController extends Controller
         $playlist->delete();
         return redirect()->route('playlists.index');
     }
-
-    // public function addToPlaylist(Playlist $playlist, Video $video)
-    // {
-
-    //     $playlist->videos()->attach($video);
-    // }
-
-    // public function removeFromPlaylist(Request $request, Playlist $playlist, Video $video)
-    // {
-    //     $playlist->videos()->detach($video);
-    // }
 }
