@@ -43,13 +43,6 @@
                             <x-formComponents.form-error name="duration" />
                         </x-formComponents.form-field>
 
-                        {{-- Video file upload field --}}
-                        {{-- <x-formComponents.form-field>
-                            <x-formComponents.form-label for="video"></x-formComponents.form-label>
-                            <x-formComponents.form-input type="file" id="video" name="video" value="{{ $video->video }}"
-                                required></x-formComponents.form-input>
-                            <x-formComponents.form-error name="video" />
-                        </x-formComponents.form-field> --}}
 
                         {{--  upload button --}}
                         <div class="flex justify-between items-center space-x-1">

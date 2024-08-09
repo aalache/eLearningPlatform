@@ -43,7 +43,7 @@ class VideoController extends Controller
         );
 
         $file = $request->file('video');
-        $file->move('upload', $file->getClientOriginalName());
+        $file->move('upload/videos', $file->getClientOriginalName());
         $attributes['video'] = $file->getClientOriginalName();
         $video = Video::create($attributes);
 

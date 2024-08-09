@@ -29,6 +29,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
+
     /**
      * check if user have a specific role
      * 

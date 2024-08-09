@@ -3,12 +3,12 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\JobController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CoachController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\CourseController;
 
 Route::view('/home', 'elearning.home');
 // Route::view('/about', 'elearning.about');
@@ -60,10 +60,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
 });
 
+
 // ? Videos Routing
-
-// Route::resource('videos', VideoController::class);
-
 Route::controller(VideoController::class)->group(function () {
     Route::get('/videos', 'index')->name('videos.index');
     Route::get('/videos/create', 'create')->name('videos.create');
@@ -77,7 +75,6 @@ Route::controller(VideoController::class)->group(function () {
 });
 
 // ? Playlist Routing
-
 Route::controller(PlaylistController::class)->group(function () {
     Route::get('/playlists', 'index')->name('playlists.index');
     Route::get('/playlists/create', 'create')->name('playlists.create');
@@ -86,9 +83,21 @@ Route::controller(PlaylistController::class)->group(function () {
     Route::get('/playlists/{playlist}/edit', 'edit')->name('playlists.edit');
     Route::patch('/playlists/{playlist}', 'update')->name('playlists.update');
     Route::delete('/playlists/{playlist}', 'destroy')->name('playlists.destroy');
-
-    Route::post('/playlists/{playlist}/add-video/{video}', 'addToPlaylist')->name('playlists.addVideo');
 });
+
+
+// ? Courses Routing
+Route::controller(CourseController::class)->group(function () {
+    Route::get('/courses', 'index')->name('courses.index');
+    Route::get('/courses/create', 'create')->name('courses.create');
+    Route::get('/courses/{course}', 'show')->name('courses.show');
+    Route::post('/courses', 'store')->name('courses.store');
+    Route::get('/courses/{course}/edit', 'edit')->name('courses.edit');
+    Route::patch('/courses/{course}', 'update')->name('courses.update');
+    Route::delete('/courses/{course}', 'destroy')->name('courses.destroy');
+});
+
+
 // #######################################endregion
 
 // ? Dashboard  Routing
