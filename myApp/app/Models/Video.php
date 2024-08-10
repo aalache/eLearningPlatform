@@ -13,10 +13,16 @@ class Video extends Model
         'title',
         'video',
         'duration',
+        'user_id',
     ];
 
     public function playlists()
     {
         $this->belongsToMany(Playlist::class);
+    }
+
+    public function user()
+    {
+        $this->belongsTo(User::class);
     }
 }

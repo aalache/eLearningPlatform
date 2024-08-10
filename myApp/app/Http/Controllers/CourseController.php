@@ -64,7 +64,7 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        $auth_user_playlists = Auth::user()?->playlists;
+        $auth_user_playlists = Auth::user()->playlists ?? collect();
         return view('courses.show', ['course' => $course, 'playlists' => $auth_user_playlists]);
     }
 
@@ -119,5 +119,19 @@ class CourseController extends Controller
     {
         $course->delete();
         return redirect()->route('courses.index');
+    }
+
+    public function enroll(Course $course)
+    {
+        $status = '';
+        if (Auth::check()) {
+            $course->users_enrolled()->attach(Auth::id());
+            $status = "you are successfully enrolled ";
+        } else {
+            $status = "you have to login to enroll ";
+        }
+        $auth_user_playlists = Auth::user()->playlists ?? collect();
+
+        return view('courses.show', ['course' => $course, 'playlists' => $auth_user_playlists, 'status' => $status]);
     }
 }

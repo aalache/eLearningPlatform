@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Playlist;
 use App\Models\Video;
 use Illuminate\Http\Request;
-use App\Services\VideoService;
+use Illuminate\Support\Facades\Auth;
 
 class VideoController extends Controller
 {
@@ -34,18 +34,26 @@ class VideoController extends Controller
     public static function upload(Request $request)
     {
 
-        $attributes = $request->validate(
+        $request->validate(
             [
                 'title' => ['required', 'max:256'],
-                'duration' => ['required'],
+                'duration' => 'required|numeric',
                 'video' => ['required', 'mimes:mp4,ogx,oga,ogv,ogg,webm'],
             ]
         );
 
         $file = $request->file('video');
+
         $file->move('upload/videos', $file->getClientOriginalName());
-        $attributes['video'] = $file->getClientOriginalName();
-        $video = Video::create($attributes);
+
+        $file_name = $file->getClientOriginalName();
+
+        $video = Video::create([
+            'title' => $request->title,
+            'duration' => $request->duration,
+            'video' => $file_name,
+            'user_id' => Auth::id(),
+        ]);
 
         return $video;
     }

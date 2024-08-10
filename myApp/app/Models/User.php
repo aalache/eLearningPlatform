@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use PhpParser\Node\Expr\FuncCall;
+use App\Models\Course;
 
 class User extends Authenticatable
 {
@@ -29,14 +29,28 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+
+
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
+
+
+    public function courses_enrolledIn()
+    {
+        return $this->belongsToMany(Course::class, 'enrollements');
+    }
+
     public function playlists()
     {
         return $this->hasMany(Playlist::class);
     }
 
-    public function courses()
+    public function videos()
     {
-        return $this->hasMany(Course::class);
+        return $this->hasMany(Video::class);
     }
 
     /**

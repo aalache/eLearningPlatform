@@ -9,6 +9,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnrollementController;
 
 Route::view('/home', 'elearning.home');
 // Route::view('/about', 'elearning.about');
@@ -97,7 +98,10 @@ Route::controller(CourseController::class)->group(function () {
     Route::get('/courses/{course}/edit', 'edit')->name('courses.edit');
     Route::patch('/courses/{course}', 'update')->name('courses.update');
     Route::delete('/courses/{course}', 'destroy')->name('courses.destroy');
+    Route::post('/courses/{course}/enroll', 'enroll')->name('courses.enroll');
 });
+
+
 
 
 // #######################################endregion

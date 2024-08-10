@@ -21,13 +21,18 @@ class Course extends Model
     ];
 
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function playlists()
     {
         return $this->belongsToMany(Playlist::class);
     }
 
-    public function user()
+    public function users_enrolled()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class, 'enrollements');
     }
 }
