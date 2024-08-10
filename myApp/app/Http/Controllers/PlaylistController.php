@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Playlist;
-use App\Http\Controllers\VideoController;
+use App\Models\Course;
+use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Expr\FuncCall;
 
 class PlaylistController extends Controller
 {
@@ -30,11 +32,14 @@ class PlaylistController extends Controller
      */
     public function store(Request $request)
     {
-        $attributes = $request->validate([
+        $request->validate([
             'name' => ['required', 'string', 'max:60'],
         ]);
 
-        Playlist::create($attributes);
+        Playlist::create([
+            'name' => request()->name,
+            'user_id' => Auth::id(),
+        ]);
 
         return redirect()->route('playlists.index');
     }
@@ -62,6 +67,7 @@ class PlaylistController extends Controller
     {
         $attributes = $request->validate([
             'name' => ['required', 'string', 'max:60'],
+
         ]);
 
         $playlist->update($attributes);
@@ -76,5 +82,31 @@ class PlaylistController extends Controller
     {
         $playlist->delete();
         return redirect()->route('playlists.index');
+    }
+
+
+    /**
+     * add a playlist to specified course
+     * @param $course  specified course where the action will take place
+     */
+    public function addToCourse(Request $request, Course $course)
+    {
+        $playlist_id = $request->input('playlist');
+        if (!$course->playlists->find($playlist_id)) {
+            $course->playlists()->attach($playlist_id);
+        }
+        return redirect()->route('courses.show', $course->id);
+    }
+
+
+    /**
+     * remove a playlist from  a specified course
+     * @param $course  specified course where the action will take place
+     * @param $playlist    the playlist that will be removed from the specified course
+     */
+    public function removeFromCourse(Course $course, Playlist $playlist)
+    {
+        $course->playlists()->detach($playlist->id);
+        return redirect()->route('courses.show', $course->id);
     }
 }

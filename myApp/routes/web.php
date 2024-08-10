@@ -83,6 +83,8 @@ Route::controller(PlaylistController::class)->group(function () {
     Route::get('/playlists/{playlist}/edit', 'edit')->name('playlists.edit');
     Route::patch('/playlists/{playlist}', 'update')->name('playlists.update');
     Route::delete('/playlists/{playlist}', 'destroy')->name('playlists.destroy');
+    Route::post('/playlists/{course}', 'addToCourse')->name('playlists.addToCourse');
+    Route::post('/playlists/course/{course}/remove/{playlist}', 'removeFromCourse')->name('playlists.removeFromCourse');
 });
 
 

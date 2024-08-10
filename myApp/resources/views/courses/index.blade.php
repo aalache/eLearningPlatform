@@ -3,10 +3,11 @@
     <div class="p-2">
         <h1>Courses </h1>
     </div>
-    <div class="w-full h-full flex  space-x-3 space-y-3 flex-wrap">
+    <div class=" flex  space-x-3 space-y-3 flex-wrap p-3 mb-10 mx-auto my-auto">
         @foreach ($courses as $course)
-            <a href="/courses/{{ $course->id }}">
-                <div class="h-auto w-[300px] rounded-md bg-[#efefef] space-y-2 text-gray-900 overflow-hidden">
+            <a href="/courses/{{ $course->id }}"
+                class="h-atuo  w-[300px] rounded-md bg-[#ffffff] space-y-2 text-gray-900">
+                <div class=" ">
 
                     <img src="{{ asset('upload') }}/courses/{{ $course->image }}" alt="">
                     <ul>
@@ -18,6 +19,8 @@
                         <li><strong>Author: </strong>@ {{ $course->user->name }}</li>
                         <li><strong>Thumbnail: </strong> {{ $course->image }}</li>
                     </ul>
+
+
                 </div>
             </a>
         @endforeach

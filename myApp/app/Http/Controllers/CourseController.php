@@ -13,6 +13,7 @@ class CourseController extends Controller
      */
     public function index()
     {
+
         $courses = Course::all();
         return view('courses.index', ['courses' => $courses]);
     }
@@ -63,7 +64,8 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        return view('courses.show', ['course' => $course]);
+        $auth_user_playlists = Auth::user()?->playlists;
+        return view('courses.show', ['course' => $course, 'playlists' => $auth_user_playlists]);
     }
 
     /**
