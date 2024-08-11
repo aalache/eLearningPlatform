@@ -124,9 +124,46 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route(Route::currentRouteName())" :active="request()->routeIs(Route::currentRouteName())">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+            {{-- ? Links for student  --}}
+            @if ($isStudent && $isUserPath)
+                <x-responsive-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('user.enrollement')" :active="request()->routeIs('user.enrollement')">
+                    {{ __('Enrollement') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('user.courses')" :active="request()->routeIs('user.courses')">
+                    {{ __('Courses') }}
+                </x-responsive-nav-link>
+            @endif
+
+            {{-- ? Links for Coach  --}}
+            @if ($isInstructor && $isCoachPath)
+                <x-responsive-nav-link :href="route('coach.dashboard')" :active="request()->routeIs('coach.dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('coach.courses')" :active="request()->routeIs('coach.courses')">
+                    {{ __('Courses') }}
+                </x-responsive-nav-link>
+            @endif
+
+            {{-- ? Links for Admin  --}}
+            @if ($isAdmin && $isAdminPath)
+                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('admin.courses')" :active="request()->routeIs('admin.courses')">
+                    {{ __('Courses') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">
+                    {{ __('Users') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

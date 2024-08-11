@@ -14,7 +14,7 @@ class CourseController extends Controller
     public function index()
     {
 
-        $courses = Course::all();
+        $courses = Course::with('user')->get() ?? collect();
         return view('courses.index', ['courses' => $courses]);
     }
 
@@ -32,7 +32,7 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:60',
             'description' => 'required',
             'duration' => 'required|numeric',
             'level' => 'required',
@@ -82,7 +82,7 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:60',
             'description' => 'required',
             'duration' => 'required|numeric',
             'level' => 'required',
@@ -121,6 +121,11 @@ class CourseController extends Controller
         return redirect()->route('courses.index');
     }
 
+
+
+
+
+    // enroll feature allow users to enroll a specific course
     public function enroll(Course $course)
     {
         $status = '';

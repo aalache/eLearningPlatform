@@ -7,7 +7,7 @@
 
     <div class="mx-auto  flex items-baseline p-2 space-x-3 space-y-3">
         <div class="p-3 w-[50%] rounded-md bg-[#efefef] mx-auto space-y-2 text-gray-900 overflow-hidden">
-            <div class="bg-black/20 p-2 rounded-md text-gray-500">{{ $status }}</div>
+            {{-- <div class="bg-black/20 p-2 rounded-md text-gray-500">{{ $status }}</div> --}}
             <h1> {{ $course->name }}</h1>
             <img src="{{ asset('upload') }}/courses/{{ $course->image }}" class="w-full h-52" alt="">
             <ul>
