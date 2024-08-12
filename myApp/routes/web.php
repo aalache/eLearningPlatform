@@ -11,7 +11,7 @@ use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EnrollementController;
 
-Route::view('/home', 'elearning.home');
+// Route::view('/home', 'elearning.home');
 // Route::view('/about', 'elearning.about');
 // Route::view('/contact', 'elearning.contact');
 // Route::view('/register3', 'elearning.register');

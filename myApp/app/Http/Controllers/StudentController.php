@@ -36,6 +36,9 @@ class StudentController extends Controller
         $courses = Course::where('name', 'like', '%' . $query . '%')
             ->orWhere('description', 'like', '%' . $query . '%')
             ->orWhere('level', 'like', '%' . $query . '%')
+            ->orwhereHas('user', function ($q) use ($query) {
+                $q->where('name', 'like', '%' . $query . '%');
+            })
             ->with('user')
             ->get();
 

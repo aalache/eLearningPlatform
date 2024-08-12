@@ -1,3 +1,39 @@
+let playlists = document.querySelectorAll('.playlist');
+
+// Get the playlist items
+// let playlistItemsArray = Array.from(playlistItems);
+
+console.log(playlists)
+
+playlists.forEach(element => {
+   element.addEventListener('click', function(){
+      let playlistItems = this.nextElementSibling;
+      if(playlistItems.style.display === 'none' || playlistItems.style.display === ''){
+         playlistItems.style.display = 'flex';
+      }
+      else{
+         playlistItems.style.display = 'none';
+      }
+   })
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let toggleBtn = document.getElementById('toggle-btn');
 let body = document.body;
 let darkMode = localStorage.getItem('dark-mode');
