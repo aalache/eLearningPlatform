@@ -1,21 +1,27 @@
 let playlists = document.querySelectorAll('.playlist');
 
-// Get the playlist items
-// let playlistItemsArray = Array.from(playlistItems);
-
-console.log(playlists)
+// console.log(playlists)
 
 playlists.forEach(element => {
+   
    element.addEventListener('click', function(){
+      // Get the arrow icon child element of the current  playlist class
+      let arrowIcon = this.children.item(1);
+      
+      // Get playlist items of the current playlist class
       let playlistItems = this.nextElementSibling;
+
       if(playlistItems.style.display === 'none' || playlistItems.style.display === ''){
          playlistItems.style.display = 'flex';
+         arrowIcon.classList.add('rotate-90');
       }
       else{
          playlistItems.style.display = 'none';
+         arrowIcon.classList.remove('rotate-90');
       }
    })
 
+   
 })
 
 

@@ -101,6 +101,7 @@ Route::controller(CourseController::class)->group(function () {
     Route::patch('/courses/{course}', 'update')->name('courses.update');
     Route::delete('/courses/{course}', 'destroy')->name('courses.destroy');
     Route::post('/courses/{course}/enroll', 'enroll')->name('courses.enroll');
+    Route::get('/courses/course/{course}/watch/{video?}', 'watch')->name('courses.watch');
 });
 
 

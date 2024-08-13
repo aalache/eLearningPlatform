@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\Playlist;
+use App\Models\Video;
 use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
@@ -119,6 +121,29 @@ class CourseController extends Controller
     {
         $course->delete();
         return redirect()->route('courses.index');
+    }
+
+
+
+    // return the course view wich render all the course data ( palaylists & videos)
+    public function watch(Course $course, Video $video)
+    {
+        $course = Course::with('playlists')->find($course->id);
+        $item = $course->playlists->first()->videos()->firstOr();
+
+
+
+        if ($video) {
+            foreach ($course->playlists as $playlist) {
+                // dd($playlist);
+                $playlist = Playlist::with('videos')->find($playlist->id);
+                if ($playlist->videos->contains($video)) {
+                    $item = $video;
+                }
+            }
+        }
+
+        return view('courses.course', ['course' => $course])->with('item', $item);
     }
 
 

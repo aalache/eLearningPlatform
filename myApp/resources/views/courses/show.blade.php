@@ -14,7 +14,7 @@
                      <div class="h-full w-full flex items-center justify-between  space-x-2">
 
                          <div class=" w-full  space-y-5">
-                             <h2 class="course-name text-2xl  tracking-wide text-gray-800 mb-4">
+                             <h2 class="course-name text-3xl  tracking-wide text-gray-800 mb-4">
                                  {{ $course->name }}
                              </h2>
                              <p class="course-description text-gray-600  leading-relaxed">
@@ -23,11 +23,15 @@
 
                              <div class=" space-y-4">
                                  @if (Auth::user()->isEnrolledIn($course))
-                                     <x-courseComponents.course-button>Go to course</x-courseComponents.course-button>
+                                     <x-courseComponents.course-link
+                                         href="{{ route('courses.watch', ['course' => $course]) }}">
+                                         Go to course
+                                     </x-courseComponents.course-link>
                                  @else
                                      <form action="{{ route('courses.enroll', ['course' => $course]) }}" method="POST">
                                          @csrf
-                                         <x-courseComponents.course-enrollbutton>Enroll</x-courseComponents.course-enrollbutton>
+                                         <x-courseComponents.course-enrollbutton
+                                             type='submit'>Enroll</x-courseComponents.course-enrollbutton>
                                      </form>
                                  @endif
 
@@ -70,9 +74,9 @@
 
                      <div class="border-t-2 border-gray-400/50  w-full"></div>
 
-                     <div class=" space-y-5">
-                         <h2 class="text-xl ">Course content</h2>
-                         <div class=" w-full">
+                     <div class=" space-y-8">
+                         <h2 class="text-xl  text-black ">Course content</h2>
+                         <div class=" w-full space-y-3">
 
                              @foreach ($course->playlists as $playlist)
                                  @php
@@ -80,7 +84,7 @@
                                  @endphp
                                  <div class=" space-y-3">
                                      <div
-                                         class="playlist group w-full flex justify-between items-center rounded-md px-3 py-2 border-2 border-gray-500  text-black ">
+                                         class="playlist group w-full flex justify-between items-center rounded-md px-3 py-1  text-lg border-2 border-dashed border-gray-500  hover:text-black hover:border-solid transition-all ease-in">
                                          <h3>{{ $playlist->name }}</h3>
                                          <i class="fa-solid fa-angle-right group-hover:rotate-90"></i>
                                      </div>
