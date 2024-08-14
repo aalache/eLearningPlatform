@@ -4,7 +4,7 @@
     // $course = Course::with('playlists')->find($course->id);
 @endphp
 <x-page-layout>
-    <div class="p-6 bg-white">
+    <div class="p-6 bg-whiter">
         <div class=" max-w-8xl mx-auto ">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 {{-- header --}}

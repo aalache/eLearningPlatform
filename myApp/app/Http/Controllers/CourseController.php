@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\Enrollement;
 use App\Models\Playlist;
 use App\Models\Video;
 use Illuminate\Support\Facades\Auth;
@@ -13,11 +14,15 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $courses = Course::with('user')->get() ?? collect();
-        return view('courses.index', ['courses' => $courses]);
+        if ($request->session()->get('courses')) {
+            $courses = $request->session()->get('courses');
+        } else {
+            $courses = Course::with('user')->latest()->get() ?? collect();
+        }
+        return view('dashboard', ['courses' => $courses]);
     }
 
     /**
@@ -155,7 +160,10 @@ class CourseController extends Controller
     {
         $status = '';
         if (Auth::check()) {
-            $course->users_enrolled()->attach(Auth::id());
+            $enrollement = new Enrollement();
+            $enrollement->user_id = Auth::user()->id;
+            $enrollement->course_id = $course->id;
+            $enrollement->save();
             $status = "you are successfully enrolled ";
         } else {
             $status = "you have to login to enroll ";

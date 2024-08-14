@@ -45,9 +45,8 @@ Route::view('/contact', 'contact');
 Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/user/dashboard', [StudentController::class, 'index'])->name('user.dashboard');
     Route::get('/user/enrollement', [StudentController::class, 'enrollement'])->name('user.enrollement');
-    Route::get('/user/courses', [StudentController::class, 'courses'])->name('user.courses');
+    Route::get('/user/courses', [CourseController::class, 'index'])->name('user.courses');
     Route::post('/user/courses/search', [StudentController::class, 'search'])->name('user.courses.search');
-    Route::get('/user/courses/result', [StudentController::class, 'result'])->name('user.courses.result');
 });
 
 // Instructor Role routes mapping

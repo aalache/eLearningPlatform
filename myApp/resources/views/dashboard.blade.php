@@ -12,18 +12,11 @@
 
 
     <x-slot name="header">
-        <div class="flex justify-between items-center  ">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <div class="flex justify-end items-center  ">
+            <h2 class="text-xl text-gray-800 leading-tight">
 
-                @if (request()->routeIs('user.dashboard') ||
-                        request()->routeIs('coach.dashboard') ||
-                        request()->routeIs('admin.dashboard'))
-                    {{ __('Dashboard') }}
-                @endif
 
-                @if (request()->routeIs('user.courses') || request()->routeIs('coach.courses') || request()->routeIs('admin.courses'))
-                    {{ __('Courses') }}
-                @endif
+
 
                 @if (request()->routeIs('user.enrollement'))
                     {{ __('Enrollement') }}
@@ -33,12 +26,15 @@
                     {{ __('Users') }}
                 @endif
             </h2>
-            <form action="{{ route('user.courses.search') }}" method="POST"
-                class=" w-[30%] hover:w-[40%] hover:shadow-sm h-12 rounded-xl transition-all ease-in border-2 ">
-                @csrf
-                <input type="text" placeholder="Search..." name="query" id="query"
-                    class=" border-none outlin-none w-full  h-full bg-[#efefef] rounded-xl text-gray-700">
-            </form>
+
+            @if (request()->routeIs('user.courses'))
+                <form action="{{ route('user.courses.search') }}" method="POST"
+                    class=" w-[30%] hover:w-[40%] hover:shadow-sm h-12 rounded-xl transition-all ease-in border-2 ">
+                    @csrf
+                    <input type="text" placeholder="Search..." name="query" id="query"
+                        class=" border-none outlin-none w-full  h-full bg-[#efefef] rounded-xl text-gray-700">
+                </form>
+            @endif
 
         </div>
     </x-slot>
@@ -48,8 +44,7 @@
 
         {{-- user dashboard --}}
         @if (request()->routeIs('user.dashboard'))
-            <x-userComponents.user-dashboard>
-                <x-slot:msg>{{ $msg }}</x-slot:msg>
+            <x-userComponents.user-dashboard :activities="$activities">
             </x-userComponents.user-dashboard>
         @endif
 

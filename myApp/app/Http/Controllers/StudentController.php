@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Course;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
 
 class StudentController extends Controller
 {
+
     public function index()
     {
-        return view('dashboard', ['msg' => 'student dashboard']);
+        $activities = $this->getAtivities();
+        return view('dashboard', ['msg' => 'student dashboard', 'activities' => $activities]);
     }
 
     public function enrollement()
@@ -17,16 +22,18 @@ class StudentController extends Controller
         return view('dashboard', ['msg' => 'student enrollement page']);
     }
 
-    public function courses(Request $request)
+
+    public function getAtivities()
     {
 
-        if ($request->session()->get('courses')) {
-            $courses = $request->session()->get('courses');
-        } else {
-            $courses = Course::with('user')->get() ?? collect();
+        $user = User::find(Auth::id());
+        if (Auth::check()) {
+            $reccentEnrollements = $user->enrollements()->with('course')->take(5)->latest()->get();
+
+            return $reccentEnrollements;
         }
-        return view('dashboard', ['courses' => $courses]);
     }
+
 
     // search feature allow users to search courses by name, category, author, level,
     public function search(Request $request)
@@ -40,6 +47,7 @@ class StudentController extends Controller
                 $q->where('name', 'like', '%' . $query . '%');
             })
             ->with('user')
+            ->latest()
             ->get();
 
         // dd($courses);
