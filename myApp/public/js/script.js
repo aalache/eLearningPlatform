@@ -1,15 +1,84 @@
-let playlists = document.querySelectorAll('.playlist');
 
-// console.log(playlists)
+
+
+
+/**
+ *  Add event listeners to all video elements
+ */
+
+let lesson = document.querySelector('.lesson');
+console.log(lesson);
+lesson.addEventListener('ended', function() {
+     
+   console.log('Video ended');
+   const videoId = lesson.getAttribute('data-video-id');
+   const userId = lesson.getAttribute('data-user-id');
+
+   fetch('/api/video/completed', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      },
+      body: JSON.stringify({
+          video_id: videoId,
+          user_id: userId
+      })
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.success) {
+          alert('Video marked as completed!');
+      }
+  });
+
+  console.log('done video marked')
+     
+});
+
+function markVideoAsCompleted(videoElement){
+  
+   const videoId = videoElement.getAttribute('data-video-id');
+   const userId = videoElement.getAttribute('data-user-id');
+
+   fetch('/api/video/completed', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      },
+      body: JSON.stringify({
+          video_id: videoId,
+          user_id: userId
+      })
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.success) {
+          alert('Video marked as completed!');
+      }
+  });
+
+  console.log('done video marked')
+  
+}
+
+/**
+ * ############################################################
+ */
+
+let playlists = document.querySelectorAll('.playlist');
 
 playlists.forEach(element => {
    
    element.addEventListener('click', function(){
+      console.log(element)
       // Get the arrow icon child element of the current  playlist class
       let arrowIcon = this.children.item(1);
       
       // Get playlist items of the current playlist class
       let playlistItems = this.nextElementSibling;
+
 
       if(playlistItems.style.display === 'none' || playlistItems.style.display === ''){
          playlistItems.style.display = 'flex';
@@ -19,10 +88,10 @@ playlists.forEach(element => {
          playlistItems.style.display = 'none';
          arrowIcon.classList.remove('rotate-90');
       }
-   })
 
+   });
    
-})
+});
 
 
 

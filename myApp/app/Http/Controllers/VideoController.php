@@ -6,6 +6,8 @@ use App\Models\Playlist;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\VideoProgress;
+
 
 class VideoController extends Controller
 {
@@ -92,7 +94,6 @@ class VideoController extends Controller
         $attributes = $request->validate(
             [
                 'title' => ['required', 'max:256'],
-                'url' => ['required', 'url'],
                 'duration' => ['required']
             ]
         );
@@ -137,5 +138,25 @@ class VideoController extends Controller
         $playlist->videos()->detach($video->id);
 
         return redirect()->route('playlists.show', $playlist->id);
+    }
+
+
+
+
+    public function markAsCompleted(Request $request)
+    {
+        $videoId = $request->input('video_id');
+        $userId = $request->input('user_id');
+
+        echo $videoId;
+        echo $userId->user->name;
+
+        // Update or create a record in the database
+        $progress = VideoProgress::Create(
+            ['video_id' => $videoId, 'user_id' => $userId],
+            ['completed' => true]
+        );
+
+        return response()->json(['success' => true]);
     }
 }

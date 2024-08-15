@@ -76,6 +76,9 @@ Route::controller(VideoController::class)->group(function () {
     Route::post('/videos/playlist/{playlist}/remove/{video}', 'removeFromPlaylist')->name('videos.removeFromPlaylist');
 });
 
+Route::post('/api/video/completed', [VideoController::class, 'markAsCompleted']);
+
+
 // ? Playlist Routing
 Route::controller(PlaylistController::class)->group(function () {
     Route::get('/playlists', 'index')->name('playlists.index');

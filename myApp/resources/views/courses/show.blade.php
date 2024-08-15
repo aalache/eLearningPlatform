@@ -84,17 +84,25 @@
                                  @endphp
                                  <div class=" space-y-3">
                                      <div
-                                         class="playlist group w-full flex justify-between items-center rounded-md px-3 py-1  text-lg border-2 border-dashed border-gray-500  hover:text-black hover:border-solid transition-all ease-in">
+                                         class="playlist group w-full flex justify-between items-center rounded-md px-3 py-1  text-lg   hover:text-black  transition-all ease-in">
                                          <h3>{{ $playlist->name }}</h3>
                                          <i class="fa-solid fa-angle-right group-hover:rotate-90"></i>
                                      </div>
                                      <ul
                                          class="list-items px-10  space-y-3  hidden flex-col  justify-center items-center ">
                                          @foreach ($playlist->videos as $video)
-                                             <li
-                                                 class="w-full rounded-md px-3 py-2 text-gray-700  hover:text-black bg-[#efefef] ">
-                                                 {{ $video->title }}
-                                             </li>
+                                             <div class="flex px-2 w-full items-center">
+                                                 <div class="flex flex-col items-center gap-1">
+                                                     <div class="w-[1.5px] bg-[#cedde8] h-4"></div>
+                                                     <div class="size-2 rounded-full bg-[#0d151c]"></div>
+                                                     <div class="w-[1.5px] bg-[#cedde8] h-4 grow"></div>
+                                                 </div>
+
+                                                 <li
+                                                     class="w-full rounded-md px-3 py-2 text-gray-700  hover:text-black  ">
+                                                     {{ $video->title }}
+                                                 </li>
+                                             </div>
                                          @endforeach
                                      </ul>
                                  </div>
