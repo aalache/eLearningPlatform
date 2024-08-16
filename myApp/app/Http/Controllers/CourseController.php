@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      */
@@ -172,4 +174,47 @@ class CourseController extends Controller
 
         return view('courses.show', ['course' => $course, 'playlists' => $auth_user_playlists, 'status' => $status]);
     }
+
+    // course progress
+    public static function progress(Course $course)
+    {
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Get the enrollment of the user in the specific course
+        $enrollment = $user->enrollements()->with('course')->where('course_id', $course->id)->first();
+
+        // Initialization
+        $total_course_videos = 0;
+        $completed_videos = 0;
+
+        if ($enrollment) {
+            // Get the course playlists with videos
+            $playlists = $enrollment->course->playlists()->with('videos')->get();
+
+            // Iterate over each playlist and sum up the total videos and completed videos
+            foreach ($playlists as $playlist) {
+                $total_course_videos += $playlist->videos->count();
+
+                // For each video, check if it's completed by the user
+                foreach ($playlist->videos as $video) {
+                    if ($user->completedLessons()->where('video_id', $video->id)->where('completed', true)->exists()) {
+                        $completed_videos++;
+                    }
+                }
+            }
+        }
+
+        // Calculate the progress percentage
+        $progress = $total_course_videos > 0 ? ($completed_videos / $total_course_videos) * 100 : 0;
+
+        if ($progress == 100 && $enrollment->status != 'completed') {
+            $enrollment->status = 'completed';
+            $enrollment->save();
+        }
+
+        return round($progress, 2); // Return the progress as a percentage rounded to 2 decimal places
+    }
+
+    public function courseCompleted() {}
 }

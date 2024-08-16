@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Enrollement;
 
 
 class StudentController extends Controller
@@ -18,8 +19,22 @@ class StudentController extends Controller
     }
 
     public function enrollement()
+
     {
-        return view('dashboard', ['msg' => 'student enrollement page']);
+
+        $user = Auth::user();
+        $enrollments = $user->enrollements()->with('course')->get();
+
+        // if ($enrollments)
+
+        foreach ($enrollments as $enrollment) {
+            $enrollment->progress = CourseController::progress($enrollment->course);
+        }
+
+        // }
+        return view('dashboard', ['enrollments' => $enrollments]);
+
+        // return view('dashboard', ['msg' => 'student enrollement page', 'enrollments' => $enrollments]);
     }
 
 
@@ -53,5 +68,34 @@ class StudentController extends Controller
         // dd($courses);
 
         return redirect()->route('user.courses')->with('courses', $courses);
+    }
+
+
+    // ? Helper functions 
+
+    // return number of enrollement for a specific user;
+    public static function enrollements(): int
+    {
+        return Enrollement::count();
+    }
+
+    // return number of course in progress for a specific user;
+    public static function inProgress(): int
+    {
+        $course_inProgress = Enrollement::where(
+            'user_id',
+            Auth::user()->id
+        )->where('status', 'in_progress')->count();
+        return $course_inProgress;
+    }
+
+    // return number of completed course for a specific user;
+    public static function completed(): int
+    {
+        $course_completed = Enrollement::where(
+            'user_id',
+            Auth::user()->id
+        )->where('status', 'completed')->count();
+        return $course_completed;
     }
 }

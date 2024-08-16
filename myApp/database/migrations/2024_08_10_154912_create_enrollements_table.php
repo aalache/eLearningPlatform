@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('course_id')->constrained()->cascadeOnDelete();
+            $table->enum('status', ['in_progress', 'completed'])->default('in_progress');
             $table->timestamps();
         });
     }

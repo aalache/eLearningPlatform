@@ -1,7 +1,7 @@
 @props(['courses' => collect()])
 
 
-<div class="py-0 mx-3 bg-white">
+<div class="py-0 px-3 bg-white">
     <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             {{-- header --}}

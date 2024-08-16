@@ -151,8 +151,11 @@ class VideoController extends Controller
 
         // Update or create a record in the database
         $progress = VideoProgress::Create(
-            ['video_id' => $videoId, 'user_id' => $userId],
-            ['completed' => true]
+            [
+                'video_id' => $videoId,
+                'user_id' => $userId,
+                'completed' => true,
+            ],
         );
 
         return response()->json(['success' => true]);
@@ -168,5 +171,15 @@ class VideoController extends Controller
             'message' => 'POST request was successful!',
             'data' => $data,
         ]);
+    }
+
+    public static function isMarkedAsCompleted(Video $video): bool
+    {
+        $user = Auth::user();
+
+        $completed = $user->completedLessons()->where('video_id', $video->id)
+            ->where('completed', true)  // Check for 'completed' status in the pivot table
+            ->exists();
+        return $completed;
     }
 }

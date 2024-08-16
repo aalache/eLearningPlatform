@@ -1,3 +1,8 @@
+@php
+    use App\Http\Controllers\StudentController;
+    use App\Http\Controllers\CourseController;
+@endphp
+
 @props(['activities'])
 
 <div class="py-4 bg-[#ffffff] ">
@@ -12,26 +17,32 @@
 
                 {{-- summary details --}}
                 <div class="space-y-2">
-                    <p class="text-[#49779c] text-sm font-normal leading-normal">Here's your learning summary</p>
-                    <div class=" flex space-x-3 ">
+                    <p class="text-[#49779c] text-sm font-normal leading-normal">Here's your learning summary
+                        @php
+
+                            $enrollements = auth()->user()->enrollements()->with('course')->get();
+                            foreach ($enrollements as $enrollement) {
+                                CourseController::progress($enrollement->course);
+                            }
+
+                        @endphp
+
+                    </p>
+                    <div class="  space-x-3 grid grid-cols-3 gap-2">
+
                         <div
-                            class="border-2 bg-[#efefef]/70 shadow-md min-w-[250px] basis-1/4 px-3 py-4  rounded-md text-center space-y-2 backdrop-blur-md">
-                            <h2 class="text-3xl">8</h2>
-                            <p class="text-gray-600  font-normal leading-normal">Courses completed</p>
-                        </div>
-                        <div
-                            class="border-2 bg-[#efefef]/70 shadow-md min-w-[250px] basis-1/4 px-3 py-4  rounded-md text-center space-y-2 backdrop-blur-md">
-                            <h2 class="text-3xl">8</h2>
-                            <p class="text-gray-600  font-normal leading-normal">In Progress</p>
-                        </div>
-                        <div
-                            class="border-2 bg-[#efefef]/70 shadow-md min-w-[250px] basis-1/4 px-3 py-4  rounded-md text-center space-y-2 backdrop-blur-md">
-                            <h2 class="text-3xl">{{ Auth::user()->courses_enrolledIn()->count() }}</h2>
+                            class="border-2 bg-[#efefef]/70 shadow-md min-w-[250px]  px-3 py-4  rounded-md text-center space-y-2 backdrop-blur-md">
+                            <h2 class="text-3xl">{{ StudentController::enrollements() }}</h2>
                             <p class="text-gray-600  font-normal leading-normal">Courses Enrolled In</p>
                         </div>
                         <div
-                            class="border-2 bg-[#efefef]/70 shadow-md min-w-[250px] basis-1/4 px-3 py-4  rounded-md text-center space-y-2 backdrop-blur-md">
-                            <h2 class="text-3xl">8</h2>
+                            class="border-2 bg-[#efefef]/70 shadow-md min-w-[250px] px-3 py-4  rounded-md text-center space-y-2 backdrop-blur-md">
+                            <h2 class="text-3xl">{{ StudentController::inProgress() }}</h2>
+                            <p class="text-gray-600  font-normal leading-normal">In Progress</p>
+                        </div>
+                        <div
+                            class="border-2 bg-[#efefef]/70 shadow-md min-w-[250px]  px-3 py-4  rounded-md text-center space-y-2 backdrop-blur-md">
+                            <h2 class="text-3xl">{{ StudentController::completed() }}</h2>
                             <p class="text-gray-600  font-normal leading-normal">Courses completed</p>
                         </div>
                     </div>

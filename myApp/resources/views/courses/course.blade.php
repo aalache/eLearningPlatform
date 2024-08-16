@@ -2,6 +2,7 @@
     use App\Models\Course;
     use App\Models\Playlist;
     use App\Models\VideoProgress;
+    use App\Http\Controllers\CourseController;
     // $course = Course::with('playlists')->find($course->id);
 @endphp
 <x-page-layout>
@@ -14,6 +15,7 @@
                     <div class="flex min-w-72 flex-col space-y-1">
                         <p class="text-[#0d151c] tracking-light text-[32px]  leading-tight">{{ $course->name }}
                         </p>
+                        <p>{{ CourseController::progress($course) }}</p>
                         <p class="text-[#49779c] text-sm font-normal leading-normal">By: {{ $course->user->name }}</p>
                     </div>
 

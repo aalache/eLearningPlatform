@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Video extends Model
 {
@@ -16,13 +17,29 @@ class Video extends Model
         'user_id',
     ];
 
-    public function playlists()
-    {
-        $this->belongsToMany(Playlist::class);
-    }
+    //? ################################  Table  relationships ################################
 
+    // return the appropriete user
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    //? ################################ playlists Table  relationships ################################
+
+    // return playlists that a video belongs to
+    public function playlists()
+    {
+        return $this->belongsToMany(Playlist::class);
+    }
+
+
+    //? ################################ VideoProgress Table  relationships ################################
+
+
+
+    public function completedBy()
+    {
+        return $this->belongsToMany(User::class, 'video_progress');
     }
 }

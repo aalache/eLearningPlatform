@@ -18,9 +18,7 @@
 
 
 
-                @if (request()->routeIs('user.enrollement'))
-                    {{ __('Enrollement') }}
-                @endif
+
 
                 @if (request()->routeIs('admin.users'))
                     {{ __('Users') }}
@@ -50,8 +48,8 @@
 
         {{-- user enrollements page --}}
         @if (request()->routeIs('user.enrollement'))
-            <x-userComponents.user-enrollement>
-                <x-slot:msg>{{ $msg }}</x-slot:msg>
+            <x-userComponents.user-enrollement :enrollments="$enrollments">
+
             </x-userComponents.user-enrollement>
         @endif
 

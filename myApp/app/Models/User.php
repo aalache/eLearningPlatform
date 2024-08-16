@@ -25,44 +25,13 @@ class User extends Authenticatable
         'password',
     ];
 
+
+
+    // ? ################################ Roles table relationships ################################
+    // return user roles
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
-    }
-
-
-
-
-    public function courses()
-    {
-        return $this->hasMany(Course::class);
-    }
-
-
-    public function courses_enrolledIn()
-    {
-        return $this->belongsToMany(Course::class, 'enrollements');
-    }
-
-    public function enrollements()
-    {
-        return $this->hasMany(Enrollement::class);
-    }
-
-    public function playlists()
-    {
-        return $this->hasMany(Playlist::class);
-    }
-
-    public function videos()
-    {
-        return $this->hasMany(Video::class);
-    }
-
-
-    public function isEnrolledIn(Course $course)
-    {
-        return $this->courses_enrolledIn()->where('course_id', $course->id)->exists();
     }
 
     /**
@@ -75,6 +44,58 @@ class User extends Authenticatable
     {
         return $this->roles()->where('name', $role)->exists();
     }
+
+
+    //? ################################ Courses Table relationships ################################
+    // return user courses
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
+
+    //? ################################ Enrollements Table  relationships ################################
+    // return courses in witch user is enrolled in 
+    public function courses_enrolledIn()
+    {
+        return $this->belongsToMany(Course::class, 'enrollements');
+    }
+
+    // return enrollement record of a user
+    public function enrollements()
+    {
+        return $this->hasMany(Enrollement::class);
+    }
+
+
+    // test if a user is enrolled in a specific course 
+    public function isEnrolledIn(Course $course)
+    {
+        return $this->enrollements()->where('course_id', $course->id)->exists();
+    }
+
+    //? ################################ Playlists Table relationShips ################################
+    // return user playlists
+    public function playlists()
+    {
+        return $this->hasMany(Playlist::class);
+    }
+
+
+    //? ################################ Videos Table  relationships ################################
+    // return user videos
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
+
+    //? ################################ VideoProgress Table  relationships ################################
+
+    public function completedLessons()
+    {
+        return $this->belongsToMany(Video::class, 'video_progress');
+    }
+
+
 
     /**
      * The attributes that should be hidden for serialization.
