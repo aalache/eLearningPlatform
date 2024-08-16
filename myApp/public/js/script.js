@@ -6,34 +6,16 @@
  *  Add event listeners to all video elements
  */
 
+
+
+
 let lesson = document.querySelector('.lesson');
 console.log(lesson);
 lesson.addEventListener('ended', function() {
      
    console.log('Video ended');
-   const videoId = lesson.getAttribute('data-video-id');
-   const userId = lesson.getAttribute('data-user-id');
+   markVideoAsCompleted(lesson);
 
-   fetch('/api/video/completed', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-      },
-      body: JSON.stringify({
-          video_id: videoId,
-          user_id: userId
-      })
-  })
-  .then(response => response.json())
-  .then(data => {
-      if (data.success) {
-          alert('Video marked as completed!');
-      }
-  });
-
-  console.log('done video marked')
-     
 });
 
 function markVideoAsCompleted(videoElement){

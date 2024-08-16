@@ -77,7 +77,7 @@ Route::controller(VideoController::class)->group(function () {
 });
 
 Route::post('/api/video/completed', [VideoController::class, 'markAsCompleted']);
-
+Route::post('/api/test', [VideoController::class, 'test']);
 
 // ? Playlist Routing
 Route::controller(PlaylistController::class)->group(function () {

@@ -148,8 +148,6 @@ class VideoController extends Controller
         $videoId = $request->input('video_id');
         $userId = $request->input('user_id');
 
-        echo $videoId;
-        echo $userId->user->name;
 
         // Update or create a record in the database
         $progress = VideoProgress::Create(
@@ -158,5 +156,17 @@ class VideoController extends Controller
         );
 
         return response()->json(['success' => true]);
+    }
+
+    public function test(Request $request)
+    {
+        $data = $request->all();
+
+        // Return a JSON response with a success message and the data received
+        return response()->json([
+            'success' => true,
+            'message' => 'POST request was successful!',
+            'data' => $data,
+        ]);
     }
 }
