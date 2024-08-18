@@ -67,7 +67,7 @@ class VideoController extends Controller
     {
         $video = $this->upload($request);
 
-        return redirect('/videos');
+        return redirect()->route('coach.courses');
     }
 
     /**

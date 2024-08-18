@@ -65,9 +65,18 @@
 
 
     @if ($isInstructor && $isCoachPath)
-        <x-coachComponents.coach-dashboard>
-            <x-slot:msg>{{ $msg }}</x-slot:msg>
-        </x-coachComponents.coach-dashboard>
+        {{-- instructor dashboard --}}
+        @if (request()->routeIs('coach.dashboard'))
+            <x-coachComponents.coach-dashboard>
+                <x-slot:msg>{{ $msg }}</x-slot:msg>
+            </x-coachComponents.coach-dashboard>
+        @endif
+
+        @if (request()->routeIs('coach.courses'))
+            <x-coachComponents.coach-courses :myVideos="$myVideos">
+
+            </x-coachComponents.coach-courses>
+        @endif
     @endif
 
     @if ($isAdmin && $isAdminPath)

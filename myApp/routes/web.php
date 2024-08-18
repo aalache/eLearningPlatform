@@ -28,6 +28,7 @@ Route::view('/watch-video', 'elearning.watch-video');
 
 // ? 
 Route::view('/', 'welcome');
+Route::view('/home', 'welcome');
 // Route::view('/home', 'home');
 Route::view('/contact', 'contact');
 

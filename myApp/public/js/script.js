@@ -2,79 +2,93 @@
 
 
 
-/**
- *  Add event listeners to all video elements
- */
+// /**
+//  *  Add event listeners to all video elements
+//  * to track video competion and store the progress in the database
+//  */
 
-
-
-
-let lesson = document.querySelector('.lesson');
-console.log(lesson);
-lesson.addEventListener('ended', function() {
+// let lesson = document.querySelector('.lesson');
+// console.log(lesson);
+// lesson.addEventListener('ended', function() {
      
-   console.log('Video ended');
-   markVideoAsCompleted(lesson);
+//    console.log('Video ended');
+//    markVideoAsCompleted(lesson);
 
-});
+// });
 
-function markVideoAsCompleted(videoElement){
+// function markVideoAsCompleted(videoElement){
   
-   const videoId = videoElement.getAttribute('data-video-id');
-   const userId = videoElement.getAttribute('data-user-id');
+//    const videoId = videoElement.getAttribute('data-video-id');
+//    const userId = videoElement.getAttribute('data-user-id');
 
-   fetch('/api/video/completed', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-      },
-      body: JSON.stringify({
-          video_id: videoId,
-          user_id: userId
-      })
-  })
-  .then(response => response.json())
-  .then(data => {
-      if (data.success) {
-          alert('Video marked as completed!');
-      }
-  });
+//    fetch('/api/video/completed', {
+//       method: 'POST',
+//       headers: {
+//           'Content-Type': 'application/json',
+//           'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+//       },
+//       body: JSON.stringify({
+//           video_id: videoId,
+//           user_id: userId
+//       })
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//       if (data.success) {
+//           alert('Video marked as completed!');
+//       }
+//   });
 
-  console.log('done video marked')
+//   console.log('done video marked')
   
-}
+// }
+
+// /**
+//  * add event listener to all playlists to show & hide palylist items
+//  */
+
+// let playlists = document.querySelectorAll('.playlist');
+
+// playlists.forEach(element => {
+   
+//    element.addEventListener('click', function(){
+//       console.log(element)
+//       // Get the arrow icon child element of the current  playlist class
+//       let arrowIcon = this.children.item(1);
+      
+//       // Get playlist items of the current playlist class
+//       let playlistItems = this.nextElementSibling;
+
+
+//       if(playlistItems.style.display === 'none' || playlistItems.style.display === ''){
+//          playlistItems.style.display = 'flex';
+//          arrowIcon.classList.add('rotate-90');
+//       }
+//       else{
+//          playlistItems.style.display = 'none';
+//          arrowIcon.classList.remove('rotate-90');
+//       }
+
+//    });
+   
+// });
 
 /**
- * ############################################################
+ * add event listener to all close & open buttons to show & hide pop up pages
  */
 
-let playlists = document.querySelectorAll('.playlist');
+// let popUp = document.querySelectorAll('.pop-up');
+// console.log(popUp)
 
-playlists.forEach(element => {
-   
-   element.addEventListener('click', function(){
-      console.log(element)
-      // Get the arrow icon child element of the current  playlist class
-      let arrowIcon = this.children.item(1);
-      
-      // Get playlist items of the current playlist class
-      let playlistItems = this.nextElementSibling;
+// let openBtns = document.querySelectorAll('.open-btn');
+// console.log(opentBtns)
 
-
-      if(playlistItems.style.display === 'none' || playlistItems.style.display === ''){
-         playlistItems.style.display = 'flex';
-         arrowIcon.classList.add('rotate-90');
-      }
-      else{
-         playlistItems.style.display = 'none';
-         arrowIcon.classList.remove('rotate-90');
-      }
-
-   });
-   
-});
-
+// opentBtns.forEach(btn => {
+//    btn.addEventListener('click', function(){
+//       console.log("clicked")
+       
+//    })
+// })
 
 
 
