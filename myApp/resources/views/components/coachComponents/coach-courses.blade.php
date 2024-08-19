@@ -14,7 +14,8 @@
                     <h3 class="text-md text-black">You don't have any videos uploaded yet</h3>
                     <p class=" text-sm text-gray-600">Upload your first video to get started</p>
                 </div>
-                <button class="open-btn bg-blue-500 hover:bg-blue-700 hover:shadow-md py-2 px-4 rounded-md text-white ">
+                <button
+                    class="upload-open-btn bg-blue-500 hover:bg-blue-700 hover:shadow-md py-2 px-4 rounded-md text-white ">
                     Upload Video
                 </button>
             </div>
@@ -22,10 +23,10 @@
 
         {{-- Hidden video upload pop up form --}}
         <div
-            class="pop-up bg-black/30 backdrop-blur-sm w-full h-[105vh] fixed top-[-8vh] left-0 z-50 flex justify-center items-center hidden">
+            class="upload-pop-up bg-black/30 backdrop-blur-sm w-full h-[105vh] fixed top-[-8vh] left-0 z-50 flex justify-center items-center hidden">
             <div id="video-upload-form" class="rounded-md bg-[#172868]  max-w-[500px] ">
                 <div class="text-white flex justify-end items-center p-3">
-                    <button class="close-btn hover:scale-125 transition-all ease-in"><i
+                    <button class="upload-close-btn hover:scale-125 transition-all ease-in"><i
                             class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="py-10 px-8">
@@ -42,7 +43,7 @@
                     </div>
                     {{-- ? form start --}}
                     <form action="/videos" method="POST" enctype="multipart/form-data"
-                        class="space-y-5 max-w-[400px] mx-auto">
+                        class="space-y-5 max-w-[400px] mx-auto shadow-lg">
                         @csrf
 
                         {{-- Title field --}}
@@ -100,7 +101,7 @@
                                 <div>
                                     <h3 class=" text-black">{{ $video->title }}</h3>
                                     <p class="text-sm text-blue-600">
-                                        Uploaded on {{ $video->updated_at->format('M d,Y') }}
+                                        Uploaded on {{ $video->updated_at->format('M d,Y | h:m a') }}
                                     </p>
                                 </div>
                                 <button title="view menu" class="video-menu-btn px-3">
@@ -113,25 +114,34 @@
                                     <ul class="text-sm text-black">
                                         <a href="">
                                             <li
-                                                class="video-menu-item p-2 w-full text-blue-600 hover:bg-blue-600 hover:text-white flex justify-between items-center">
+                                                class="video-menu-item p-2 w-full text-gray-700 hover:bg-blue-600 hover:text-white flex justify-between items-center">
                                                 <p>Add To playlist</p>
                                                 <i class="fa-solid fa-list-ul"></i>
                                             </li>
                                         </a>
-                                        <a href="{{ route('videos.edit', ['video' => $video]) }}">
+
+                                        <li class="  w-full text-gray-700 hover:bg-blue-600 hover:text-white ">
+                                            <button data-id={{ $video->id }} data-title={{ $video->title }}
+                                                data-duration={{ $video->duration }}
+                                                class="video-menu-item video-edit-open-btn  p-2 w-full flex justify-between items-center">Edit
+                                                {{ $video->title }}
+                                                <i class="fa-solid fa-pen"></i></button>
+
+                                        </li>
+
+                                        <form action="{{ route('videos.destroy', ['video' => $video]) }}" method="POST"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            @method('DELETE')
                                             <li
-                                                class="video-menu-item p-2 w-full text-blue-600 hover:bg-blue-600 hover:text-white flex justify-between items-center">
-                                                <p>Edit</p>
-                                                <i class="fa-solid fa-pen"></i>
+                                                class=" w-full text-red-600 hover:bg-red-600 hover:text-white flex justify-between items-center">
+                                                <button type="submit"
+                                                    class="video-menu-item  p-2 w-full  flex justify-between items-center">
+                                                    Delete
+                                                    <i class="fa-solid fa-trash-can ml-2"></i>
+                                                </button>
                                             </li>
-                                        </a>
-                                        <a href="{{ route('videos.destroy',['video' => $video]) }}">
-                                            <li
-                                                class="video-menu-item p-2 w-full text-red-600 hover:bg-red-600 hover:text-white flex justify-between items-center">
-                                                <p>Delete</p>
-                                                <i class="fa-solid fa-trash-can"></i>
-                                            </li>
-                                        </a>
+                                        </form>
                                     </ul>
                                 </div>
                                 <!------------------------>
@@ -145,6 +155,92 @@
             </div>
         </div>
 
+        {{-- Pop up Video Edit Form --}}
+        <div
+            class="edit-video-pop-up hidden  bg-black/30 backdrop-blur-sm w-full h-[105vh] fixed top-[-8vh] left-0 z-50 flex justify-center items-center shadow-md">
+            <div class="w-full   rounded-md bg-[#172868] max-w-[500px]">
+                <div class="text-white flex justify-end items-center p-3">
+                    <button class="video-edit-close-btn hover:scale-125 transition-all ease-in">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+                    <a href="/">
+                        <img class="mx-auto h-10 w-auto"
+                            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
+                    </a>
+
+                    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-200">
+                        Edit video information
+                    </h2>
+                </div>
+
+                <div class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm  pb-10">
+                    {{-- ? here form start --}}
+
+                    <form method="POST" enctype="multipart/form-data" class="space-y-5">
+                        @csrf
+                        @method('PATCH')
+
+                        {{-- Title field --}}
+                        <x-formComponents.form-field>
+                            <x-formComponents.form-label for="title">Title</x-formComponents.form-label>
+                            <x-formComponents.form-input type="text" id="edit-title" name="title"
+                                placeholder="Video title" required
+                                value="{{ $video->title }}"></x-formComponents.form-input>
+                            <x-formComponents.form-error name="title" />
+                        </x-formComponents.form-field>
+
+
+
+                        {{-- duration field --}}
+                        <x-formComponents.form-field>
+                            <x-formComponents.form-label for="duration">Duration</x-formComponents.form-label>
+                            <x-formComponents.form-input type="text" id="edit-duration" name="duration"
+                                placeholder="Video duration in minite" required
+                                value="{{ $video->duration }}"></x-formComponents.form-input>
+                            <x-formComponents.form-error name="duration" />
+                        </x-formComponents.form-field>
+
+
+                        {{--  upload button --}}
+                        <div class="flex justify-between items-center space-x-1">
+                            <x-formComponents.form-button>Update</x-formComponents.form-button>
+
+                        </div>
+
+                    </form>
+
+
+
+                    {{-- ? here form ends --}}
+
+                </div>
+            </div>
+        </div>
+        {{--  --}}
+        {{-- pop up notification --}}
+        @session('success')
+            <div
+                class="notif-card bg-green-500 min-w-52 w-fit rounded-md p-4 fixed bottom-2 left-2 text-sm text-white z-auto shadow-md">
+                <div class=" w-full flex justify-between items-center space-x-4">
+                    <i class="fa-solid fa-check font-bold text-2xl"></i>
+                    <p>{{ session('success') }}</p>
+                </div>
+            </div>
+        @endsession
+
+        @session('error')
+            <div
+                class="notif-card bg-red-500 min-w-52 w-fit rounded-md p-4 fixed bottom-2 left-2 text-sm text-white z-auto shadow-md">
+                <div class=" w-full flex justify-between items-center space-x-4">
+                    <i class="fa-solid fa-triangle-exclamation font-bold text-2xl"></i>
+                    <p>{{ session('error') }}</p>
+                </div>
+            </div>
+        @endsession
+
+        <div>$currentVideo</div>
 
     </div>
 
@@ -155,24 +251,53 @@
 
 <script>
     // popup show and hide events using click event
-    let popUp = document.querySelector('.pop-up');
-    let openBtn = document.querySelector('.open-btn').addEventListener('click', showPopup);
-    let closeBtn = document.querySelector('.close-btn').addEventListener('click', hidePopup);
+    //upload popUp
+    const uploadPopUp = document.querySelector('.upload-pop-up');
+    const uploadOpenBtn = document.querySelector('.upload-open-btn').addEventListener('click', showUploadPopUp);
+    const uploadCloseBtn = document.querySelector('.upload-close-btn').addEventListener('click', hideUploadPopUp);
 
-    function showPopup() {
+    function showUploadPopUp() {
         document.body.style.overflow = 'hidden';
-        popUp.classList.remove('hidden');
+        uploadPopUp.classList.remove('hidden');
     }
 
-    function hidePopup() {
+    function hideUploadPopUp() {
         document.body.style.overflow = 'visible';
-        popUp.classList.add('hidden');
+        uploadPopUp.classList.add('hidden');
     }
+    // edit video popUp 
+    const editVideoPopUp = document.querySelector('.edit-video-pop-up')
+    const videoEditOpenBtns = document.querySelectorAll('.video-edit-open-btn')
+    const videoEditCloseBtn = document.querySelector('.video-edit-close-btn')
+    const videoEditTitle = document.getElementById('edit-title');
+    const videoEditDuration = document.getElementById('edit-duration');
+
+    videoEditOpenBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            console.log('clicked')
+
+            const videoId = this.getAttribute('data-id');
+            console.log(this.getAttribute('data-title'))
+
+            videoEditTitle.value = this.getAttribute('data-title');;
+            videoEditDuration.value = this.getAttribute('data-duration');
+
+            editVideoPopUp.action = `/videos/${videoId}`;
+
+            document.body.style.overflow = 'hidden';
+            editVideoPopUp.classList.remove('hidden');
+        });
+    });
+
+    videoEditCloseBtn.addEventListener('click', function() {
+        document.body.style.overflow = 'visible';
+        editVideoPopUp.classList.add('hidden');
+    })
 
     // show and hide video menu 
     let videoMenuBtns = document.querySelectorAll('.video-menu-btn');
     let videoMenuBtnClicked = false;
-    console.log(videoMenuBtns);
+    // console.log(videoMenuBtns);
     videoMenuBtns.forEach(btn => {
         btn.addEventListener('click', function() {
 
@@ -198,5 +323,17 @@
             })
 
         })
+    })
+
+    // notification timeout
+    document.addEventListener('DOMContentLoaded', function() {
+        const notifications = document.querySelectorAll('.notif-card');
+        notifications.forEach(notif => {
+            setTimeout(function() {
+                if (notif) {
+                    notif.classList.add('hidden');
+                }
+            }, 4000);
+        });
     })
 </script>
