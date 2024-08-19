@@ -1,6 +1,8 @@
-@props(['myVideos'])
+@props(['myVideos' => collect(), 'playlists' => collect()])
 
-
+@php
+    $selectedPlaylist = null;
+@endphp
 
 <div class="py-4  max-w-7xl mx-auto sm:px-6 lg:px-8">
 
@@ -112,19 +114,22 @@
                                     class="video-menu w-52 z-50 absolute top-[65%] right-3
                                   shadow-md rounded-md bg-[#efefef] overflow-hidden hidden">
                                     <ul class="text-sm text-black">
-                                        <a href="">
-                                            <li
-                                                class="video-menu-item p-2 w-full text-gray-700 hover:bg-blue-600 hover:text-white flex justify-between items-center">
-                                                <p>Add To playlist</p>
+
+                                        <li
+                                            class="video-menu-item  w-full text-gray-700 hover:bg-blue-600 hover:text-white ">
+
+                                            <button
+                                                class="addTo-open-btn p-2 w-full  flex justify-between items-center">
+                                                Add To playlist
                                                 <i class="fa-solid fa-list-ul"></i>
-                                            </li>
-                                        </a>
+                                            </button>
+                                        </li>
+
 
                                         <li class="  w-full text-gray-700 hover:bg-blue-600 hover:text-white ">
                                             <button data-id={{ $video->id }} data-title={{ $video->title }}
                                                 data-duration={{ $video->duration }}
                                                 class="video-menu-item video-edit-open-btn  p-2 w-full flex justify-between items-center">Edit
-                                                {{ $video->title }}
                                                 <i class="fa-solid fa-pen"></i></button>
 
                                         </li>
@@ -219,6 +224,54 @@
             </div>
         </div>
         {{--  --}}
+
+        {{-- Pop Up Add to list feature --}}
+        <div
+            class="add-to-playlist-pop-up hidden bg-black/30 backdrop-blur-sm w-full h-[105vh] fixed top-[-8vh] left-0 z-50 flex justify-center items-center shadow-md">
+            <div class="bg-[#172868] rounded-lg  shadow-lg mx-auto max-w-[500px] min-w-[500px]">
+                <div class="text-white flex justify-end items-center p-3">
+                    <button class="addTo-close-btn hover:scale-125 transition-all ease-in">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="sm:mx-auto sm:w-full sm:max-w-sm ">
+                    <a href="/">
+                        <img class="mx-auto h-10 w-auto"
+                            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
+                    </a>
+
+                    {{-- <h2 class="mt-10 text-center text-2xl  leading-9 tracking-tight text-gray-200">
+                Select Playlist
+            </h2> --}}
+                </div>
+                {{-- ? form start --}}
+                <form action="" method="POST" enctype="multipart/form-data"
+                    class="bg-[#172868] rounded-lg  shadow-lg mx-auto max-w-[500px] min-w-[500px] ">
+                    @csrf
+
+                    <div class="p-10 space-y-5">
+                        <select name="addedTo" id="addedTo"
+                            class="w-full rounded-md border-0  text-gray-200 shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400 backdrop-blur-sm bg-gray-300/20 p-2">
+                            @if ($playlists->isNotEmpty())
+                                @foreach ($playlists as $playlist)
+                                    @php
+                                        $selectedPlaylist = $playlist;
+                                    @endphp
+                                    <option value="{{ $playlist->id }}">{{ $playlist->name }}</option>
+                                @endforeach
+                            @else
+                                <option value=""> No playlist available</option>
+                            @endif
+                        </select>
+                        <x-formComponents.form-button type='submit'>Add To</x-formComponents.form-button>
+                        <p>{{ $selectedPlaylist }}</p>
+                    </div>
+
+                </form>
+                {{-- ? form end --}}
+            </div>
+        </div>
+        {{--  --}}
         {{-- pop up notification --}}
         @session('success')
             <div
@@ -240,7 +293,7 @@
             </div>
         @endsession
 
-        <div>$currentVideo</div>
+
 
     </div>
 
@@ -277,12 +330,13 @@
             console.log('clicked')
 
             const videoId = this.getAttribute('data-id');
+            console.log(videoId);
             console.log(this.getAttribute('data-title'))
 
             videoEditTitle.value = this.getAttribute('data-title');;
             videoEditDuration.value = this.getAttribute('data-duration');
 
-            editVideoPopUp.action = `/videos/${videoId}`;
+            editVideoPopUp.action = `{{ route('videos.update', ['video' => 12]) }}`;
 
             document.body.style.overflow = 'hidden';
             editVideoPopUp.classList.remove('hidden');
@@ -294,10 +348,31 @@
         editVideoPopUp.classList.add('hidden');
     })
 
+    // Add video to playlist Popup
+    const addToPlaylistPopUp = document.querySelector('.add-to-playlist-pop-up');
+    const addToOpenBtns = document.querySelectorAll('.addTo-open-btn')
+    console.log(addToOpenBtns)
+    const addToCloseBtn = document.querySelector('.addTo-close-btn').addEventListener('click', hideAddToPlaylistPopUp);
+
+
+    addToOpenBtns.forEach(btn => {
+        btn.addEventListener('click', showAddToPlaylistPopUp);
+    })
+
+    function showAddToPlaylistPopUp() {
+        console.log('clicked')
+        document.body.style.overflow = 'hidden';
+        addToPlaylistPopUp.classList.remove('hidden');
+    }
+
+    function hideAddToPlaylistPopUp() {
+        document.body.style.overflow = 'visible';
+        addToPlaylistPopUp.classList.add('hidden');
+    }
+
     // show and hide video menu 
     let videoMenuBtns = document.querySelectorAll('.video-menu-btn');
     let videoMenuBtnClicked = false;
-    // console.log(videoMenuBtns);
     videoMenuBtns.forEach(btn => {
         btn.addEventListener('click', function() {
 

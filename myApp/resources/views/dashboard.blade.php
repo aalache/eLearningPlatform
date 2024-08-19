@@ -73,7 +73,7 @@
         @endif
 
         @if (request()->routeIs('coach.courses'))
-            <x-coachComponents.coach-courses :myVideos="$myVideos">
+            <x-coachComponents.coach-courses :myVideos="$myVideos" :playlists="$playlists">
 
             </x-coachComponents.coach-courses>
         @endif

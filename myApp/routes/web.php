@@ -54,6 +54,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 Route::middleware(['auth', 'role:instructor'])->group(function () {
     Route::get('/coach/dashboard', [CoachController::class, 'index'])->name('coach.dashboard');
     Route::get('/coach/courses', [CoachController::class, 'courses'])->name('coach.courses');
+    // Route::patch('/coach/courses/videos/{video}', [VideoController::class, 'update'])->name('videos.update');
 });
 
 // Admin Role routes mapping
