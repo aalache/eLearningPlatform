@@ -9,55 +9,38 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\EnrollementController;
 
-// Route::view('/home', 'elearning.home');
-// Route::view('/about', 'elearning.about');
-// Route::view('/contact', 'elearning.contact');
-// Route::view('/register3', 'elearning.register');
-// Route::view('/login3', 'elearning.login');
-// Route::view('/profile', 'elearning.profile');
-// Route::view('/teacher_profile', 'elearning.teacher_profile');
-// Route::view('/teachers', 'elearning.teachers');
-Route::view('/courses', 'elearning.courses');
-Route::view('/playlist', 'elearning.playlist');
-Route::view('/watch-video', 'elearning.watch-video');
-// Route::view('/update', 'elearning.update');
 
-// ?
 
-// ? 
 Route::view('/', 'welcome');
 Route::view('/home', 'welcome');
 // Route::view('/home', 'home');
 Route::view('/contact', 'contact');
 
 
+// !  Routes Mapping using the Role Middleware
 
-// Route::resource('jobs', JobController::class, [
-//     'only' => ['index', 'create', 'show', 'update', 'store', 'destroy', 'edit']
-// ]);
-
-
-
-// ? dashboard Routing using the Role Middleware
-
-// Student Role routes mapping
+// ? Student Role routes mapping
 Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/user/dashboard', [StudentController::class, 'index'])->name('user.dashboard');
     Route::get('/user/enrollement', [StudentController::class, 'enrollement'])->name('user.enrollement');
     Route::get('/user/courses', [CourseController::class, 'index'])->name('user.courses');
-    Route::post('/user/courses/search', [StudentController::class, 'search'])->name('user.courses.search');
+    Route::post('/user/courses/search', [CourseController::class, 'search'])->name('user.courses.search');
 });
 
-// Instructor Role routes mapping
+// ? Instructor Role routes mapping
 Route::middleware(['auth', 'role:instructor'])->group(function () {
     Route::get('/coach/dashboard', [CoachController::class, 'index'])->name('coach.dashboard');
-    Route::get('/coach/courses', [CoachController::class, 'courses'])->name('coach.courses');
+    Route::get('/coach/courses', [CourseController::class, 'index'])->name('coach.courses');
+    Route::post('/coach/courses/search', [CourseController::class, 'search'])->name('coach.courses.search');
+    Route::get('/coach/myvideos', [CoachController::class, 'myvideos'])->name('coach.myvideos');
+    Route::get('/coach/myplaylists', [CoachController::class, 'myplaylists'])->name('coach.myplaylists');
+    Route::get('/coach/mycourses', [CoachController::class, 'mycourses'])->name('coach.mycourses');
+
     // Route::patch('/coach/courses/videos/{video}', [VideoController::class, 'update'])->name('videos.update');
 });
 
-// Admin Role routes mapping
+// ? Admin Role routes mapping
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/courses', [AdminController::class, 'courses'])->name('admin.courses');

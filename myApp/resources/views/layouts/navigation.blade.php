@@ -47,6 +47,18 @@
                         <x-nav-link :href="route('coach.courses')" :active="request()->routeIs('coach.courses')">
                             {{ __('Courses') }}
                         </x-nav-link>
+
+                        <x-nav-link :href="route('coach.mycourses')" :active="request()->routeIs('coach.mycourses')">
+                            {{ __('My Courses') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('coach.myplaylists')" :active="request()->routeIs('coach.myplaylists')">
+                            {{ __('My Playlists') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('coach.myvideos')" :active="request()->routeIs('coach.myvideos')">
+                            {{ __('My Videos') }}
+                        </x-nav-link>
                     @endif
 
                     {{-- ? Links for Admin  --}}

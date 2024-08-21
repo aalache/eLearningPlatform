@@ -18,13 +18,20 @@ class CourseController extends Controller
      */
     public function index(Request $request)
     {
-
         if ($request->session()->get('courses')) {
             $courses = $request->session()->get('courses');
         } else {
             $courses = Course::with('user')->latest()->get() ?? collect();
         }
-        return view('dashboard', ['courses' => $courses]);
+
+
+        if ($request->routeIs('user.courses')) {
+            return view('dashboard', ['courses' => $courses]);
+        }
+
+        if ($request->routeIs('coach.courses')) {
+            return view('dashboard', ['courses' => $courses]);
+        }
     }
 
     /**
@@ -130,6 +137,35 @@ class CourseController extends Controller
         return redirect()->route('courses.index');
     }
 
+    /**
+     * search feature allow users to search courses by name, category, author, level,
+     */
+    public function search(Request $request)
+    {
+
+        $query = $request->input('query');
+        $courses = Course::where('name', 'like', '%' . $query . '%')
+            ->orWhere('description', 'like', '%' . $query . '%')
+            ->orWhere('level', 'like', '%' . $query . '%')
+            ->orwhereHas('user', function ($q) use ($query) {
+                $q->where('name', 'like', '%' . $query . '%');
+            })
+            ->with('user')
+            ->latest()
+            ->get();
+
+        // dd($courses);
+
+        if ($request->routeIs('user.courses.search')) {
+            // dd($courses);
+            return redirect()->route('user.courses')->with('courses', $courses);
+        }
+
+        if ($request->routeIs('coach.courses.search')) {
+            // dd($courses);
+            return redirect()->route('coach.courses')->with('courses', $courses);
+        }
+    }
 
 
     // return the course view wich render all the course data ( palaylists & videos)

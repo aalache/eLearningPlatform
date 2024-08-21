@@ -14,19 +14,23 @@
     <x-slot name="header">
         <div class="flex justify-end items-center  ">
             <h2 class="text-xl text-gray-800 leading-tight">
-
-
-
-
-
-
                 @if (request()->routeIs('admin.users'))
                     {{ __('Users') }}
                 @endif
             </h2>
 
-            @if (request()->routeIs('user.courses'))
-                <form action="{{ route('user.courses.search') }}" method="POST"
+            @if (request()->routeIs('user.courses') || request()->routeIs('coach.courses'))
+                @php
+                    $route = null;
+                    if (request()->routeIs('user.courses')) {
+                        $route = 'user.courses.search';
+                    }
+                    if (request()->routeIs('coach.courses')) {
+                        $route = 'coach.courses.search';
+                    }
+                @endphp
+
+                <form action="{{ route($route) }}" method="POST"
                     class=" w-[30%] hover:w-[40%] hover:shadow-sm h-12 rounded-xl transition-all ease-in border-2 ">
                     @csrf
                     <input type="text" placeholder="Search..." name="query" id="query"
@@ -37,7 +41,7 @@
         </div>
     </x-slot>
 
-    {{-- ? User interface --}}
+    {{-- ? ########### User Views ############### --}}
     @if ($isStudent && $isUserPath)
 
         {{-- user dashboard --}}
@@ -63,6 +67,7 @@
     @endif
     {{-- ? --}}
 
+    {{-- ? ############ Instructor Views ############# --}}
 
     @if ($isInstructor && $isCoachPath)
         {{-- instructor dashboard --}}
@@ -73,16 +78,40 @@
         @endif
 
         @if (request()->routeIs('coach.courses'))
-            <x-coachComponents.coach-courses :myVideos="$myVideos" :playlists="$playlists">
+            <x-coachComponents.coach-courses :courses="$courses">
 
             </x-coachComponents.coach-courses>
         @endif
+
+        @if (request()->routeIs('coach.mycourses'))
+            <x-coachComponents.coach-mycourses :mycourses="$mycourses">
+
+            </x-coachComponents.coach-mycourses>
+        @endif
+
+        @if (request()->routeIs('coach.myvideos'))
+            <x-coachComponents.coach-myvideos :myVideos="$myVideos" :playlists="$playlists">
+
+            </x-coachComponents.coach-myvideos>
+        @endif
+
+        @if (request()->routeIs('coach.myplaylists'))
+            <x-coachComponents.coach-myplaylists :myplaylists="$myplaylists">
+
+            </x-coachComponents.coach-myplaylists>
+        @endif
+
     @endif
+    {{-- ? --}}
+
+    {{-- ? ############ Admin Views ############# --}}
 
     @if ($isAdmin && $isAdminPath)
         <x-adminComponents.admin-dashboard>
             <x-slot:msg>{{ $msg }}</x-slot:msg>
         </x-adminComponents.admin-dashboard>
     @endif
+
+    {{-- ? --}}
 
 </x-app-layout>

@@ -18,6 +18,8 @@ class StudentController extends Controller
         return view('dashboard', ['msg' => 'student dashboard', 'activities' => $activities]);
     }
 
+    public function courses() {}
+
     public function enrollement()
 
     {
@@ -50,25 +52,7 @@ class StudentController extends Controller
     }
 
 
-    // search feature allow users to search courses by name, category, author, level,
-    public function search(Request $request)
-    {
 
-        $query = $request->input('query');
-        $courses = Course::where('name', 'like', '%' . $query . '%')
-            ->orWhere('description', 'like', '%' . $query . '%')
-            ->orWhere('level', 'like', '%' . $query . '%')
-            ->orwhereHas('user', function ($q) use ($query) {
-                $q->where('name', 'like', '%' . $query . '%');
-            })
-            ->with('user')
-            ->latest()
-            ->get();
-
-        // dd($courses);
-
-        return redirect()->route('user.courses')->with('courses', $courses);
-    }
 
 
     // ? Helper functions 
