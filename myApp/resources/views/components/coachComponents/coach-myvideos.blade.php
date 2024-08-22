@@ -7,7 +7,10 @@
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg  p-6 text-gray-900 space-y-12">
 
         <div class="space-y-5 ">
-            <h1 class="text-black text-3xl ">My Videos</h1>
+            <div class=" space-y-0">
+                <h2 class="border-l-4 px-2 border-blue-600 text-2xl font-meduim ">My Videos</h2>
+                <p class="border-l-4 px-2 text-sm border-blue-600 text-blue-600 ">Where Vision Meets Reality</p>
+            </div>
 
             <div class="border border-gray-500/30 rounded-md p-4 flex justify-between items-center">
                 <div>
@@ -272,23 +275,11 @@
         {{--  --}}
         {{-- pop up notification --}}
         @session('success')
-            <div
-                class="notif-card bg-green-500 min-w-52 w-fit rounded-md p-4 fixed bottom-2 left-2 text-sm text-white z-auto shadow-md">
-                <div class=" w-full flex justify-between items-center space-x-4">
-                    <i class="fa-solid fa-check font-bold text-2xl"></i>
-                    <p>{{ session('success') }}</p>
-                </div>
-            </div>
+            <x-notificationCards.notif-success>{{ session('success') }}</x-notificationCards.notif-success>
         @endsession
 
         @session('error')
-            <div
-                class="notif-card bg-red-500 min-w-52 w-fit rounded-md p-4 fixed bottom-2 left-2 text-sm text-white z-auto shadow-md">
-                <div class=" w-full flex justify-between items-center space-x-4">
-                    <i class="fa-solid fa-triangle-exclamation font-bold text-2xl"></i>
-                    <p>{{ session('error') }}</p>
-                </div>
-            </div>
+            <x-notificationCards.notif-error>{{ session('error') }}</x-notificationCards.notif-error>
         @endsession
 
 

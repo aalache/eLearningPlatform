@@ -34,9 +34,9 @@ Route::middleware(['auth', 'role:instructor'])->group(function () {
     Route::get('/coach/courses', [CourseController::class, 'index'])->name('coach.courses');
     Route::post('/coach/courses/search', [CourseController::class, 'search'])->name('coach.courses.search');
     Route::get('/coach/myvideos', [CoachController::class, 'myvideos'])->name('coach.myvideos');
-    Route::get('/coach/myplaylists', [CoachController::class, 'myplaylists'])->name('coach.myplaylists');
     Route::get('/coach/mycourses', [CoachController::class, 'mycourses'])->name('coach.mycourses');
-
+    Route::get('/coach/myplaylists', [CoachController::class, 'myplaylists'])->name('coach.myplaylists');
+    Route::get('/coach/myplaylists/playlist/{playlist}', [PlaylistController::class, 'show'])->name('coach.playlist');
     // Route::patch('/coach/courses/videos/{video}', [VideoController::class, 'update'])->name('videos.update');
 });
 

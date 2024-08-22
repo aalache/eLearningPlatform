@@ -67,7 +67,7 @@ class VideoController extends Controller
     {
         $video = $this->upload($request);
 
-        return redirect()->route('coach.courses')->with('success', 'Video uploded successfuly');
+        return redirect()->route('coach.myvideos')->with('success', 'Video uploded successfuly');
     }
 
     /**
@@ -100,7 +100,7 @@ class VideoController extends Controller
 
         $video->update($attributes);
 
-        return redirect()->route('coach.courses')->with('success', 'Video updated successfuly');
+        return redirect()->route('coach.myvideos')->with('success', 'Video updated successfuly');
     }
 
     /**
@@ -109,7 +109,7 @@ class VideoController extends Controller
     public function destroy(Video $video)
     {
         $video->delete();
-        return redirect()->route('coach.courses')->with('success', 'Video deleted successfuly');
+        return redirect()->route('coach.myvideos')->with('success', 'Video deleted successfuly');
     }
 
 

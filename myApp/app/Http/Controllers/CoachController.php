@@ -25,7 +25,7 @@ class CoachController extends Controller
     public  function mycourses()
     {
         $user_id = Auth::user()->id;
-        $mycourses = Course::with('user')->where('user_id', $user_id)->get();
+        $mycourses = Course::with('user')->where('user_id', $user_id)->latest()->get();
         return view('dashboard', ['mycourses' => $mycourses]);
     }
 

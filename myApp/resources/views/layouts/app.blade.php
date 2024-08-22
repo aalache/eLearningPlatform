@@ -21,8 +21,8 @@
 
 </head>
 
-<body class=" antialiased font-sans h-full relative">
-    <div class="min-h-full bg-white ">
+<body class=" antialiased font-sans h-full ">
+    <div class="min-h-full relative bg-white ">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
@@ -35,7 +35,7 @@
         @endisset
 
         <!-- Page Content -->
-        <main class="  ">
+        <main class="">
             {{ $slot }}
         </main>
     </div>

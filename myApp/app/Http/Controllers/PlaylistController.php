@@ -41,7 +41,7 @@ class PlaylistController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        return redirect()->route('playlists.index');
+        return redirect()->route('coach.myplaylists')->with('success', 'Playlist created successfuly');
     }
 
     /**
@@ -72,7 +72,7 @@ class PlaylistController extends Controller
 
         $playlist->update($attributes);
 
-        return redirect()->route('playlists.index');
+        return redirect()->route('coach.myplaylists');
     }
 
     /**
@@ -81,7 +81,7 @@ class PlaylistController extends Controller
     public function destroy(Playlist $playlist)
     {
         $playlist->delete();
-        return redirect()->route('playlists.index');
+        return redirect()->route('coach.myplaylists');
     }
 
 

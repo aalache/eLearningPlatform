@@ -4,7 +4,11 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-4 ">
         <div class="bg-white overflow-hidden  sm:rounded-lg min-h-full  ">
             <div class="p-6 text-gray-900 space-y-3">
-                <h2 class="text-lg">Your Enrollments</h2>
+                <div class=" space-y-0">
+                    <h2 class="border-l-4 px-2 border-blue-600 text-2xl font-meduim ">My Enrollements</h2>
+                    <p class="border-l-4 px-2 text-sm border-blue-600 text-blue-600 ">Unlock Your Potential with Every
+                        Click</p>
+                </div>
 
                 <div class=" space-y-3">
                     @foreach ($enrollments as $enrollment)
