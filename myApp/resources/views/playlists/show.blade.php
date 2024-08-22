@@ -1,17 +1,182 @@
 <x-page-layout>
-    <h1>{{ $playlist->name }} / {{ $playlist->id }}</h1>
+    {{-- ! visible page --}}
+    <section class=" h-auto bg-white min-h-full ">
+
+        <div class="py-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    {{-- ? nav menu (go back | edit | delete ) --}}
+                    <div class="px-6 w-full flex justify-between items-center mb-4">
+                        <a href="{{ route('coach.myplaylists') }}" class="text-gray-600 hover:text-blue-600">
+                            <i class="fa-solid fa-arrow-left"></i> Go Back
+                        </a>
+                        <div>
+                            <button
+                                class="edit-playlist-open-btn bg-white py-1.5 px-3 rounded-md text-gray-600 hover:text-blue-600">
+                                <i class="text-sm fa-solid fa-pen"></i> Edit
+                            </button>
+                            <button
+                                class="delete-playlist-open-btn bg-white py-1.5 px-1 rounded-md text-gray-600 hover:text-red-600  ">
+                                <i class="text-sm fa-solid fa-trash-can ml-2"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                    {{-- ? --}}
+                    @if ($videoToDisplay)
+                        <div class="p-6 text-gray-900 grid grid-cols-6 gap-2 ">
+                            {{-- ? Video section --}}
+                            <div class="col-span-4 space-y-5">
+                                <video class="lesson rounded-md w-full bg-gray-600 " controls muted>
+                                    <source src="{{ asset('upload/videos/' . $videoToDisplay->video) }}"
+                                        type="video/mp4" />
+                                </video>
+                                <div class="flex items-center justify-between">
+                                    <p class="border-l-4 border-blue-600 px-2 text-lg text-black">
+                                        {{ $videoToDisplay->title }}
+                                    </p>
+                                    <button class="bg-white py-1.5 px-1 rounded-md text-gray-600 hover:text-red-600">
+                                        <i class="text-sm fa-solid fa-trash-can ml-2"></i> Remove from Playlist
+                                    </button>
+                                </div>
+                            </div>
+                            {{-- ? --}}
+                            {{-- ? Playlist section --}}
+                            <div class="col-span-2 p-4 space-y-5">
+                                <div class="bg-white rounded-md ">
+                                    <h2 class="text-2xl border-l-4 border-blue-600 px-2  text-gray-900">
+                                        {{ $playlist->name }}
+                                    </h2>
+                                </div>
+
+                                <ul class="  mx-[-1px] space-y-0 ">
+                                    @foreach ($playlist->videos as $video)
+                                        <x-courseComponents.playlist-item
+                                            href="{{ route('coach.viewplaylist', ['playlist' => $playlist, 'video' => $video]) }}"
+                                            :videoTitle="$video->title" :video="$video" :playlist="$playlist" />
+                                    @endforeach
+
+                                </ul>
+                            </div>
+                            {{-- ? --}}
+                        </div>
+                    @else
+                        <p class="text-lg text-gray-500 w-[300px]  ">No video available to play :( </p>
+                    @endif
 
 
-    @foreach ($playlist->videos as $video)
-        <div class="w-full h-full flex p-2 space-x-3 space-y-3">
-            <video height="500px" width="600px" controls autoplay loop>
-                <source src="{{ asset('upload') }}/videos/{{ $video->video }}" type="video/mp4" />
-            </video>
-            <form action="{{ route('videos.removeFromPlaylist', ['playlist' => $playlist->id, 'video' => $video->id]) }}"
-                method="POST">
-                @csrf
-                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white">remove</button>
-            </form>
-        </div>
-    @endforeach
+                </div>
+            </div>
+    </section>
+    {{-- ! end --}}
+
+    {{-- ? edit playlist form --}}
+    <x-formComponents.popup-form id="edit-playlist-form">
+        <x-slot:closeBtn>
+            <button class="edit-playlist-close-btn hover:scale-125 transition-all ease-in">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </x-slot:closeBtn>
+        {{-- here form start --}}
+        <form action="{{ route('playlists.update', ['playlist' => $playlist->id]) }}" method="POST"
+            enctype="multipart/form-data" class="space-y-5">
+            @csrf
+            @method('PATCH')
+
+            {{-- playlist name field --}}
+            <x-formComponents.form-field>
+                <label for="name" class="text-white text-sm">Playlist Name</label>
+                <x-formComponents.form-input type="text" id="name" name="name" placeholder="playlist name"
+                    value="{{ $playlist->name }}" required></x-formComponents.form-input>
+                <x-formComponents.form-error name="name" />
+            </x-formComponents.form-field>
+
+            {{--  Edit button --}}
+            <x-formComponents.form-button>Edit</x-formComponents.form-button>
+
+        </form>
+        {{-- here form ends --}}
+    </x-formComponents.popup-form>
+    {{-- ? edit form end --}}
+
+    {{-- ? delete form start --}}
+    <x-formComponents.popup-form id="delete-playlist-form">
+        <x-slot:closeBtn>
+            <button class="delete-playlist-close-btn hover:scale-125 transition-all ease-in">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </x-slot:closeBtn>
+        {{-- form start --}}
+        <form action="{{ route('playlists.destroy', ['playlist' => $playlist->id]) }}" method="POST"
+            enctype="multipart/form-data" class="space-y-5">
+            @csrf
+            @method('DELETE')
+
+            {{-- playlist name field --}}
+            <x-formComponents.form-field>
+                <label for="name" class="text-white text-sm">
+                    Type the playlist name <strong>{{ $playlist->name }}</strong> to confirm deletion:
+                </label>
+                <x-formComponents.form-input type="text" id="confirm-delete" name="confirm-delete"
+                    placeholder="'{{ $playlist->name }}'" required></x-formComponents.form-input>
+                <x-formComponents.form-error name="confirm-delete" />
+            </x-formComponents.form-field>
+
+            {{--  Edit button --}}
+            <x-formComponents.form-button>Delete</x-formComponents.form-button>
+
+        </form>
+        {{-- form end --}}
+    </x-formComponents.popup-form>
+    {{-- ? delete form end --}}
+
+
+    {{-- notifications --}}
+    @session('success')
+        <x-notificationCards.notif-success>{{ session('success') }}</x-notificationCards.notif-success>
+    @endsession
+    @session('error')
+        <x-notificationCards.notif-error>{{ session('error') }}</x-notificationCards.notif-error>
+    @endsession
+
+
+
 </x-page-layout>
+
+
+
+<script>
+    /**
+     * Edit pop Up form handling
+     */
+    const editPlaylistForm = document.getElementById('edit-playlist-form');
+    document.querySelector('.edit-playlist-open-btn').addEventListener('click', showEditPlaylistForm);
+    document.querySelector('.edit-playlist-close-btn').addEventListener('click', hideEditPlaylistForm);;
+
+    function showEditPlaylistForm() {
+        document.body.overflow = "hidden";
+        editPlaylistForm.classList.remove('hidden');
+    }
+
+    function hideEditPlaylistForm() {
+        document.body.overflow = "visible";
+        editPlaylistForm.classList.add('hidden');
+    }
+
+    /**
+     * Edit pop Up form handling
+     */
+    const deletePlaylistForm = document.getElementById('delete-playlist-form');
+    document.querySelector('.delete-playlist-open-btn').addEventListener('click', showDeletePlaylistForm);
+    document.querySelector('.delete-playlist-close-btn').addEventListener('click', hideDeletePlaylistForm);;
+
+    function showDeletePlaylistForm() {
+        document.body.overflow = "hidden";
+        deletePlaylistForm.classList.remove('hidden');
+    }
+
+    function hideDeletePlaylistForm() {
+        document.body.overflow = "visible";
+        deletePlaylistForm.classList.add('hidden');
+    }
+</script>
+<script src="{{ asset('js/notif.js') }}"></script>

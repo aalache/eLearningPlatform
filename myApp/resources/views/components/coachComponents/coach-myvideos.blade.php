@@ -388,16 +388,6 @@
 
         })
     })
-
-    // notification timeout
-    document.addEventListener('DOMContentLoaded', function() {
-        const notifications = document.querySelectorAll('.notif-card');
-        notifications.forEach(notif => {
-            setTimeout(function() {
-                if (notif) {
-                    notif.classList.add('hidden');
-                }
-            }, 4000);
-        });
-    })
 </script>
+{{-- notification handling js file --}}
+<script src="{{ asset('js/notif.js') }}"></script>

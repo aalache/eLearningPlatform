@@ -2,7 +2,7 @@
 
 
 
-<a href="{{ route('coach.playlist', ['playlist' => $playlist->id]) }}">
+<a href="{{ route('coach.viewplaylist', ['playlist' => $playlist->id]) }}">
     <div
         class=" group flex relative justify-between items-center space-x-4 w-full h- hover:border-x-4 border-blue-600 rounded-md  transition-all ease-in">
 

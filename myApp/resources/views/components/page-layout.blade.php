@@ -17,7 +17,7 @@
 
 </head>
 
-<body class="h-full">
+<body class="h-full bg-[#efefef]">
     {{ $slot }}
     <script src="{{ asset('js/script.js') }}"></script>
 </body>

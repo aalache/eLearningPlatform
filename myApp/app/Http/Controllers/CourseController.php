@@ -171,20 +171,33 @@ class CourseController extends Controller
     // return the course view wich render all the course data ( palaylists & videos)
     public function watch(Course $course, Video $video)
     {
-        $course = Course::with('playlists')->find($course->id);
-        $item = $course->playlists->first()->videos()->firstOr();
+        $course = Course::with('playlists.videos')->findOrFail($course->id);
+
+        $item = null;
+
+        // Check if the course has any playlists and videos
+        if ($course->playlists->isNotEmpty()) {
+            $item = $course->playlists->first()->videos->first();
+        }
 
 
-
+        // If a specific video is provided, find and set it
         if ($video) {
             foreach ($course->playlists as $playlist) {
-                // dd($playlist);
-                $playlist = Playlist::with('videos')->find($playlist->id);
                 if ($playlist->videos->contains($video)) {
                     $item = $video;
+                    break;
                 }
             }
         }
+
+
+
+
+        // return view('courses.course', [
+        //     'course' => $course,
+        //     'item' => $item,
+        // ]);
 
         return view('courses.course', ['course' => $course])->with('item', $item);
     }

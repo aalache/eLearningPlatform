@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Playlist;
 use App\Models\Course;
 use Illuminate\Support\Facades\Auth;
-use PhpParser\Node\Expr\FuncCall;
 
 class PlaylistController extends Controller
 {
@@ -72,16 +71,38 @@ class PlaylistController extends Controller
 
         $playlist->update($attributes);
 
-        return redirect()->route('coach.myplaylists');
+        return redirect()
+            ->route('coach.viewplaylist', ['playlist' => $playlist])
+            ->with('success', 'Playlist Name changed successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Playlist $playlist)
+    public function destroy(Request $request, Playlist $playlist)
     {
-        $playlist->delete();
-        return redirect()->route('coach.myplaylists');
+        $validator = $request->validate([
+            'confirm-delete' => ['required', 'max:60', 'string']
+        ]);
+
+        // if ($validator->fails()) {
+        //     return redirect()
+        //         ->route('coach.viewplaylist', ['playlist' => $playlist])
+        //         ->withErrors('error');
+        // }
+
+        $deletConfirmation = $request->input('confirm-delete');
+
+        if ($deletConfirmation == $playlist->name) {
+            $playlist->delete();
+            return redirect()
+                ->route('coach.myplaylists')
+                ->with('success', 'Playlist deleted successfully');
+        }
+
+        return redirect()
+            ->route('coach.viewplaylist', ['playlist' => $playlist])
+            ->with('error', 'Playlist Name does not match');
     }
 
 

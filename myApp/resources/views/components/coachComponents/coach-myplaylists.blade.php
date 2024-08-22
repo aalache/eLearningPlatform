@@ -47,54 +47,33 @@
 {{-- ! Visible page end  --}}
 
 {{-- ? Add playlist PopUp form --}}
-<div
-    class="add-playlist-pop-up hidden flex min-h-full h-full absolute top-0 left-0 w-full backdrop-blur-sm justify-center items-center bg-black/30 lg:px-8  shadow-md ">
-    <div
-        class="flex bg-[#172868]  justify-center items-center h-full sm:h-auto w-full  rounded-none border-none sm:max-w-[500px]  sm:border-2  sm:rounded-lg  sm:block    backdrop-blur-lg  ">
-        <div class="text-white flex justify-end items-center p-3">
-            <button class="add-playlist-close-btn hover:scale-125 transition-all ease-in"><i
-                    class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="w-full p-10 ">
-            <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                {{-- <a href="/">
-        <img class="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
-    </a> --}}
+<x-formComponents.popup-form id="add-playlist-form">
+    <x-slot:closeBtn>
+        <button class="add-playlist-close-btn hover:scale-125 transition-all ease-in">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </x-slot:closeBtn>
 
-                {{-- <h2 class="mt-10 text-center text-xl font-bold leading-9 tracking-tight text-gray-200">
-        Add new playlist
-    </h2> --}}
-            </div>
-            <h2 class=" text-xl   text-gray-200">Add new playlist</h2>
+    {{--  here form start --}}
+    <form action="/playlists" method="POST" enctype="multipart/form-data" class="space-y-5">
+        @csrf
 
-            <div class="mt-5 sm:mx-auto sm:w-full  ">
-                {{-- ? here form start --}}
+        {{-- playlist name field --}}
+        <x-formComponents.form-field>
+            {{-- <x-formComponents.form-label for="name">Playlist Name</x-formComponents.form-label> --}}
+            <x-formComponents.form-input type="text" id="name" name="name" placeholder="playlist name"
+                required></x-formComponents.form-input>
+            <x-formComponents.form-error name="name" />
+        </x-formComponents.form-field>
 
-                <form action="/playlists" method="POST" enctype="multipart/form-data" class="space-y-5">
-                    @csrf
+        {{--  Add button --}}
+        <x-formComponents.form-button>Add</x-formComponents.form-button>
 
-                    {{-- playlist name field --}}
-                    <x-formComponents.form-field>
-                        {{-- <x-formComponents.form-label for="name">Playlist Name</x-formComponents.form-label> --}}
-                        <x-formComponents.form-input type="text" id="name" name="name"
-                            placeholder="playlist name" required></x-formComponents.form-input>
-                        <x-formComponents.form-error name="name" />
-                    </x-formComponents.form-field>
+    </form>
+    {{-- here form ends --}}
 
-                    {{--  Add button --}}
-                    <x-formComponents.form-button>Add</x-formComponents.form-button>
+</x-formComponents.popup-form>
 
-                </form>
-
-                {{-- ? here form ends --}}
-
-            </div>
-
-        </div>
-    </div>
-</div>
-{{-- ? --}}
 
 {{-- pop up notification --}}
 @session('success')
@@ -109,18 +88,19 @@
     /**
      *  hide & show Add playlist form 
      */
-    const addPlaylistPopUp = document.querySelector('.add-playlist-pop-up');
-    document.querySelector('.add-playlist-open-btn').addEventListener('click', showAddPlaylistPopUp);
-    document.querySelector('.add-playlist-close-btn').addEventListener('click', hideAddPlaylistPopUp);
+    const addPlaylistForm = document.getElementById('add-playlist-form');
+    document.querySelector('.add-playlist-open-btn').addEventListener('click', showAddPlaylistForm);
+    document.querySelector('.add-playlist-close-btn').addEventListener('click', hideAddPlaylistForm);
 
 
-    function showAddPlaylistPopUp() {
+    function showAddPlaylistForm() {
         document.body.style.overflow = 'hidden';
-        addPlaylistPopUp.classList.remove('hidden');
+        addPlaylistForm.classList.remove('hidden');
     }
 
-    function hideAddPlaylistPopUp() {
+    function hideAddPlaylistForm() {
         document.body.style.overflow = 'visible';
-        addPlaylistPopUp.classList.add('hidden');
+        addPlaylistForm.classList.add('hidden');
     }
 </script>
+<script src="{{ asset('js/notif.js') }}"></script>

@@ -48,4 +48,22 @@ class CoachController extends Controller
         $playlists = Playlist::where('user_id', Auth::id())->latest()->get();
         return view('dashboard', ['myVideos' => $myVideos, 'playlists' => $playlists]);
     }
+
+
+    /**
+     * render the playlist with videos in it and display the video selected
+     */
+    public function viewplaylist(Playlist $playlist, Video $video)
+    {
+        $videoToDisplay = $playlist->videos()->first();
+
+        if ($video) {
+
+            $playlist = Playlist::with('videos')->find($playlist->id);
+            if ($playlist->videos->contains($video)) {
+                $videoToDisplay = $video;
+            }
+        }
+        return view('playlists.show', ['playlist' => $playlist])->with('videoToDisplay', $videoToDisplay);
+    }
 }
