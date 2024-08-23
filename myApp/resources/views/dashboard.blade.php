@@ -47,6 +47,7 @@
         {{-- user dashboard --}}
         @if (request()->routeIs('user.dashboard'))
             <x-userComponents.user-dashboard :activities="$activities">
+
             </x-userComponents.user-dashboard>
         @endif
 
@@ -73,7 +74,7 @@
         {{-- instructor dashboard --}}
         @if (request()->routeIs('coach.dashboard'))
             <x-coachComponents.coach-dashboard>
-                <x-slot:msg>{{ $msg }}</x-slot:msg>
+
             </x-coachComponents.coach-dashboard>
         @endif
 

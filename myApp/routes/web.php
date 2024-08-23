@@ -33,12 +33,12 @@ Route::middleware(['auth', 'role:instructor'])->group(function () {
     Route::get('/coach/dashboard', [CoachController::class, 'index'])->name('coach.dashboard');
     Route::get('/coach/courses', [CourseController::class, 'index'])->name('coach.courses');
     Route::post('/coach/courses/search', [CourseController::class, 'search'])->name('coach.courses.search');
-    Route::get('/coach/myvideos', [CoachController::class, 'myvideos'])->name('coach.myvideos');
     Route::get('/coach/mycourses', [CoachController::class, 'mycourses'])->name('coach.mycourses');
     Route::get('/coach/myplaylists', [CoachController::class, 'myplaylists'])->name('coach.myplaylists');
     Route::get('/coach/myplaylists/playlist/{playlist}', [PlaylistController::class, 'show'])->name('coach.playlist');
     Route::get('/coach/myplaylists/playlist/{playlist}/video/{video?}', [CoachController::class, 'viewplaylist'])->name('coach.viewplaylist');
-    // Route::patch('/coach/courses/videos/{video}', [VideoController::class, 'update'])->name('videos.update');
+    Route::get('/coach/myvideos', [VideoController::class, 'index'])->name('coach.myvideos');
+    // Route::patch('/coach/myvideos/{video}', [VideoController::class, 'update'])->name('videos.update');
 });
 
 // ? Admin Role routes mapping

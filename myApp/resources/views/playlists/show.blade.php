@@ -67,7 +67,7 @@
                                     {{ $playlist->name }}
                                 </h2>
                             </div>
-                            <div class="rounded-lg w-full  bg-orange-200 p-3 shadow-sm">
+                            <div class="rounded-lg w-full  bg-orange-100 p-3 shadow-sm">
 
                                 <p class="text-lg  text-orange-400   ">
                                     No video available to play :(

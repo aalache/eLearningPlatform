@@ -6,7 +6,7 @@
 
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg  p-6 text-gray-900 space-y-12">
 
-        <div class="space-y-5 ">
+        <section class="space-y-5 ">
             <div class=" space-y-0">
                 <h2 class="border-l-4 px-2 border-blue-600 text-2xl font-meduim ">My Videos</h2>
                 <p class="border-l-4 px-2 text-sm border-blue-600 text-blue-600 ">Where Vision Meets Reality</p>
@@ -22,10 +22,10 @@
                     Upload Video
                 </button>
             </div>
-        </div>
+        </section>
 
 
-        <div class="space-y-3 ">
+        <section class="space-y-3 ">
             <h2 class=" text-black text-xl font-">Video Library</h2>
             <div class="space-y-3">
                 <ul class=" border-b  border-gray-500/20  flex justify-start items-center space-x-4">
@@ -57,21 +57,18 @@
 
                                         <li
                                             class="video-menu-item  w-full text-gray-700 hover:bg-blue-600 hover:text-white ">
-
                                             <button
                                                 class="addTo-open-btn p-2 w-full  flex justify-between items-center">
-                                                Add To playlist
-                                                <i class="fa-solid fa-list-ul"></i>
+                                                Add To playlist <i class="fa-solid fa-list-ul"></i>
                                             </button>
                                         </li>
 
-
                                         <li class="  w-full text-gray-700 hover:bg-blue-600 hover:text-white ">
-                                            <button data-id={{ $video->id }} data-title={{ $video->title }}
-                                                data-duration={{ $video->duration }}
-                                                class="video-menu-item video-edit-open-btn  p-2 w-full flex justify-between items-center">Edit
-                                                <i class="fa-solid fa-pen"></i></button>
-
+                                            <button data-id="{{ $video->id }}" data-title="{{ $video->title }}"
+                                                data-duration="{{ $video->duration }}"
+                                                class="video-menu-item video-edit-open-btn  p-2 w-full flex justify-between items-center">
+                                                Edit <i class="fa-solid fa-pen"></i>
+                                            </button>
                                         </li>
 
                                         <form action="{{ route('videos.destroy', ['video' => $video]) }}" method="POST"
@@ -98,120 +95,8 @@
                     {{ $myVideos->links() }}
                 </div>
             </div>
-        </div>
+        </section>
 
-        {{-- Pop up Video Edit Form --}}
-        <div
-            class="edit-video-pop-up hidden  bg-black/30 backdrop-blur-sm w-full h-[105vh] fixed top-[-8vh] left-0 z-50 flex justify-center items-center shadow-md">
-            <div class="w-full   rounded-md bg-[#172868] max-w-[500px]">
-                <div class="text-white flex justify-end items-center p-3">
-                    <button class="video-edit-close-btn hover:scale-125 transition-all ease-in">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-                <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <a href="/">
-                        <img class="mx-auto h-10 w-auto"
-                            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
-                    </a>
-
-                    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-200">
-                        Edit video information
-                    </h2>
-                </div>
-
-                <div class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm  pb-10">
-                    {{-- ? here form start --}}
-
-                    <form method="POST" enctype="multipart/form-data" class="space-y-5">
-                        @csrf
-                        @method('PATCH')
-
-                        {{-- Title field --}}
-                        <x-formComponents.form-field>
-                            <x-formComponents.form-label for="title">Title</x-formComponents.form-label>
-                            <x-formComponents.form-input type="text" id="edit-title" name="title"
-                                placeholder="Video title" required
-                                value="{{ $video->title }}"></x-formComponents.form-input>
-                            <x-formComponents.form-error name="title" />
-                        </x-formComponents.form-field>
-
-
-
-                        {{-- duration field --}}
-                        <x-formComponents.form-field>
-                            <x-formComponents.form-label for="duration">Duration</x-formComponents.form-label>
-                            <x-formComponents.form-input type="text" id="edit-duration" name="duration"
-                                placeholder="Video duration in minite" required
-                                value="{{ $video->duration }}"></x-formComponents.form-input>
-                            <x-formComponents.form-error name="duration" />
-                        </x-formComponents.form-field>
-
-
-                        {{--  upload button --}}
-                        <div class="flex justify-between items-center space-x-1">
-                            <x-formComponents.form-button>Update</x-formComponents.form-button>
-
-                        </div>
-
-                    </form>
-
-
-
-                    {{-- ? here form ends --}}
-
-                </div>
-            </div>
-        </div>
-        {{--  --}}
-
-        {{-- Pop Up Add to list feature --}}
-        <div
-            class="add-to-playlist-pop-up hidden bg-black/30 backdrop-blur-sm w-full h-[105vh] fixed top-[-8vh] left-0 z-50 flex justify-center items-center shadow-md">
-            <div class="bg-[#172868] rounded-lg  shadow-lg mx-auto max-w-[500px] min-w-[500px]">
-                <div class="text-white flex justify-end items-center p-3">
-                    <button class="addTo-close-btn hover:scale-125 transition-all ease-in">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-                <div class="sm:mx-auto sm:w-full sm:max-w-sm ">
-                    <a href="/">
-                        <img class="mx-auto h-10 w-auto"
-                            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
-                    </a>
-
-                    {{-- <h2 class="mt-10 text-center text-2xl  leading-9 tracking-tight text-gray-200">
-                Select Playlist
-            </h2> --}}
-                </div>
-                {{-- ? form start --}}
-                <form action="" method="POST" enctype="multipart/form-data"
-                    class="bg-[#172868] rounded-lg  shadow-lg mx-auto max-w-[500px] min-w-[500px] ">
-                    @csrf
-
-                    <div class="p-10 space-y-5">
-                        <select name="addedTo" id="addedTo"
-                            class="w-full rounded-md border-0  text-gray-200 shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400 backdrop-blur-sm bg-gray-300/20 p-2">
-                            @if ($playlists->isNotEmpty())
-                                @foreach ($playlists as $playlist)
-                                    @php
-                                        $selectedPlaylist = $playlist;
-                                    @endphp
-                                    <option value="{{ $playlist->id }}">{{ $playlist->name }}</option>
-                                @endforeach
-                            @else
-                                <option value=""> No playlist available</option>
-                            @endif
-                        </select>
-                        <x-formComponents.form-button type='submit'>Add To</x-formComponents.form-button>
-                        <p>{{ $selectedPlaylist }}</p>
-                    </div>
-
-                </form>
-                {{-- ? form end --}}
-            </div>
-        </div>
-        {{--  --}}
 
         {{-- pop up notification --}}
         @session('success')
@@ -222,15 +107,13 @@
             <x-notificationCards.notif-error>{{ session('error') }}</x-notificationCards.notif-error>
         @endsession
 
-
-
     </div>
 
 </div>
 
 
 
-{{-- ? Video Upload PopUp Form Start --}}
+{{-- ? ###### Video Upload PopUp Form Start ########## --}}
 <x-formComponents.popup-form id="upload-form">
     <x-slot:closeBtn>
         <button class="upload-close-btn hover:scale-125 transition-all ease-in">
@@ -271,14 +154,86 @@
     </form>
     {{-- ? form end --}}
 </x-formComponents.popup-form>
-{{-- ? video upload PopUp end --}}
+{{-- ? ----------------------------------------------------------------------------------- --}}
+
+{{-- ? ######### Video Edit Pop up Form  start ######### --}}
+<x-formComponents.popup-form id="edit-video-form">
+    <x-slot:closeBtn>
+        <button class="video-edit-close-btn hover:scale-125 transition-all ease-in">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </x-slot:closeBtn>
+    {{--  here form start --}}
+    <form action="" method="POST" enctype="multipart/form-data" class="space-y-5">
+        @csrf
+        @method('PATCH')
+
+        {{-- Title field --}}
+        <x-formComponents.form-field>
+            <x-formComponents.form-label for="title">Title</x-formComponents.form-label>
+            <x-formComponents.form-input type="text" id="edit-title" name="title" placeholder="Video title"
+                required value="{{ $video->title }}"></x-formComponents.form-input>
+            <x-formComponents.form-error name="title" />
+        </x-formComponents.form-field>
+
+        {{-- duration field --}}
+        <x-formComponents.form-field>
+            <x-formComponents.form-label for="duration">Duration</x-formComponents.form-label>
+            <x-formComponents.form-input type="text" id="edit-duration" name="duration"
+                placeholder="Video duration in minite" required
+                value="{{ $video->duration }}"></x-formComponents.form-input>
+            <x-formComponents.form-error name="duration" />
+        </x-formComponents.form-field>
+
+        {{--  upload button --}}
+        <div class="flex justify-between items-center space-x-1">
+            <x-formComponents.form-button>Update</x-formComponents.form-button>
+
+        </div>
+    </form>
+    {{--  here form ends --}}
+</x-formComponents.popup-form>
+{{-- ? --------------------------------------------------------------------------------- --}}
+
+{{-- ? ###### Add To Playlist PopUp Form Start ########## --}}
+<x-formComponents.popup-form id="add-to-playlist-form">
+    <x-slot:closeBtn>
+        <button class="addTo-close-btn hover:scale-125 transition-all ease-in">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </x-slot:closeBtn>
+    {{-- form start --}}
+    <form action="" method="POST" enctype="multipart/form-data"
+        class="bg-[#172868] rounded-lg  shadow-lg mx-auto  space-y-4">
+        @csrf
 
 
+        <select name="addedTo" id="addedTo"
+            class="w-full rounded-md border-0  text-gray-200 shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400 backdrop-blur-sm bg-gray-300/20 p-2">
+            @if ($playlists->isNotEmpty())
+                @foreach ($playlists as $playlist)
+                    @php
+                        $selectedPlaylist = $playlist;
+                    @endphp
+                    <option value="{{ $playlist->id }}">{{ $playlist->name }}</option>
+                @endforeach
+            @else
+                <option value=""> No playlist available</option>
+            @endif
+        </select>
+        <x-formComponents.form-button type='submit'>Add To</x-formComponents.form-button>
 
+
+    </form>
+    {{--  form end --}}
+</x-formComponents.popup-form>
+{{-- ? ----------------------------------------------------------------------------------- --}}
 
 <script>
     // popup show and hide events using click event
-    //upload popUp
+    /**
+     * upload popUp
+     */
     const uploadPopUp = document.getElementById('upload-form');
     const uploadOpenBtn = document.querySelector('.upload-open-btn').addEventListener('click', showUploadPopUp);
     const uploadCloseBtn = document.querySelector('.upload-close-btn').addEventListener('click', hideUploadPopUp);
@@ -292,38 +247,49 @@
         document.body.style.overflow = 'visible';
         uploadPopUp.classList.add('hidden');
     }
-    // edit video popUp 
-    const editVideoPopUp = document.querySelector('.edit-video-pop-up')
+
+    /**
+     * edit video  popUp Form 
+     */
+    const editVideoForm = document.getElementById('edit-video-form')
     const videoEditOpenBtns = document.querySelectorAll('.video-edit-open-btn')
-    const videoEditCloseBtn = document.querySelector('.video-edit-close-btn')
+    document.querySelector('.video-edit-close-btn').addEventListener('click', hideEditVideoForm);
+
     const videoEditTitle = document.getElementById('edit-title');
     const videoEditDuration = document.getElementById('edit-duration');
 
     videoEditOpenBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-            console.log('clicked')
-
             const videoId = this.getAttribute('data-id');
             console.log(videoId);
-            console.log(this.getAttribute('data-title'))
+            console.log(this.getAttribute('data-title'));
 
-            videoEditTitle.value = this.getAttribute('data-title');;
+            videoEditTitle.value = this.getAttribute('data-title');
             videoEditDuration.value = this.getAttribute('data-duration');
 
-            editVideoPopUp.action = `{{ route('videos.update', ['video' => 12]) }}`;
+            // Use Laravel route helper to generate the URL
+            const updateUrl = `{{ url('/videos') }}/${videoId}`;
+            console.log(updateUrl)
+            // Set the form's action attribute to the dynamically constructed URL
+            editVideoForm.action = updateUrl;
 
             document.body.style.overflow = 'hidden';
-            editVideoPopUp.classList.remove('hidden');
+            editVideoForm.classList.remove('hidden');
         });
     });
 
-    videoEditCloseBtn.addEventListener('click', function() {
-        document.body.style.overflow = 'visible';
-        editVideoPopUp.classList.add('hidden');
-    })
 
-    // Add video to playlist Popup
-    const addToPlaylistPopUp = document.querySelector('.add-to-playlist-pop-up');
+    function hideEditVideoForm() {
+        console.log('clicked');
+        document.body.style.overflow = 'visible';
+        editVideoForm.classList.add('hidden');
+    }
+
+
+    /**
+     * Add video to playlist Popup Form
+     */
+    const addToPlaylistForm = document.getElementById('add-to-playlist-form');
     const addToOpenBtns = document.querySelectorAll('.addTo-open-btn')
     // console.log(addToOpenBtns)
     const addToCloseBtn = document.querySelector('.addTo-close-btn').addEventListener('click', hideAddToPlaylistPopUp);
@@ -336,15 +302,15 @@
     function showAddToPlaylistPopUp() {
         console.log('clicked')
         document.body.style.overflow = 'hidden';
-        addToPlaylistPopUp.classList.remove('hidden');
+        addToPlaylistForm.classList.remove('hidden');
     }
 
     function hideAddToPlaylistPopUp() {
         document.body.style.overflow = 'visible';
-        addToPlaylistPopUp.classList.add('hidden');
+        addToPlaylistForm.classList.add('hidden');
     }
 
-    // show and hide video menu 
+    // show and hide video menu
     let videoMenuBtns = document.querySelectorAll('.video-menu-btn');
     let videoMenuBtnClicked = false;
     videoMenuBtns.forEach(btn => {

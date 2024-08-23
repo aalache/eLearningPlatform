@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Enrollement;
 use App\Models\Playlist;
 use App\Models\Video;
+use App\Services\ActivityLogger;
 use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
@@ -61,7 +62,7 @@ class CourseController extends Controller
         $file->move('upload/courses', $file->getClientOriginalName());
         $image = $file->getClientOriginalName();
 
-        Course::create([
+        $course = Course::create([
             'name' => $request->name,
             'description' => $request->description,
             'duration' => $request->duration,
@@ -71,7 +72,7 @@ class CourseController extends Controller
             'image' => $image,
             'user_id' => Auth::id(),
         ]);
-
+        ActivityLogger::log('Course Added', 'you added ' . $course->name . ' course to your workspace');
         return redirect()->route('courses.index');
     }
 
@@ -124,6 +125,7 @@ class CourseController extends Controller
             'price' => $request->price,
             'image' => $image,
         ]);
+        ActivityLogger::log('Course Updated', 'you have updated ' . $course->name . ' course ');
 
         return redirect()->route('courses.index')->with('success', 'Course updated successfully');
     }
@@ -134,6 +136,7 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         $course->delete();
+        ActivityLogger::log('Course Deleted', 'you have deleted ' . $course->name . ' course ');
         return redirect()->route('courses.index');
     }
 
@@ -215,6 +218,7 @@ class CourseController extends Controller
             $enrollement->user_id = Auth::user()->id;
             $enrollement->course_id = $course->id;
             $enrollement->save();
+            ActivityLogger::log('Enrolled', 'you enrolled to ' . $course->name . ' course');
             $status = "you are successfully enrolled ";
         } else {
             $status = "you have to login to enroll ";
@@ -264,6 +268,4 @@ class CourseController extends Controller
 
         return round($progress, 2); // Return the progress as a percentage rounded to 2 decimal places
     }
-
-    public function courseCompleted() {}
 }

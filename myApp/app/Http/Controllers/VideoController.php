@@ -7,7 +7,7 @@ use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\VideoProgress;
-
+use App\Services\ActivityLogger;
 
 class VideoController extends Controller
 {
@@ -20,8 +20,9 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $videos = Video::all();
-        return view('videos.index', ['videos' => $videos]);
+        $myVideos = Video::where('user_id', Auth::id())->latest()->simplepaginate(8);
+        $playlists = Playlist::where('user_id', Auth::id())->latest()->get();
+        return view('dashboard', ['myVideos' => $myVideos, 'playlists' => $playlists]);
     }
 
     /**
@@ -67,6 +68,8 @@ class VideoController extends Controller
     {
         $video = $this->upload($request);
 
+        ActivityLogger::log('Video Uploaded', 'you uploaded ' . $video->title . ' to your workspace');
+
         return redirect()->route('coach.myvideos')->with('success', 'Video uploded successfuly');
     }
 
@@ -91,6 +94,7 @@ class VideoController extends Controller
      */
     public function update(Request $request, Video $video)
     {
+        dd('hello');
         $attributes = $request->validate(
             [
                 'title' => ['required', 'max:256'],
@@ -99,6 +103,8 @@ class VideoController extends Controller
         );
 
         $video->update($attributes);
+
+        ActivityLogger::log('Video Updated ', 'you have updated ' . $video->title);
 
         return redirect()->route('coach.myvideos')->with('success', 'Video updated successfuly');
     }
@@ -110,6 +116,7 @@ class VideoController extends Controller
     {
 
         $video->delete();
+        ActivityLogger::log('Video Deleted ', 'you have deleted ' . $video->title . ' from your workspace');
         return redirect()->route('coach.myvideos')->with('success', 'Video deleted successfuly');
     }
 
@@ -124,6 +131,8 @@ class VideoController extends Controller
         $video = $this->upload($request);
 
         $playlist->videos()->attach($video);
+
+        ActivityLogger::log('Video Added To Playlist ', 'you have added ' . $video->title . ' to ' . $playlist->name . ' playlist');
 
         return redirect()->route('playlists.show', $playlist->id);
     }
@@ -144,6 +153,7 @@ class VideoController extends Controller
         if ($removeConfirmationInput == $video->title) {
             $video = Video::findorfail($video->id);
             $playlist->videos()->detach($video->id);
+            ActivityLogger::log('Video Removed From Playlist ', 'you have removed ' . $video->title . ' from ' . $playlist->name . ' playlist');
             return redirect()
                 ->route('coach.viewplaylist', $playlist->id)
                 ->with('success', 'Video removed from playlist successfuly');
@@ -162,6 +172,7 @@ class VideoController extends Controller
         $videoId = $request->input('video_id');
         $userId = $request->input('user_id');
 
+        $video = Video::find($videoId);
 
         // Update or create a record in the database
         $progress = VideoProgress::Create(
@@ -172,20 +183,11 @@ class VideoController extends Controller
             ],
         );
 
+        ActivityLogger::log('Lesson Completed', 'you successfuly completed ' . $video->title . 'lesson');
         return response()->json(['success' => true]);
     }
 
-    public function test(Request $request)
-    {
-        $data = $request->all();
 
-        // Return a JSON response with a success message and the data received
-        return response()->json([
-            'success' => true,
-            'message' => 'POST request was successful!',
-            'data' => $data,
-        ]);
-    }
 
     public static function isMarkedAsCompleted(Video $video): bool
     {

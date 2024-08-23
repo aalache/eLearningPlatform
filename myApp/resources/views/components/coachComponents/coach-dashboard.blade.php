@@ -1,11 +1,109 @@
-<div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="p-6 text-gray-900">
-                {{ __("You're logged in!") }}
-                <br>
-                {{ $msg }}
+@php
+    use App\Http\Controllers\StudentController;
+    use App\Http\Controllers\CourseController;
+    use App\Http\Controllers\CoachController;
+@endphp
+
+@props(['activities'])
+
+<div class="py-4 bg-[#ffffff] ">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-6">
+        <div class="bg-white overflow-hidden  sm:rounded-lg">
+            <div class="p-2 text-gray-900 space-y-6">
+                {{-- welcom heading and summary heading --}}
+                <div class="space-y-1">
+                    <h2 class="text-2xl border-l-4 border-blue-600 px-2">Welcome Back, {{ Auth::user()->name }}</h2>
+                </div>
+                {{--  --}}
+
+                {{-- summary details --}}
+                <div class="space-y-2">
+                    <p class="text-[#49779c] text-sm font-normal leading-normal">Here's your workspace metrics
+                        @php
+
+                            $enrollements = auth()->user()->enrollements()->with('course')->get();
+                            foreach ($enrollements as $enrollement) {
+                                CourseController::progress($enrollement->course);
+                            }
+
+                        @endphp
+
+                    </p>
+                    <div class="  space-x-3 grid grid-cols-5 gap-2">
+                        <div
+                            class=" bg-[#efefef]/70 border-l-4 shadow-md border-blue-600  p-3 space-y-1  text-center  rounded-md  flex flex-col justify-center items-center backdrop-blur-md">
+                            <h2 class="text-3xl text-blue-600">{{ CoachController::metrics('total_videos') }}</h2>
+                            <p class="text-gray-600   leading-normal">Videos</p>
+                        </div>
+                        <div
+                            class=" bg-[#efefef]/70 border-l-4 shadow-md border-blue-600  p-3 space-y-1 text-center  rounded-md  flex flex-col justify-center items-center backdrop-blur-md">
+                            <h2 class="text-3xl text-blue-600">{{ CoachController::metrics('total_playlists') }}</h2>
+                            <p class="text-gray-600   leading-normal">Playlists</p>
+                        </div>
+                        <div
+                            class=" bg-[#efefef]/70 border-l-4 shadow-md border-blue-600  p-3 space-y-1 text-center  rounded-md  flex flex-col justify-center items-center backdrop-blur-md">
+                            <h2 class="text-3xl text-blue-600">{{ CoachController::metrics('total_courses') }}</h2>
+                            <p class="text-gray-600   leading-normal">Courses </p>
+                        </div>
+                        <div
+                            class=" bg-[#efefef]/70 border-l-4 shadow-md border-blue-600  p-3 space-y-1 text-center  rounded-md  flex flex-col justify-center items-center backdrop-blur-md">
+                            <h2 class="text-3xl text-blue-600 ">
+                                {{ CoachController::metrics('total_enrollements') }}</h2>
+                            <p class="text-gray-700   leading-normal"> Enrollements</p>
+                        </div>
+                        <div
+                            class=" bg-[#efefef]/70 border-l-4 shadow-md border-blue-600 p-3 space-y-1 text-center  rounded-md  flex flex-col justify-center items-center backdrop-blur-md">
+                            <h2 class="text-3xl text-blue-600">{{ CoachController::metrics('total_users') }}</h2>
+                            <p class="text-gray-600   leading-normal">Active Users</p>
+                        </div>
+                    </div>
+                </div>
+                {{--  --}}
+
+                {{-- Your courses section --}}
+
+                @if (Auth::user()->activities->count())
+                    <div class="space-y-2">
+                        <div class=" space-y-5">
+                            <h2 class="text-xl text-black border-l-4 border-blue-600 px-2">Your Reccent activities</h2>
+                            <div class="space-y-2">
+                                @foreach (Auth::user()->activities()->take(6)->latest()->get() as $activity)
+                                    @if (strpos($activity->activity_type, 'Updated') ||
+                                            strpos($activity->activity_type, 'Uploaded') ||
+                                            strpos($activity->activity_type, 'Added'))
+                                        <div
+                                            class=" flex  justify-between items-center space-y-1 w-full bg-blue-100 shadow-sm p-3 rounded-md">
+                                            <div class=" ">
+                                                <h3 class=" text-blue-700">{{ $activity->activity_type }}</h3>
+                                                <p class="text-sm text-gray-700">{{ $activity->description }}</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm text-blue-600">
+                                                    {{ $activity->created_at->format('M d, Y | h:i a') }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div
+                                            class=" flex  justify-between items-center space-y-1 w-full bg-red-100 shadow-sm p-3 rounded-md">
+                                            <div class=" ">
+                                                <h3 class=" text-red-700">{{ $activity->activity_type }}</h3>
+                                                <p class="text-sm text-gray-700">{{ $activity->description }}</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm text-red-600">
+                                                    {{ $activity->created_at->format('M d, Y | h:i a') }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                @endif
+
+
+
             </div>
         </div>
     </div>
-</div>

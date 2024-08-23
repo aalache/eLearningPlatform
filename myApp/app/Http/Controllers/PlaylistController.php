@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Playlist;
 use App\Models\Course;
+use App\Services\ActivityLogger;
 use Illuminate\Support\Facades\Auth;
 
 class PlaylistController extends Controller
@@ -35,10 +36,12 @@ class PlaylistController extends Controller
             'name' => ['required', 'string', 'max:60'],
         ]);
 
-        Playlist::create([
+        $playlist = Playlist::create([
             'name' => request()->name,
             'user_id' => Auth::id(),
         ]);
+
+        ActivityLogger::log('New Playlist Added', 'you added ' . $playlist->name . ' playlist to your workspace');
 
         return redirect()->route('coach.myplaylists')->with('success', 'Playlist created successfuly');
     }
@@ -70,6 +73,7 @@ class PlaylistController extends Controller
         ]);
 
         $playlist->update($attributes);
+        ActivityLogger::log('Playlist Updated', 'you updated ' . $playlist->name . ' playlist in your workspace');
 
         return redirect()
             ->route('coach.viewplaylist', ['playlist' => $playlist])
@@ -95,6 +99,7 @@ class PlaylistController extends Controller
 
         if ($deleteConfirmationInput == $playlist->name) {
             $playlist->delete();
+            ActivityLogger::log('Playlist Deleted', 'you deleted ' . $playlist->name . ' playlist from your workspace');
             return redirect()
                 ->route('coach.myplaylists')
                 ->with('success', 'Playlist deleted successfully');
@@ -115,6 +120,8 @@ class PlaylistController extends Controller
         $playlist_id = $request->input('playlist');
         if (!$course->playlists->find($playlist_id)) {
             $course->playlists()->attach($playlist_id);
+            ActivityLogger::log('Playlist Added To Course', 'you added ' . $course->playlists->find($playlist_id)->name
+                . ' playlist to ' . $course->name . ' course');
         }
         return redirect()->route('courses.show', $course->id);
     }
@@ -128,6 +135,8 @@ class PlaylistController extends Controller
     public function removeFromCourse(Course $course, Playlist $playlist)
     {
         $course->playlists()->detach($playlist->id);
+        ActivityLogger::log('Playlist Removed From Course', 'you removed ' . $playlist->name
+            . ' playlist from ' . $course->name . ' course');
         return redirect()->route('courses.show', $course->id);
     }
 }

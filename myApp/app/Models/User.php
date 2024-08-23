@@ -45,6 +45,23 @@ class User extends Authenticatable
         return $this->roles()->where('name', $role)->exists();
     }
 
+    public static function students()
+    {
+        $allUsers = User::all();
+        $students = collect();
+        foreach ($allUsers as $user) {
+            if ($user->hasRole('student')) {
+                $students->add($user);
+            }
+        }
+        return $students;
+    }
+    //? ################################ Activity Logs Table relationships ################################
+
+    public function activities()
+    {
+        return $this->hasMany(ActivityLog::class); // one user can have many activity logs
+    }
 
     //? ################################ Courses Table relationships ################################
     // return user courses
@@ -94,6 +111,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Video::class, 'video_progress');
     }
+
+
 
 
 

@@ -6,6 +6,8 @@ use App\Models\Playlist;
 use App\Models\Video;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Course;
+use App\Models\Enrollement;
+use App\Models\User;
 
 class CoachController extends Controller
 {
@@ -14,9 +16,9 @@ class CoachController extends Controller
      */
     public function index()
     {
-        return view('dashboard', ['msg' => 'instructor dashboard']);
+        $activities = $this->getAtivities();
+        return view('dashboard', ['activities' => $activities]);
     }
-
 
 
     /**
@@ -65,5 +67,37 @@ class CoachController extends Controller
             }
         }
         return view('playlists.show', ['playlist' => $playlist])->with('videoToDisplay', $videoToDisplay);
+    }
+
+    /**
+     * User activities
+     */
+    public function getAtivities()
+    {
+        $user = User::find(Auth::id());
+        if ($user->hasRole('coach')) {
+            $activities = Activity::where('coach_id', $user->id)->latest()->get();
+        }
+        if (Auth::check()) {
+            $reccentEnrollements = $user->enrollements()->with('course')->take(5)->latest()->get();
+
+            return $reccentEnrollements;
+        }
+    }
+
+    /**
+     * Metric functions
+     */
+    public static function metrics(String $metric)
+    {
+        $user_id = Auth::user()->id;
+        $metrics = [
+            'total_users' => User::students()->count(),
+            'total_courses' => Course::where('user_id', $user_id)->count(),
+            'total_enrollements' => Enrollement::count(),
+            'total_videos' => Video::where('user_id', $user_id)->count(),
+            'total_playlists' => Playlist::where('user_id', $user_id)->count(),
+        ];
+        return $metrics[$metric];
     }
 }
