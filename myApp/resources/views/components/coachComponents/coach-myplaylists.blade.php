@@ -3,7 +3,7 @@
 {{-- ! Visible page  --}}
 <div class="py-4  max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 text-gray-900 space-y-12">
+    <div class="bg-white overflow-hidden  sm:rounded-lg p-6 text-gray-900 space-y-12">
         <div class="space-y-5 ">
             {{-- <h1 class="border-l-4 px-2 border-blue-600 text-black text-3xl ">My Playlists</h1> --}}
             <div class=" space-y-0">

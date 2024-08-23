@@ -82,7 +82,7 @@ class PlaylistController extends Controller
     public function destroy(Request $request, Playlist $playlist)
     {
         $validator = $request->validate([
-            'confirm-delete' => ['required', 'max:60', 'string']
+            'confirm-delete' => ['required', 'string', 'max:60']
         ]);
 
         // if ($validator->fails()) {
@@ -91,9 +91,9 @@ class PlaylistController extends Controller
         //         ->withErrors('error');
         // }
 
-        $deletConfirmation = $request->input('confirm-delete');
+        $deleteConfirmationInput = $request->input('confirm-delete');
 
-        if ($deletConfirmation == $playlist->name) {
+        if ($deleteConfirmationInput == $playlist->name) {
             $playlist->delete();
             return redirect()
                 ->route('coach.myplaylists')

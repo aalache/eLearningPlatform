@@ -5,7 +5,9 @@
         {{-- ? form start --}}
         <div class="w-full ">
             <div class="text-white flex justify-end items-center p-3">
+                {{-- close btn start --}}
                 {{ $closeBtn }}
+                {{-- close btn end --}}
             </div>
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
                 <a href="/">
@@ -15,11 +17,11 @@
             </div>
 
             <div class=" sm:mx-auto sm:w-full p-5 ">
-                {{-- ? here form start --}}
+                {{-- here form start --}}
 
                 {{ $slot }}
 
-                {{-- ? here form ends --}}
+                {{-- here form ends --}}
 
             </div>
 

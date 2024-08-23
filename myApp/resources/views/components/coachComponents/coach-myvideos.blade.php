@@ -24,67 +24,6 @@
             </div>
         </div>
 
-        {{-- Hidden video upload pop up form --}}
-        <div
-            class="upload-pop-up bg-black/30 backdrop-blur-sm w-full h-[105vh] fixed top-[-8vh] left-0 z-50 flex justify-center items-center hidden">
-            <div id="video-upload-form" class="rounded-md bg-[#172868]  max-w-[500px] w-[500px] ">
-                <div class="text-white flex justify-end items-center p-3">
-                    <button class="upload-close-btn hover:scale-125 transition-all ease-in"><i
-                            class="fa-solid fa-xmark"></i></button>
-                </div>
-                <div class="py-10 px-8">
-                    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                        <a href="/">
-                            <img class="mx-auto h-10 w-auto"
-                                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                                alt="Your Company">
-                        </a>
-
-                        <h2 class="mt-10 text-center text-2xl  leading-9 tracking-tight text-gray-200">
-                            Upload Video
-                        </h2>
-                    </div>
-                    {{-- ? form start --}}
-                    <form action="/videos" method="POST" enctype="multipart/form-data"
-                        class="space-y-5 max-w-[400px] mx-auto shadow-lg">
-                        @csrf
-
-                        {{-- Title field --}}
-                        <x-formComponents.form-field>
-                            <x-formComponents.form-label for="title">Title</x-formComponents.form-label>
-                            <x-formComponents.form-input type="text" id="title" name="title"
-                                placeholder="Video title" required></x-formComponents.form-input>
-                            <x-formComponents.form-error name="title" />
-                        </x-formComponents.form-field>
-
-
-
-                        {{-- duration field --}}
-                        <x-formComponents.form-field>
-                            <x-formComponents.form-label for="duration">Duration</x-formComponents.form-label>
-                            <x-formComponents.form-input type="text" id="duration" name="duration"
-                                placeholder="Video duration in minite" required></x-formComponents.form-input>
-                            <x-formComponents.form-error name="duration" />
-                        </x-formComponents.form-field>
-
-                        {{-- Video file upload field --}}
-                        <x-formComponents.form-field>
-                            <x-formComponents.form-label for="video"></x-formComponents.form-label>
-                            <x-formComponents.form-input type="file" id="video" name="video"
-                                required></x-formComponents.form-input>
-                            <x-formComponents.form-error name="video" />
-                        </x-formComponents.form-field>
-
-                        {{--  upload button --}}
-                        <x-formComponents.form-button>Upload</x-formComponents.form-button>
-
-                    </form>
-                    {{-- ? form end --}}
-                </div>
-
-            </div>
-        </div>
-        {{-- ##### --}}
 
         <div class="space-y-3 ">
             <h2 class=" text-black text-xl font-">Video Library</h2>
@@ -273,6 +212,7 @@
             </div>
         </div>
         {{--  --}}
+
         {{-- pop up notification --}}
         @session('success')
             <x-notificationCards.notif-success>{{ session('success') }}</x-notificationCards.notif-success>
@@ -286,15 +226,60 @@
 
     </div>
 
-
-
-
 </div>
+
+
+
+{{-- ? Video Upload PopUp Form Start --}}
+<x-formComponents.popup-form id="upload-form">
+    <x-slot:closeBtn>
+        <button class="upload-close-btn hover:scale-125 transition-all ease-in">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </x-slot:closeBtn>
+    {{-- ? form start --}}
+    <form action="/videos" method="POST" enctype="multipart/form-data" class="space-y-5  mx-auto shadow-lg">
+        @csrf
+
+        {{-- Title field --}}
+        <x-formComponents.form-field>
+            <x-formComponents.form-label for="title">Title</x-formComponents.form-label>
+            <x-formComponents.form-input type="text" id="title" name="title" placeholder="Video title"
+                required></x-formComponents.form-input>
+            <x-formComponents.form-error name="title" />
+        </x-formComponents.form-field>
+
+        {{-- duration field --}}
+        <x-formComponents.form-field>
+            <x-formComponents.form-label for="duration">Duration</x-formComponents.form-label>
+            <x-formComponents.form-input type="text" id="duration" name="duration"
+                placeholder="Video duration in minite" required></x-formComponents.form-input>
+            <x-formComponents.form-error name="duration" />
+        </x-formComponents.form-field>
+
+        {{-- Video file upload field --}}
+        <x-formComponents.form-field>
+            <x-formComponents.form-label for="video"></x-formComponents.form-label>
+            <x-formComponents.form-input type="file" id="video" name="video"
+                required></x-formComponents.form-input>
+            <x-formComponents.form-error name="video" />
+        </x-formComponents.form-field>
+
+        {{--  upload button --}}
+        <x-formComponents.form-button>Upload</x-formComponents.form-button>
+
+    </form>
+    {{-- ? form end --}}
+</x-formComponents.popup-form>
+{{-- ? video upload PopUp end --}}
+
+
+
 
 <script>
     // popup show and hide events using click event
     //upload popUp
-    const uploadPopUp = document.querySelector('.upload-pop-up');
+    const uploadPopUp = document.getElementById('upload-form');
     const uploadOpenBtn = document.querySelector('.upload-open-btn').addEventListener('click', showUploadPopUp);
     const uploadCloseBtn = document.querySelector('.upload-close-btn').addEventListener('click', hideUploadPopUp);
 
@@ -340,7 +325,7 @@
     // Add video to playlist Popup
     const addToPlaylistPopUp = document.querySelector('.add-to-playlist-pop-up');
     const addToOpenBtns = document.querySelectorAll('.addTo-open-btn')
-    console.log(addToOpenBtns)
+    // console.log(addToOpenBtns)
     const addToCloseBtn = document.querySelector('.addTo-close-btn').addEventListener('click', hideAddToPlaylistPopUp);
 
 

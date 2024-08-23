@@ -108,6 +108,7 @@ class VideoController extends Controller
      */
     public function destroy(Video $video)
     {
+
         $video->delete();
         return redirect()->route('coach.myvideos')->with('success', 'Video deleted successfuly');
     }
@@ -132,12 +133,25 @@ class VideoController extends Controller
      * @param $playlist  specified playlist where the action will take place
      * @param $video    the video that will be removed from specified playlist
      */
-    public function removeFromPlaylist(Playlist $playlist, Video $video)
+    public function removeFromPlaylist(Request $request, Playlist $playlist, Video $video)
     {
-        $video = Video::findorfail($video->id);
-        $playlist->videos()->detach($video->id);
+        $validator = $request->validate([
+            'confirm-remove' => ['required', 'string']
+        ]);
 
-        return redirect()->route('playlists.show', $playlist->id);
+        $removeConfirmationInput = $request->input('confirm-remove');
+
+        if ($removeConfirmationInput == $video->title) {
+            $video = Video::findorfail($video->id);
+            $playlist->videos()->detach($video->id);
+            return redirect()
+                ->route('coach.viewplaylist', $playlist->id)
+                ->with('success', 'Video removed from playlist successfuly');
+        }
+
+        return redirect()
+            ->route('coach.viewplaylist', $playlist->id)
+            ->with('error', 'Video Name does not match');
     }
 
 

@@ -4,7 +4,7 @@
 
         <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white overflow-hidden  sm:rounded-lg">
                     {{-- ? nav menu (go back | edit | delete ) --}}
                     <div class="px-6 w-full flex justify-between items-center mb-4">
                         <a href="{{ route('coach.myplaylists') }}" class="text-gray-600 hover:text-blue-600">
@@ -34,7 +34,8 @@
                                     <p class="border-l-4 border-blue-600 px-2 text-lg text-black">
                                         {{ $videoToDisplay->title }}
                                     </p>
-                                    <button class="bg-white py-1.5 px-1 rounded-md text-gray-600 hover:text-red-600">
+                                    <button
+                                        class="remove-from-playlist-open-btn bg-white py-1.5 px-1 rounded-md text-gray-600 hover:text-red-600">
                                         <i class="text-sm fa-solid fa-trash-can ml-2"></i> Remove from Playlist
                                     </button>
                                 </div>
@@ -60,7 +61,19 @@
                             {{-- ? --}}
                         </div>
                     @else
-                        <p class="text-lg text-gray-500 w-[300px]  ">No video available to play :( </p>
+                        <div class="w-full p-5 space-y-8">
+                            <div class="bg-white rounded-md ">
+                                <h2 class="text-2xl border-l-4 border-blue-600 px-2  text-gray-900">
+                                    {{ $playlist->name }}
+                                </h2>
+                            </div>
+                            <div class="rounded-lg w-full  bg-orange-200 p-3 shadow-sm">
+
+                                <p class="text-lg  text-orange-400   ">
+                                    No video available to play :(
+                                </p>
+                            </div>
+                        </div>
                     @endif
 
 
@@ -129,6 +142,38 @@
     </x-formComponents.popup-form>
     {{-- ? delete form end --}}
 
+    {{-- ? remove from playlist Form start --}}
+    @if ($videoToDisplay)
+        <x-formComponents.popup-form id="remove-from-playlist-form">
+            <x-slot:closeBtn>
+                <button class="remove-from-playlist-close-btn hover:scale-125 transition-all ease-in">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </x-slot:closeBtn>
+            {{-- form start --}}
+            <form
+                action="{{ route('videos.removeFromPlaylist', ['playlist' => $playlist, 'video' => $videoToDisplay]) }}"
+                method="POST" enctype="multipart/form-data" class="space-y-5">
+                @csrf
+
+                {{-- playlist name field --}}
+                <x-formComponents.form-field>
+                    <label for="name" class="text-white text-sm">
+                        Type the video name <strong>{{ $videoToDisplay->title }}</strong> to confirm removing:
+                    </label>
+                    <x-formComponents.form-input type="text" id="confirm-remove" name="confirm-remove"
+                        placeholder="'{{ $videoToDisplay->title }}'" required></x-formComponents.form-input>
+                    <x-formComponents.form-error name="confirm-remove" />
+                </x-formComponents.form-field>
+
+                {{--  Edit button --}}
+                <x-formComponents.form-button>Remove Video</x-formComponents.form-button>
+
+            </form>
+            {{-- form end --}}
+        </x-formComponents.popup-form>
+    @endif
+    {{-- ? remove from playlist Form  end --}}
 
     {{-- notifications --}}
     @session('success')
@@ -163,7 +208,7 @@
     }
 
     /**
-     * Edit pop Up form handling
+     * Delete pop Up form handling
      */
     const deletePlaylistForm = document.getElementById('delete-playlist-form');
     document.querySelector('.delete-playlist-open-btn').addEventListener('click', showDeletePlaylistForm);
@@ -177,6 +222,23 @@
     function hideDeletePlaylistForm() {
         document.body.overflow = "visible";
         deletePlaylistForm.classList.add('hidden');
+    }
+
+    /**
+     * Remove from playlist form 
+     */
+    const removeFromPlaylistForm = document.getElementById('remove-from-playlist-form');
+    document.querySelector('.remove-from-playlist-open-btn').addEventListener('click', showRemoveFromPlaylistForm);
+    document.querySelector('.remove-from-playlist-close-btn').addEventListener('click', hideRemoveFromPlaylistForm);
+
+    function showRemoveFromPlaylistForm() {
+        document.body.overflow = "hidden";
+        removeFromPlaylistForm.classList.remove('hidden');
+    }
+
+    function hideRemoveFromPlaylistForm() {
+        document.body.overflow = "visible";
+        removeFromPlaylistForm.classList.add('hidden');
     }
 </script>
 <script src="{{ asset('js/notif.js') }}"></script>
