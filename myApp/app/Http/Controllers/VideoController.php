@@ -20,18 +20,16 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $myVideos = Video::where('user_id', Auth::id())->latest()->simplepaginate(8);
-        $playlists = Playlist::where('user_id', Auth::id())->latest()->get();
-        return view('dashboard', ['myVideos' => $myVideos, 'playlists' => $playlists]);
+        $videos = Video::latest()->simplepaginate(8);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        return view('videos.create');
-    }
+    // public function create()
+    // {
+    //     return view('videos.create');
+    // }
 
 
     public static function upload(Request $request)
@@ -62,35 +60,33 @@ class VideoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new created Video in the storage .
      */
-    public function store(Request $request, Playlist $playlist)
+    public function store(Request $request)
     {
         $video = $this->upload($request);
-
         ActivityLogger::log('Video Uploaded', 'you uploaded ' . $video->title . ' to your workspace');
-
         return redirect()->route('coach.myvideos')->with('success', 'Video uploded successfuly');
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Video.
      */
-    public function show(Video $video)
-    {
-        return view('videos.show', ['video' => $video]);
-    }
+    // public function show(Video $video)
+    // {
+    //     return view('videos.show', ['video' => $video]);
+    // }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Video $video)
-    {
-        return view('videos.edit', ['video' => $video]);
-    }
+    // public function edit(Video $video)
+    // {
+    //     return view('videos.edit', ['video' => $video]);
+    // }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Video in storage.
      */
     public function update(Request $request, Video $video)
     {
@@ -103,21 +99,26 @@ class VideoController extends Controller
         );
 
         $video->update($attributes);
-
         ActivityLogger::log('Video Updated ', 'you have updated ' . $video->title);
-
         return redirect()->route('coach.myvideos')->with('success', 'Video updated successfuly');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Video $video)
+    public function destroy(Request $request, Video $video)
     {
+        $validator = $request->validate([
+            'confirm-deletion' => ['required', 'string']
+        ]);
 
-        $video->delete();
-        ActivityLogger::log('Video Deleted ', 'you have deleted ' . $video->title . ' from your workspace');
-        return redirect()->route('coach.myvideos')->with('success', 'Video deleted successfuly');
+        if ($validator['confirm-deletion'] == $video->title) {
+            $video->delete();
+            ActivityLogger::log('Video Deleted', 'you have deleted ' . $video->title);
+            return redirect()->route('coach.myvideos')->with('success', 'Video deleted successfuly');
+        } else {
+            return redirect()->route('coach.myvideos')->with('error', 'Invalid title');
+        }
     }
 
 
@@ -129,11 +130,8 @@ class VideoController extends Controller
     public function addToPlaylist(Request $request, Playlist $playlist)
     {
         $video = $this->upload($request);
-
         $playlist->videos()->attach($video);
-
         ActivityLogger::log('Video Added To Playlist ', 'you have added ' . $video->title . ' to ' . $playlist->name . ' playlist');
-
         return redirect()->route('playlists.show', $playlist->id);
     }
 
@@ -148,9 +146,8 @@ class VideoController extends Controller
             'confirm-remove' => ['required', 'string']
         ]);
 
-        $removeConfirmationInput = $request->input('confirm-remove');
 
-        if ($removeConfirmationInput == $video->title) {
+        if ($validator['confirm-remove'] == $video->title) {
             $video = Video::findorfail($video->id);
             $playlist->videos()->detach($video->id);
             ActivityLogger::log('Video Removed From Playlist ', 'you have removed ' . $video->title . ' from ' . $playlist->name . ' playlist');
@@ -192,7 +189,6 @@ class VideoController extends Controller
     public static function isMarkedAsCompleted(Video $video): bool
     {
         $user = Auth::user();
-
         $completed = $user->completedLessons()->where('video_id', $video->id)
             ->where('completed', true)  // Check for 'completed' status in the pivot table
             ->exists();

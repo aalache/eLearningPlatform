@@ -35,13 +35,7 @@ class CourseController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('courses.create');
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -85,13 +79,6 @@ class CourseController extends Controller
         return view('courses.show', ['course' => $course, 'playlists' => $auth_user_playlists]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Course $course)
-    {
-        return view('courses.edit', ['course' => $course]);
-    }
 
     /**
      * Update the specified resource in storage.
@@ -194,20 +181,13 @@ class CourseController extends Controller
             }
         }
 
-
-
-
         // return view('courses.course', [
         //     'course' => $course,
         //     'item' => $item,
         // ]);
 
-        return view('courses.course', ['course' => $course])->with('item', $item);
+        return view('courses.watch', ['course' => $course])->with('item', $item);
     }
-
-
-
-
 
     // enroll feature allow users to enroll a specific course
     public function enroll(Course $course)

@@ -83,28 +83,26 @@
                                      $playlist = Playlist::with('videos')->find($playlist->id);
                                  @endphp
                                  <div class=" space-y-3">
-                                     <div
-                                         class="playlist group w-full flex justify-between items-center rounded-md px-3 py-1  text-lg   hover:text-black  transition-all ease-in">
-                                         <h3>{{ $playlist->name }}</h3>
-                                         <i class="fa-solid fa-angle-right group-hover:rotate-90"></i>
-                                     </div>
-                                     <ul
-                                         class="list-items px-10  space-y-3  hidden flex-col  justify-center items-center ">
-                                         @foreach ($playlist->videos as $video)
-                                             <div class="flex px-2 w-full items-center">
-                                                 <div class="flex flex-col items-center gap-1">
-                                                     <div class="w-[1.5px] bg-[#cedde8] h-4"></div>
-                                                     <div class="size-2 rounded-full bg-[#0d151c]"></div>
-                                                     <div class="w-[1.5px] bg-[#cedde8] h-4 grow"></div>
-                                                 </div>
+                                     {{-- ? Playlist section --}}
+                                     <div class="col-span-2 p-4 space-y-5">
+                                         <div
+                                             class="playlist group w-full flex justify-between items-center bg-white rounded-md ">
+                                             <h2 class="text-lg border-l-4 border-blue-600 px-2  text-gray-900">
+                                                 {{ $playlist->name }}
+                                             </h2>
+                                             <i class="fa-solid fa-angle-right group-hover:rotate-90"></i>
+                                         </div>
 
-                                                 <li
-                                                     class="w-full rounded-md px-3 py-2 text-gray-700  hover:text-black  ">
-                                                     {{ $video->title }}
-                                                 </li>
-                                             </div>
-                                         @endforeach
-                                     </ul>
+                                         <ul class="list-items hidden  mx-[-1px] space-y-0 ">
+                                             @foreach ($playlist->videos as $video)
+                                                 <x-courseComponents.playlist-item
+                                                     href="{{ route('coach.viewplaylist', ['playlist' => $playlist, 'video' => $video]) }}"
+                                                     :videoTitle="$video->title" :video="$video" :playlist="$playlist" />
+                                             @endforeach
+
+                                         </ul>
+                                     </div>
+                                     {{-- ? --}}
                                  </div>
                              @endforeach
                          </div>
@@ -114,7 +112,7 @@
              </div>
  </x-page-layout>
 
-
+ <script></script>
 
 
 

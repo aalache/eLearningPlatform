@@ -1,13 +1,14 @@
 @props(['course'])
 
-<div class="relative  h-[340px] bg-[#ffffff] border-2  rounded-md shadow-md overflow-hidden">
+<div class="relative  h-[340px] bg-[#ffffff]  rounded-md shadow-md overflow-hidden">
     <a href="{{ route('courses.show', ['course' => $course]) }}">
         {{-- course image --}}
-        <img src="{{ asset('upload') }}/courses/{{ $course->image }}" alt="" class="h-[55%] w-full rounded-t-md">
+        <img src="{{ asset('upload') }}/courses/{{ $course->image }}" alt=""
+            class="h-[55%] w-full rounded-t-md object-cover">
 
         {{-- course detail --}}
         <div
-            class="w-full h-full absolute bg-[#ffffff] rounded-b-md px-3 py-1 hover:p-3 hover:translate-y-[-56%]  hover:rounded-md  transition-all ease-in space-y-1 overflow-hidden ">
+            class="w-full h-full absolute bg-[#ffffff] rounded-b-md px-3 py-1 hover:p-3 hover:translate-y-[-55%]  hover:rounded-md hover:bg-[#efefef] transition-all ease-in space-y-1 overflow-hidden ">
 
             <div class="flex justify-start items-center space-x-2 mb-2">
                 <div class="h-10 w-10 rounded-full bg-gray-500/40 border-2"></div>

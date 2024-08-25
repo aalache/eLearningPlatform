@@ -48,33 +48,16 @@
                             {{ __('Courses') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('coach.mycourses')" :active="request()->routeIs('coach.mycourses')">
-                            {{ __('My Courses') }}
-                        </x-nav-link>
-
                         <x-nav-link :href="route('coach.myplaylists')" :active="request()->routeIs('coach.myplaylists')">
-                            {{ __('My Playlists') }}
+                            {{ __('Playlists') }}
                         </x-nav-link>
 
                         <x-nav-link :href="route('coach.myvideos')" :active="request()->routeIs('coach.myvideos')">
-                            {{ __('My Videos') }}
+                            {{ __('Videos') }}
                         </x-nav-link>
                     @endif
 
-                    {{-- ? Links for Admin  --}}
-                    @if ($isAdmin && $isAdminPath)
-                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
 
-                        <x-nav-link :href="route('admin.courses')" :active="request()->routeIs('admin.courses')">
-                            {{ __('Courses') }}
-                        </x-nav-link>
-
-                        <x-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">
-                            {{ __('Users') }}
-                        </x-nav-link>
-                    @endif
 
                 </div>
             </div>

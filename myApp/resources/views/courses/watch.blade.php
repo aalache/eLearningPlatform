@@ -43,7 +43,7 @@
                                     @php
                                         $playlist = Playlist::with('videos')->find($playlist->id);
                                     @endphp
-                                    <div class="space-y-1">
+                                    {{-- <div class="space-y-1">
                                         <div
                                             class="playlist group w-full flex justify-between cursor-pointer items-center rounded-md px-3 py-2 text-gray-800 hover:text-black">
                                             <h3 class="">{{ $playlist->name }}</h3>
@@ -70,7 +70,27 @@
                                                 </div>
                                             @endforeach
                                         </ul>
+                                    </div> --}}
+                                    {{-- ? Playlist section --}}
+                                    <div class="col-span-2 p-4 space-y-5">
+                                        <div
+                                            class="playlist group w-full flex justify-between items-center bg-white rounded-md ">
+                                            <h2 class="text-md border-l-4 border-blue-600 px-2  text-gray-900">
+                                                {{ $playlist->name }}
+                                            </h2>
+                                            <i class="fa-solid fa-angle-right group-hover:rotate-90"></i>
+                                        </div>
+
+                                        <ul class="list-items hidden  mx-[-1px] space-y-0 ">
+                                            @foreach ($playlist->videos as $video)
+                                                <x-courseComponents.playlist-item id="link-{{ $video->id }}"
+                                                    href="{{ route('courses.watch', ['course' => $course, 'video' => $video]) }}"
+                                                    :videoTitle="$video->title" :video="$video" :course="$course" />
+                                            @endforeach
+
+                                        </ul>
                                     </div>
+                                    {{-- ? --}}
                                 @endforeach
                             </div>
                             {{--  --}}

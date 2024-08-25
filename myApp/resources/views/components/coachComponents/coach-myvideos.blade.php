@@ -164,7 +164,7 @@
         </button>
     </x-slot:closeBtn>
     {{--  here form start --}}
-    <form action="" method="POST" enctype="multipart/form-data" class="space-y-5">
+    <form method="POST" enctype="multipart/form-data" class="space-y-5">
         @csrf
         @method('PATCH')
 
@@ -204,7 +204,7 @@
     </x-slot:closeBtn>
     {{-- form start --}}
     <form action="" method="POST" enctype="multipart/form-data"
-        class="bg-[#172868] rounded-lg  shadow-lg mx-auto  space-y-4">
+        class="edit-form bg-[#172868] rounded-lg  shadow-lg mx-auto  space-y-4">
         @csrf
 
 
@@ -261,17 +261,25 @@
     videoEditOpenBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             const videoId = this.getAttribute('data-id');
-            console.log(videoId);
-            console.log(this.getAttribute('data-title'));
+            // console.log(videoId);
+            // console.log(this.getAttribute('data-title'));
 
             videoEditTitle.value = this.getAttribute('data-title');
             videoEditDuration.value = this.getAttribute('data-duration');
 
-            // Use Laravel route helper to generate the URL
-            const updateUrl = `{{ url('/videos') }}/${videoId}`;
-            console.log(updateUrl)
+
+            const updateUrl = `{{ url('/coach/myvideos') }}/${videoId}`;
+
+            if (editVideoForm) {
+                editVideoForm.setAttribute('action', updateUrl);
+                console.log('Form action set to:', editVideoForm.getAttribute('action'));
+
+
+            } else {
+                console.error('Form element not found');
+            }
             // Set the form's action attribute to the dynamically constructed URL
-            editVideoForm.action = updateUrl;
+            // editVideoForm.action = updateUrl;
 
             document.body.style.overflow = 'hidden';
             editVideoForm.classList.remove('hidden');
@@ -292,7 +300,8 @@
     const addToPlaylistForm = document.getElementById('add-to-playlist-form');
     const addToOpenBtns = document.querySelectorAll('.addTo-open-btn')
     // console.log(addToOpenBtns)
-    const addToCloseBtn = document.querySelector('.addTo-close-btn').addEventListener('click', hideAddToPlaylistPopUp);
+    const addToCloseBtn = document.querySelector('.addTo-close-btn').addEventListener('click',
+        hideAddToPlaylistPopUp);
 
 
     addToOpenBtns.forEach(btn => {

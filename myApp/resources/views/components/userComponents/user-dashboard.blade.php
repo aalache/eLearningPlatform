@@ -58,7 +58,7 @@
                             <div class=" space-y-2">
                                 <div class="flex space-x-3">
                                     @foreach (Auth::user()->enrollements()->where('status', 'in_progress')->with('course')->take(4)->latest()->get() as $enrollement)
-                                        <a href=""
+                                        <a href="{{ route('courses.show', ['course' => $enrollement->course]) }}"
                                             class="min-w-[150px] max-w-[250px] rounded-md bg-[#efefef]  basis-1/4  space-y-2">
                                             <img src="{{ asset('upload/courses') }}/{{ $enrollement->course->image }}"
                                                 alt="" class="w-full rounded-t-md max-">

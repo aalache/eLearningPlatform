@@ -12,6 +12,14 @@
                         </a>
                         <div>
                             <button
+                                class="add-to-course-open-btn bg-white py-1.5 px-3 rounded-md text-gray-600 hover:text-blue-600">
+                                <i class="text-sm fa-solid fa-plus"></i> Add To Course
+                            </button>
+                            <button
+                                class="remove-from-course-open-btn bg-white py-1.5 px-3 rounded-md text-gray-600 hover:text-blue-600">
+                                <i class="text-sm fa-solid fa-minus"></i> Remove From Course
+                            </button>
+                            <button
                                 class="edit-playlist-open-btn bg-white py-1.5 px-3 rounded-md text-gray-600 hover:text-blue-600">
                                 <i class="text-sm fa-solid fa-pen"></i> Edit
                             </button>
@@ -81,6 +89,69 @@
             </div>
     </section>
     {{-- ! end --}}
+
+
+
+
+    {{-- ? ########## Add To course form ############## --}}
+    <x-formComponents.popup-form id="add-to-course-form">
+        <x-slot:closeBtn>
+            <button class="add-to-course-close-btn hover:scale-125 transition-all ease-in">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </x-slot:closeBtn>
+
+
+        {{-- here form start --}}
+        <form action="{{ route('playlists.addToCourse', ['playlist' => $playlist]) }}" method="POST"
+            enctype="multipart/form-data" class="space-y-5">
+            @csrf
+            <select name="course_id" id="course_id"
+                class="w-full rounded-md border-0  text-gray-200 shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400 backdrop-blur-sm bg-gray-300/20 p-2">
+                @if ($courses->isNotEmpty())
+                    @foreach ($courses as $course)
+                        <option value="{{ $course->id }}">{{ $course->name }}</option>
+                    @endforeach
+                @else
+                    <option value=""> No playlist available</option>
+                @endif
+            </select>
+            <x-formComponents.form-button type='submit'>Add To Course</x-formComponents.form-button>
+
+        </form>
+        {{-- here form ends --}}
+    </x-formComponents.popup-form>
+    {{-- ? -------------------- end --}}
+
+
+    {{-- ? ########## Remove From Course form ############## --}}
+    <x-formComponents.popup-form id="remove-from-course-form">
+        <x-slot:closeBtn>
+            <button class="remove-from-course-close-btn hover:scale-125 transition-all ease-in">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </x-slot:closeBtn>
+        {{-- here form start --}}
+        <form action="{{ route('coach.playlist.removeFromCourse', ['playlist' => $playlist]) }}" method="POST"
+            enctype="multipart/form-data" class="space-y-5">
+            @csrf
+            <select name="course_id" id="course_id"
+                class="w-full rounded-md border-0  text-gray-200 shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400 backdrop-blur-sm bg-gray-300/20 p-2">
+                @if ($coursesContainingPlaylist->isNotEmpty())
+                    @foreach ($coursesContainingPlaylist as $course)
+                        <option value="{{ $course->id }}">{{ $course->name }}</option>
+                    @endforeach
+                @else
+                    <option value=""> No playlist available</option>
+                @endif
+            </select>
+            <x-formComponents.form-button type='submit'>Remove From Course</x-formComponents.form-button>
+
+        </form>
+        {{-- here form ends --}}
+    </x-formComponents.popup-form>
+    {{-- ? -------------------- end --}}
+
 
     {{-- ? edit playlist form --}}
     <x-formComponents.popup-form id="edit-playlist-form">
@@ -190,6 +261,38 @@
 
 
 <script>
+    /**
+     * Add To Course pop Up form handling
+     */
+    const addToCourseForm = document.getElementById('add-to-course-form');
+    document.querySelector('.add-to-course-open-btn').addEventListener('click', showAddToCourseForm);
+    document.querySelector('.add-to-course-close-btn').addEventListener('click', hideAddToCourseForm);;
+
+    function showAddToCourseForm() {
+        document.body.overflow = "hidden";
+        addToCourseForm.classList.remove('hidden');
+    }
+
+    function hideAddToCourseForm() {
+        document.body.overflow = "visible";
+        addToCourseForm.classList.add('hidden');
+    }
+    /**
+     *  Remove From Course pop Up form handling
+     */
+    const removeFromCourseForm = document.getElementById('remove-from-course-form');
+    document.querySelector('.remove-from-course-open-btn').addEventListener('click', showRemoveFromCourseForm);
+    document.querySelector('.remove-from-course-close-btn').addEventListener('click', hideRemoveFromCourseForm);;
+
+    function showRemoveFromCourseForm() {
+        document.body.overflow = "hidden";
+        removeFromCourseForm.classList.remove('hidden');
+    }
+
+    function hideRemoveFromCourseForm() {
+        document.body.overflow = "visible";
+        removeFromCourseForm.classList.add('hidden');
+    }
     /**
      * Edit pop Up form handling
      */

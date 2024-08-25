@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Course;
 use App\Models\Enrollement;
 use App\Models\User;
+use App\Http\Controllers\Activity;
 
 class CoachController extends Controller
 {
@@ -18,17 +19,6 @@ class CoachController extends Controller
     {
         $activities = $this->getAtivities();
         return view('dashboard', ['activities' => $activities]);
-    }
-
-
-    /**
-     * Instructor created courses
-     */
-    public  function mycourses()
-    {
-        $user_id = Auth::user()->id;
-        $mycourses = Course::with('user')->where('user_id', $user_id)->latest()->get();
-        return view('dashboard', ['mycourses' => $mycourses]);
     }
 
     /**
@@ -51,26 +41,34 @@ class CoachController extends Controller
         return view('dashboard', ['myVideos' => $myVideos, 'playlists' => $playlists]);
     }
 
-
     /**
-     * render the playlist with videos in it and display the video selected
+     * render the playlist with videos in it and display the  selected video
      */
     public function viewplaylist(Playlist $playlist, Video $video)
     {
-        $videoToDisplay = $playlist->videos()->first();
+        $videoToDisplay = $playlist->videos()->first(); // get the first video of the playlist if $video is null
+        $courses = Course::with('playlists')->get();   // all courses
+        $coursesContainingPlaylist = collect();
+
+        // loop over all courses to find courses that contain this playlist 
+        foreach ($courses as $course) {
+            if ($course->playlists->contains($playlist->id)) {
+                $coursesContainingPlaylist->push($course); // add course to courses containing playlist collection
+            }
+        }
+
 
         if ($video) {
-
             $playlist = Playlist::with('videos')->find($playlist->id);
             if ($playlist->videos->contains($video)) {
                 $videoToDisplay = $video;
             }
         }
-        return view('playlists.show', ['playlist' => $playlist])->with('videoToDisplay', $videoToDisplay);
+        return view('playlists.show', ['playlist' => $playlist, 'courses' => $courses, 'coursesContainingPlaylist' => $coursesContainingPlaylist])->with('videoToDisplay', $videoToDisplay);
     }
 
     /**
-     * User activities
+     * get the latest user activity
      */
     public function getAtivities()
     {
