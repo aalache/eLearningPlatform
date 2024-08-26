@@ -26,9 +26,15 @@
             </div>
         </div>
     </div>
+    @session('success')
+        <x-notificationCards.notif-success>{{ session('success') }}</x-notificationCards.notif-success>
+    @endsession
+    @session('error')
+        <x-notificationCards.notif-error>{{ session('error') }}</x-notificationCards.notif-error>
+    @endsession
 </div>
 
-{{-- ? Add playlist PopUp form --}}
+{{-- ? Create Course PopUp form --}}
 <x-formComponents.popup-form id="create-course-form">
     <x-slot:closeBtn>
         <button class="create-course-close-btn hover:scale-125 transition-all ease-in">
@@ -37,7 +43,7 @@
     </x-slot:closeBtn>
 
     {{--  here form start --}}
-    <form action="{{ route('courses.store') }}" method="POST" enctype="multipart/form-data"
+    <form action="{{ route('coach.courses.store') }}" method="POST" enctype="multipart/form-data"
         class="space-y-5 min-w-screen-md grid grid-cols-2 gap-x-2">
         @csrf
 
@@ -106,11 +112,12 @@
 
         {{--  upload button --}}
         <div class="col-span-2 flex justify-center items-center">
-            <x-formComponents.form-button>Create</x-formComponents.form-button>
+            <x-formComponents.form-button type='submit'>Create</x-formComponents.form-button>
         </div>
 
     </form>
     {{-- here form ends --}}
+
 </x-formComponents.popup-form>
 
 
@@ -130,3 +137,4 @@
         createCourseForm.classList.add('hidden');
     }
 </script>
+<script src="{{ asset('js/notif.js') }}"></script>

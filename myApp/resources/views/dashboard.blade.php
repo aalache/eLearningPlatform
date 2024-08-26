@@ -52,14 +52,14 @@
         @endif
 
         {{-- user enrollements page --}}
-        @if (request()->routeIs('user.enrollement'))
+        @if (request()->routeIs('user.enrollement.index'))
             <x-userComponents.user-enrollement :enrollments="$enrollments">
 
             </x-userComponents.user-enrollement>
         @endif
 
         {{-- user courses page --}}
-        @if (request()->routeIs('user.courses'))
+        @if (request()->routeIs('user.courses.index'))
             <x-userComponents.user-courses :courses="$courses">
 
             </x-userComponents.user-courses>
@@ -78,29 +78,24 @@
             </x-coachComponents.coach-dashboard>
         @endif
 
-        @if (request()->routeIs('coach.courses'))
+        @if (request()->routeIs('coach.courses.index'))
             <x-coachComponents.coach-courses :courses="$courses">
 
             </x-coachComponents.coach-courses>
         @endif
 
-        @if (request()->routeIs('coach.mycourses'))
-            <x-coachComponents.coach-mycourses :mycourses="$mycourses">
+        @if (request()->routeIs('coach.playlists.index'))
+            <x-coachComponents.coach-myplaylists :myplaylists="$myplaylists">
 
-            </x-coachComponents.coach-mycourses>
+            </x-coachComponents.coach-myplaylists>
         @endif
 
-        @if (request()->routeIs('coach.myvideos'))
+        @if (request()->routeIs('coach.videos.index'))
             <x-coachComponents.coach-myvideos :myVideos="$myVideos" :playlists="$playlists">
 
             </x-coachComponents.coach-myvideos>
         @endif
 
-        @if (request()->routeIs('coach.myplaylists'))
-            <x-coachComponents.coach-myplaylists :myplaylists="$myplaylists">
-
-            </x-coachComponents.coach-myplaylists>
-        @endif
 
     @endif
     {{-- ? --}}

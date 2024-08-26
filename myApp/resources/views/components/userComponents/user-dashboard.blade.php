@@ -58,7 +58,7 @@
                             <div class=" space-y-2">
                                 <div class="flex space-x-3">
                                     @foreach (Auth::user()->enrollements()->where('status', 'in_progress')->with('course')->take(4)->latest()->get() as $enrollement)
-                                        <a href="{{ route('courses.show', ['course' => $enrollement->course]) }}"
+                                        <a href="{{ route('user.courses.show', ['course' => $enrollement->course]) }}"
                                             class="min-w-[150px] max-w-[250px] rounded-md bg-[#efefef]  basis-1/4  space-y-2">
                                             <img src="{{ asset('upload/courses') }}/{{ $enrollement->course->image }}"
                                                 alt="" class="w-full rounded-t-md max-">
@@ -72,7 +72,7 @@
                                     @endforeach
                                 </div>
                                 <div>
-                                    <a href="{{ route('user.enrollement') }}"
+                                    <a href="{{ route('user.enrollement.index') }}"
                                         class="text-[#234b6b] text-sm font-normal leading-normal">View more</a>
                                 </div>
                             </div>

@@ -1,4 +1,4 @@
-@props(['mycourses' => collect()])
+@props(['courses' => collect()])
 
 
 <div class="py-0 px-3 bg-white">
@@ -15,11 +15,18 @@
 
                 <div class="h-full w-full grid gap-3  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 ">
 
-                    @foreach ($mycourses as $course)
+                    @foreach ($courses as $course)
                         <x-courseComponents.course-item :course="$course" />
                     @endforeach
                 </div>
             </div>
         </div>
     </div>
+    {{-- notifications --}}
+    @session('success')
+        <x-notificationCards.notif-success>{{ session('success') }}</x-notificationCards.notif-success>
+    @endsession
+    @session('error')
+        <x-notificationCards.notif-error>{{ session('error') }}</x-notificationCards.notif-error>
+    @endsession
 </div>

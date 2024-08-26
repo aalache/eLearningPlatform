@@ -7,7 +7,7 @@
                 <div class="bg-white overflow-hidden  sm:rounded-lg">
                     {{-- ? nav menu (go back | edit | delete ) --}}
                     <div class="px-6 w-full flex justify-between items-center mb-4">
-                        <a href="{{ route('coach.myplaylists') }}" class="text-gray-600 hover:text-blue-600">
+                        <a href="{{ route('coach.playlists.index') }}" class="text-gray-600 hover:text-blue-600">
                             <i class="fa-solid fa-arrow-left"></i> Go Back
                         </a>
                         <div>
@@ -60,7 +60,7 @@
                                 <ul class="  mx-[-1px] space-y-0 ">
                                     @foreach ($playlist->videos as $video)
                                         <x-courseComponents.playlist-item
-                                            href="{{ route('coach.viewplaylist', ['playlist' => $playlist, 'video' => $video]) }}"
+                                            href="{{ route('coach.playlists.show', ['playlist' => $playlist, 'video' => $video]) }}"
                                             :videoTitle="$video->title" :video="$video" :playlist="$playlist" />
                                     @endforeach
 
@@ -103,7 +103,7 @@
 
 
         {{-- here form start --}}
-        <form action="{{ route('playlists.addToCourse', ['playlist' => $playlist]) }}" method="POST"
+        <form action="{{ route('coach.playlists.addToCourse', ['playlist' => $playlist]) }}" method="POST"
             enctype="multipart/form-data" class="space-y-5">
             @csrf
             <select name="course_id" id="course_id"
@@ -132,7 +132,7 @@
             </button>
         </x-slot:closeBtn>
         {{-- here form start --}}
-        <form action="{{ route('coach.playlist.removeFromCourse', ['playlist' => $playlist]) }}" method="POST"
+        <form action="{{ route('coach.playlists.removeFromCourse', ['playlist' => $playlist]) }}" method="POST"
             enctype="multipart/form-data" class="space-y-5">
             @csrf
             <select name="course_id" id="course_id"
@@ -161,7 +161,7 @@
             </button>
         </x-slot:closeBtn>
         {{-- here form start --}}
-        <form action="{{ route('playlists.update', ['playlist' => $playlist->id]) }}" method="POST"
+        <form action="{{ route('coach.playlists.update', ['playlist' => $playlist->id]) }}" method="POST"
             enctype="multipart/form-data" class="space-y-5">
             @csrf
             @method('PATCH')
@@ -190,12 +190,12 @@
             </button>
         </x-slot:closeBtn>
         {{-- form start --}}
-        <form action="{{ route('playlists.destroy', ['playlist' => $playlist->id]) }}" method="POST"
+        <form action="{{ route('coach.playlists.destroy', ['playlist' => $playlist->id]) }}" method="POST"
             enctype="multipart/form-data" class="space-y-5">
             @csrf
             @method('DELETE')
 
-            {{-- playlist name field --}}
+            {{-- playlist name delete confirmation field --}}
             <x-formComponents.form-field>
                 <label for="name" class="text-white text-sm">
                     Type the playlist name <strong>{{ $playlist->name }}</strong> to confirm deletion:
@@ -223,11 +223,11 @@
             </x-slot:closeBtn>
             {{-- form start --}}
             <form
-                action="{{ route('videos.removeFromPlaylist', ['playlist' => $playlist, 'video' => $videoToDisplay]) }}"
+                action="{{ route('coach.videos.removeFromPlaylist', ['playlist' => $playlist, 'video' => $videoToDisplay]) }}"
                 method="POST" enctype="multipart/form-data" class="space-y-5">
                 @csrf
 
-                {{-- playlist name field --}}
+                {{-- video name delete confirmation field --}}
                 <x-formComponents.form-field>
                     <label for="name" class="text-white text-sm">
                         Type the video name <strong>{{ $videoToDisplay->title }}</strong> to confirm removing:

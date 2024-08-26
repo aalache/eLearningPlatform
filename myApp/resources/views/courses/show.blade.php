@@ -22,16 +22,27 @@
                              </p>
 
                              <div class=" space-y-4">
-                                 @if (Auth::user()->isEnrolledIn($course))
+                                 @if (request()->routeIs('coach.*'))
                                      <x-courseComponents.course-link
-                                         href="{{ route('courses.watch', ['course' => $course]) }}">
+                                         href="{{ route('coach.courses.watch', ['course' => $course]) }}">
+                                         View Course
+                                     </x-courseComponents.course-link>
+                                 @endif
+
+                                 @if (request()->routeIs('user.*') && Auth::user()->isEnrolledIn($course))
+                                     <x-courseComponents.course-link
+                                         href="{{ route('user.courses.watch', ['course' => $course]) }}">
                                          Go to course
                                      </x-courseComponents.course-link>
-                                 @else
-                                     <form action="{{ route('courses.enroll', ['course' => $course]) }}" method="POST">
+                                 @endif
+
+                                 @if (request()->routeIs('user.*') && !Auth::user()->isEnrolledIn($course))
+                                     <form action="{{ route('user.courses.enroll', ['course' => $course]) }}"
+                                         method="POST">
                                          @csrf
-                                         <x-courseComponents.course-enrollbutton
-                                             type='submit'>Enroll</x-courseComponents.course-enrollbutton>
+                                         <x-courseComponents.course-enrollbutton class="enroll-open-btn" type='submit'>
+                                             Enroll Now
+                                         </x-courseComponents.course-enrollbutton>
                                      </form>
                                  @endif
 
@@ -82,9 +93,9 @@
                                  @php
                                      $playlist = Playlist::with('videos')->find($playlist->id);
                                  @endphp
-                                 <div class=" space-y-3">
+                                 <div class=" space-y-2">
                                      {{-- ? Playlist section --}}
-                                     <div class="col-span-2 p-4 space-y-5">
+                                     <div class="col-span-2 p-4 space-y-3">
                                          <div
                                              class="playlist group w-full flex justify-between items-center bg-white rounded-md ">
                                              <h2 class="text-lg border-l-4 border-blue-600 px-2  text-gray-900">
@@ -96,8 +107,8 @@
                                          <ul class="list-items hidden  mx-[-1px] space-y-0 ">
                                              @foreach ($playlist->videos as $video)
                                                  <x-courseComponents.playlist-item
-                                                     href="{{ route('coach.viewplaylist', ['playlist' => $playlist, 'video' => $video]) }}"
-                                                     :videoTitle="$video->title" :video="$video" :playlist="$playlist" />
+                                                     href="{{ route('coach.playlists.show', ['playlist' => $playlist, 'video' => $video]) }}"
+                                                     :videoTitle="$video->title" :video="$video" />
                                              @endforeach
 
                                          </ul>
@@ -112,99 +123,37 @@
              </div>
  </x-page-layout>
 
- <script></script>
+ <x-formComponents.popup-form id="go-to-payment-popup">
+     <x-slot:closeBtn>
+         <button class="enroll-close-btn hover:scale-125 transition-all ease-in">
+             <i class="fa-solid fa-xmark"></i>
+         </button>
+     </x-slot:closeBtn>
+
+     {{--  here form start --}}
+     <form action="" method="POST" class="space-y-5 min-w-screen-md grid grid-cols-2 gap-x-2">
+         @csrf
+         <x-formComponents.form-button type='submit'>Pay with Paypal</x-formComponents.form-button>
+     </form>
+
+ </x-formComponents.popup-form>
 
 
+ <script>
+     /**
+      * Go to payment popup page 
+      */
+     const goToPaymentPopup = document.getElementById('go-to-payment-popup');
+     document.querySelector('.enroll-open-btn').addEventListener('click', showGoToPaymentPopup);
+     document.querySelector('.enroll-close-btn').addEventListener('click', hideGoToPaymentPopup);;
 
+     function showGoToPaymentPopup() {
+         document.body.overflow = "hidden";
+         goToPaymentPopup.classList.remove('hidden');
+     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- {{-- @php
-    use App\Models\Course;
-    use App\Models\Playlist;
-    $course = Course::with('playlists')->find($course->id);
-@endphp
-<x-page-layout>
-
-    <div class="mx-auto  flex items-baseline p-2 space-x-3 space-y-3">
-        <div class="p-3 w-[50%] rounded-md bg-[#efefef] mx-auto space-y-2 text-gray-900 overflow-hidden">
-            <h1> {{ $course->name }}</h1>
-            <img src="{{ asset('upload') }}/courses/{{ $course->image }}" class="w-full h-52" alt="">
-            <ul>
-                <li><strong>Name: </strong> {{ $course->name }}</li>
-                <li><strong>Description: </strong>{{ $course->description }}</li>
-                <li><strong>Level: </strong> {{ $course->level }}</li>
-                <li><strong>Category: </strong> {{ $course->category }}</li>
-                <li><strong>Price: </strong>${{ $course->price }}</li>
-                <li><strong>Author: </strong>@ {{ $course->user->name }}</li>
-            </ul>
-            <div class="mt-2">
-                <h2><strong>Playlists</strong></h2>
-
-                @foreach ($course->playlists as $playlist)
-                    <div class="bg-[#efefef] w-[100px] rounded-md">
-                        <form
-                            action="{{ route('playlists.removeFromCourse', ['course' => $course, 'playlist' => $playlist]) }}"
-                            method="POST" id="delete-form">
-                            @csrf
-                        </form>
-                        @php
-                            $playlist = Playlist::with('videos')->find($playlist->id);
-                        @endphp
-                        <div class="space-x-3 text-sm font-medium flex justify-between items-center">
-                            <a
-                                href="{{ route('playlists.show', ['playlist' => $playlist]) }}"><span>#{{ $playlist->name }}</span></a>
-                            <span class="text-red-600 p-1 rounded-md bg-black/20"><button
-                                    form="delete-form">delete</button></span>
-                        </div>
-                        <ul>
-
-                            @foreach ($playlist->videos as $video)
-                                <a href="{{ route('videos.show', ['video' => $video]) }}">
-                                    <li class="text-sm text-gray-500">-> {{ $video->title }}</li>
-                                </a>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endforeach
-            </div>
-            <hr>
-            <form action="{{ route('playlists.addToCourse', ['course' => $course->id]) }}" method="POST">
-                @csrf
-                <select name="playlist" id="playlist" class="p-2 bg-black/20 w-full rounded-md mb-2">
-                    @foreach ($playlists as $playlist)
-                        <option value="{{ $playlist->id }}">{{ $playlist->name }}</option>
-                    @endforeach
-                </select>
-                <x-formComponents.form-button>add</x-formComponents.form-button>
-            </form>
-            <form action="/courses/{{ $course->id }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <x-formComponents.form-button>Delete</x-formComponents.form-button>
-            </form>
-
-
-
-        </div>
-
-    </div>
-</x-page-layout> --}}
+     function hideGoToPaymentPopup() {
+         document.body.overflow = "visible";
+         goToPaymentPopup.classList.add('hidden');
+     }
+ </script>

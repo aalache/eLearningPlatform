@@ -23,7 +23,7 @@ class StudentController extends Controller
     public function enrollement()
     {
         $user = Auth::user();
-        $enrollments = $user->enrollements()->with('course')->get();
+        $enrollments = $user->enrollements()->with('course')->latest()->get();
 
         foreach ($enrollments as $enrollment) {
             $enrollment->progress = CourseController::progress($enrollment->course);

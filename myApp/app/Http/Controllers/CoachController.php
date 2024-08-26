@@ -24,7 +24,7 @@ class CoachController extends Controller
     /**
      * render all  playlists of the current instructor
      */
-    public function myplaylists()
+    public function playlists()
     {
         $user_id = Auth::user()->id;
         $myplaylists = Playlist::with('videos')->where('user_id', $user_id)->get();
@@ -34,7 +34,7 @@ class CoachController extends Controller
     /**
      * render all videos of the current instructor
      */
-    public function myvideos()
+    public function videos()
     {
         $myVideos = Video::where('user_id', Auth::id())->latest()->simplepaginate(8);
         $playlists = Playlist::where('user_id', Auth::id())->latest()->get();

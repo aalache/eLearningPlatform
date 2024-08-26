@@ -43,24 +43,10 @@ class PlaylistController extends Controller
 
         ActivityLogger::log('New Playlist Added', 'you added ' . $playlist->name . ' playlist to your workspace');
 
-        return redirect()->route('coach.myplaylists')->with('success', 'Playlist created successfuly');
+        return redirect()->route('coach.playlists.index')->with('success', 'Playlist created successfuly');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    // public function show(Playlist $playlist)
-    // {
-    //     return view('playlists.show', ['playlist' => $playlist]);
-    // }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    // public function edit(Playlist $playlist)
-    // {
-    //     return view('playlists.edit', ['playlist' => $playlist]);
-    // }
 
     /**
      * Update the specified resource in storage.
@@ -76,7 +62,7 @@ class PlaylistController extends Controller
         ActivityLogger::log('Playlist Updated', 'you updated ' . $playlist->name . ' playlist in your workspace');
 
         return redirect()
-            ->route('coach.viewplaylist', ['playlist' => $playlist])
+            ->route('coach.playlists.show', ['playlist' => $playlist])
             ->with('success', 'Playlist Name changed successfully');
     }
 
@@ -89,23 +75,16 @@ class PlaylistController extends Controller
             'confirm-delete' => ['required', 'string', 'max:60']
         ]);
 
-        // if ($validator->fails()) {
-        //     return redirect()
-        //         ->route('coach.viewplaylist', ['playlist' => $playlist])
-        //         ->withErrors('error');
-        // }
-
-
         if ($validator['confirm-delete'] == $playlist->name) {
             $playlist->delete();
             ActivityLogger::log('Playlist Deleted', 'you deleted ' . $playlist->name . ' playlist from your workspace');
             return redirect()
-                ->route('coach.myplaylists')
+                ->route('coach.playlists.index', ['playlist' => $playlist])
                 ->with('success', 'Playlist deleted successfully');
         }
 
         return redirect()
-            ->route('coach.viewplaylist', ['playlist' => $playlist])
+            ->route('coach.playlists.show', ['playlist' => $playlist])
             ->with('error', 'Playlist Name does not match');
     }
 
@@ -117,21 +96,27 @@ class PlaylistController extends Controller
     public function addToCourse(Request $request, Playlist $playlist)
     {
         $course_id = $request->input('course_id');
+        $course = Course::find($course_id);
 
-        if (Auth::user()->playlists->find($playlist->id)) {
+        if (Auth::user()->playlists->find($playlist->id) && !$course->playlists->contains($playlist)) {
 
-            $course = Course::find($course_id);
             $course->playlists()->attach($playlist);
 
             ActivityLogger::log('Playlist Added to Course', 'you added ' . $playlist->name
                 . ' playlist to ' . $course->name . ' course');
 
             return redirect()
-                ->route('coach.playlist', ['playlist' => $playlist->id])
+                ->route('coach.playlists.show', ['playlist' => $playlist->id])
                 ->with('success', 'Playlist added to course successfully');
+        } else {
+            return redirect()
+                ->route('coach.playlists.show', ['playlist' => $playlist->id])
+                ->with('error', 'Playlist allready added !!!');
         }
 
-        return redirect()->route('coach.playlist', ['playlist' => $playlist->id]);
+        return redirect()
+            ->route('coach.playlists.show', ['playlist' => $playlist->id])
+            ->with('error', 'Something went wrong !!!');
     }
 
 
@@ -153,10 +138,12 @@ class PlaylistController extends Controller
                 . ' playlist from ' . $course->name . ' course');
 
             return redirect()
-                ->route('coach.playlist', ['playlist' => $playlist->id])
+                ->route('coach.playlists.show', ['playlist' => $playlist->id])
                 ->with('success', 'Playlist removed from course successfully');
         }
 
-        return redirect()->route('coach.playlist', ['playlist' => $playlist->id]);
+        return redirect()
+            ->route('coach.playlist.show', ['playlist' => $playlist->id])
+            ->with('error', 'Something went wrong !!!');
     }
 }

@@ -55,7 +55,7 @@
     </x-slot:closeBtn>
 
     {{--  here form start --}}
-    <form action="/playlists" method="POST" enctype="multipart/form-data" class="space-y-5">
+    <form action="{{ route('coach.playlists.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
         @csrf
 
         {{-- playlist name field --}}

@@ -26,11 +26,11 @@ class CourseController extends Controller
         }
 
 
-        if ($request->routeIs('user.courses')) {
+        if ($request->routeIs('user.courses.index')) {
             return view('dashboard', ['courses' => $courses]);
         }
 
-        if ($request->routeIs('coach.courses')) {
+        if ($request->routeIs('coach.courses.index')) {
             return view('dashboard', ['courses' => $courses]);
         }
     }
@@ -42,16 +42,15 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = $request->validate([
             'name' => 'required|max:60',
             'description' => 'required',
             'duration' => 'required|numeric',
             'level' => 'required',
             'category' => 'required',
             'price' => 'required|numeric',
-            'image' => 'required|mimes:png,jpg',
+            'image' => 'required|mimes:png,jpg,webp',
         ]);
-
         $file = $request->file('image');
         $file->move('upload/courses', $file->getClientOriginalName());
         $image = $file->getClientOriginalName();
@@ -67,7 +66,7 @@ class CourseController extends Controller
             'user_id' => Auth::id(),
         ]);
         ActivityLogger::log('Course Added', 'you added ' . $course->name . ' course to your workspace');
-        return redirect()->route('courses.index');
+        return redirect()->route('coach.courses')->with('success', 'Course Created successfuly');
     }
 
     /**
@@ -83,7 +82,7 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, Course $course, Video $video)
     {
         $request->validate([
             'name' => 'required|max:60',
@@ -92,7 +91,7 @@ class CourseController extends Controller
             'level' => 'required',
             'category' => 'required',
             'price' => 'required|numeric',
-            'image' => 'mimes:png,jpg',
+            // 'image' => 'mimes:png,jpg,webp',
         ]);
 
         if ($request->hasFile('image')) {
@@ -114,17 +113,23 @@ class CourseController extends Controller
         ]);
         ActivityLogger::log('Course Updated', 'you have updated ' . $course->name . ' course ');
 
-        return redirect()->route('courses.index')->with('success', 'Course updated successfully');
+        return redirect()->route('courses.watch', ['course' => $course, 'videoToDisplay' => $video])->with('success', 'Course updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Course $course)
+    public function destroy(Request $request, Course $course)
     {
-        $course->delete();
-        ActivityLogger::log('Course Deleted', 'you have deleted ' . $course->name . ' course ');
-        return redirect()->route('courses.index');
+        $validator = $request->validate([
+            'confirm-deletion' => ['required', 'string'],
+        ]);
+        if ($validator['confirm-deletion'] == 'delete') {
+            $course->delete();
+            ActivityLogger::log('Course Deleted', 'you have deleted ' . $course->name . ' course ');
+            return redirect()->route('courses.index')->with('success', 'Course deleted successfully');
+        }
+        return redirect()->back()->with('error', 'Course Name does not match !!!');
     }
 
     /**
@@ -163,11 +168,11 @@ class CourseController extends Controller
     {
         $course = Course::with('playlists.videos')->findOrFail($course->id);
 
-        $item = null;
+        $videoToDisplay = null;
 
         // Check if the course has any playlists and videos
         if ($course->playlists->isNotEmpty()) {
-            $item = $course->playlists->first()->videos->first();
+            $videoToDisplay = $course->playlists->first()->videos->first();
         }
 
 
@@ -175,18 +180,13 @@ class CourseController extends Controller
         if ($video) {
             foreach ($course->playlists as $playlist) {
                 if ($playlist->videos->contains($video)) {
-                    $item = $video;
+                    $videoToDisplay = $video;
                     break;
                 }
             }
         }
 
-        // return view('courses.course', [
-        //     'course' => $course,
-        //     'item' => $item,
-        // ]);
-
-        return view('courses.watch', ['course' => $course])->with('item', $item);
+        return view('courses.watch', ['course' => $course])->with('videoToDisplay', $videoToDisplay);
     }
 
     // enroll feature allow users to enroll a specific course

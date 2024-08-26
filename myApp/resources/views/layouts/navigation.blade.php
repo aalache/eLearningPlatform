@@ -29,11 +29,11 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('user.enrollement')" :active="request()->routeIs('user.enrollement')">
+                        <x-nav-link :href="route('user.enrollement.index')" :active="request()->routeIs('user.enrollement.index')">
                             {{ __('Enrollement') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('user.courses')" :active="request()->routeIs('user.courses')">
+                        <x-nav-link :href="route('user.courses.index')" :active="request()->routeIs('user.courses.index')">
                             {{ __('Courses') }}
                         </x-nav-link>
                     @endif
@@ -44,15 +44,15 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('coach.courses')" :active="request()->routeIs('coach.courses')">
+                        <x-nav-link :href="route('coach.courses.index')" :active="request()->routeIs('coach.courses.index')">
                             {{ __('Courses') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('coach.myplaylists')" :active="request()->routeIs('coach.myplaylists')">
+                        <x-nav-link :href="route('coach.playlists.index')" :active="request()->routeIs('coach.playlists.index')">
                             {{ __('Playlists') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('coach.myvideos')" :active="request()->routeIs('coach.myvideos')">
+                        <x-nav-link :href="route('coach.videos.index')" :active="request()->routeIs('coach.videos.index')">
                             {{ __('Videos') }}
                         </x-nav-link>
                     @endif
@@ -125,11 +125,11 @@
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('user.enrollement')" :active="request()->routeIs('user.enrollement')">
+                <x-responsive-nav-link :href="route('user.enrollement.index')" :active="request()->routeIs('user.enrollement.index')">
                     {{ __('Enrollement') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('user.courses')" :active="request()->routeIs('user.courses')">
+                <x-responsive-nav-link :href="route('user.courses.index')" :active="request()->routeIs('user.courses.index')">
                     {{ __('Courses') }}
                 </x-responsive-nav-link>
             @endif
@@ -140,8 +140,16 @@
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('coach.courses')" :active="request()->routeIs('coach.courses')">
+                <x-responsive-nav-link :href="route('coach.courses.index')" :active="request()->routeIs('coach.courses.index')">
                     {{ __('Courses') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('coach.playlists.index')" :active="request()->routeIs('coach.playlists.index')">
+                    {{ __('Playlists') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('coach.videos.index')" :active="request()->routeIs('coach.videos.index')">
+                    {{ __('Videos') }}
                 </x-responsive-nav-link>
             @endif
 

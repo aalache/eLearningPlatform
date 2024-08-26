@@ -3,7 +3,8 @@
     use App\Models\VideoProgress;
     $isCurrentRoute = null;
     if ($playlist) {
-        $isCurrentRoute = url()->current() == route('coach.viewplaylist', ['playlist' => $playlist, 'video' => $video]);
+        $isCurrentRoute =
+            url()->current() == route('coach.playlists.show', ['playlist' => $playlist, 'video' => $video]);
     }
     if ($course) {
         $isCurrentRoute = url()->current() == route('courses.watch', ['course' => $course, 'video' => $video]);

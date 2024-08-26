@@ -71,19 +71,16 @@
                                             </button>
                                         </li>
 
-                                        <form action="{{ route('videos.destroy', ['video' => $video]) }}" method="POST"
-                                            enctype="multipart/form-data">
-                                            @csrf
-                                            @method('DELETE')
-                                            <li
-                                                class=" w-full text-red-600 hover:bg-red-600 hover:text-white flex justify-between items-center">
-                                                <button type="submit"
-                                                    class="video-menu-item  p-2 w-full  flex justify-between items-center">
-                                                    Delete
-                                                    <i class="fa-solid fa-trash-can ml-2"></i>
-                                                </button>
-                                            </li>
-                                        </form>
+
+                                        <li
+                                            class="video-menu-item w-full text-red-600 hover:bg-red-600 hover:text-white flex justify-between items-center">
+                                            <button type="submit"
+                                                class="delete-video-open-btn   p-2 w-full  flex justify-between items-center">
+                                                Delete
+                                                <i class="fa-solid fa-trash-can ml-2"></i>
+                                            </button>
+                                        </li>
+
                                     </ul>
                                 </div>
                                 <!------------------------>
@@ -121,7 +118,8 @@
         </button>
     </x-slot:closeBtn>
     {{-- ? form start --}}
-    <form action="/videos" method="POST" enctype="multipart/form-data" class="space-y-5  mx-auto shadow-lg">
+    <form action="{{ route('coach.videos.store') }}" method="POST" enctype="multipart/form-data"
+        class="space-y-5  mx-auto shadow-lg">
         @csrf
 
         {{-- Title field --}}
@@ -164,7 +162,7 @@
         </button>
     </x-slot:closeBtn>
     {{--  here form start --}}
-    <form method="POST" enctype="multipart/form-data" class="space-y-5">
+    <form method="POST" action="" enctype="multipart/form-data" class="space-y-5">
         @csrf
         @method('PATCH')
 
@@ -196,7 +194,7 @@
 {{-- ? --------------------------------------------------------------------------------- --}}
 
 {{-- ? ###### Add To Playlist PopUp Form Start ########## --}}
-<x-formComponents.popup-form id="add-to-playlist-form">
+<x-formComponents.popup-form id="delete-video-form">
     <x-slot:closeBtn>
         <button class="addTo-close-btn hover:scale-125 transition-all ease-in">
             <i class="fa-solid fa-xmark"></i>
@@ -221,13 +219,44 @@
                 <option value=""> No playlist available</option>
             @endif
         </select>
-        <x-formComponents.form-button type='submit'>Add To</x-formComponents.form-button>
+        <x-formComponents.form-button type='submit'>Add To Playlist</x-formComponents.form-button>
 
 
     </form>
     {{--  form end --}}
 </x-formComponents.popup-form>
 {{-- ? ----------------------------------------------------------------------------------- --}}
+
+{{-- ? ###### Delete Video PopUp Form Start ########## --}}
+<x-formComponents.popup-form id="delete-video-form">
+    <x-slot:closeBtn>
+        <button class="delete-video-close-btn hover:scale-125 transition-all ease-in">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </x-slot:closeBtn>
+    {{-- form start --}}
+    <form action="" method="POST" enctype="multipart/form-data" class="space-y-5">
+        @csrf
+        @method('DELETE')
+
+        {{-- playlist name delete confirmation field --}}
+        <x-formComponents.form-field>
+            <label for="name" class="text-white text-sm">
+                Type the playlist name <strong>{{ $playlist->name }}</strong> to confirm deletion:
+            </label>
+            <x-formComponents.form-input type="text" id="confirm-delete" name="confirm-delete"
+                placeholder="'{{ $playlist->name }}'" required></x-formComponents.form-input>
+            <x-formComponents.form-error name="confirm-delete" />
+        </x-formComponents.form-field>
+
+        {{--  Edit button --}}
+        <x-formComponents.form-button>Delete</x-formComponents.form-button>
+
+    </form>
+    {{--  form end --}}
+</x-formComponents.popup-form>
+{{-- ? ----------------------------------------------------------------------------------- --}}
+
 
 <script>
     // popup show and hide events using click event
@@ -297,26 +326,50 @@
     /**
      * Add video to playlist Popup Form
      */
-    const addToPlaylistForm = document.getElementById('add-to-playlist-form');
-    const addToOpenBtns = document.querySelectorAll('.addTo-open-btn')
-    // console.log(addToOpenBtns)
-    const addToCloseBtn = document.querySelector('.addTo-close-btn').addEventListener('click',
-        hideAddToPlaylistPopUp);
+    const addToPlaylistForm = document.getElementById('delete-video-form');
+    const addToOpenBtns = document.querySelectorAll('.delete-video-open-btn') /
+        const delete - videoCloseBtn = document.querySelector('.delete-video-close-btn').addEventListener('click',
+            hideAddToPlaylistPopUp);
 
 
-    addToOpenBtns.forEach(btn => {
+    delete - videoOpenBtns.forEach(btn => {
         btn.addEventListener('click', showAddToPlaylistPopUp);
     })
 
     function showAddToPlaylistPopUp() {
         console.log('clicked')
         document.body.style.overflow = 'hidden';
-        addToPlaylistForm.classList.remove('hidden');
+        delete - videoPlaylistForm.classList.remove('hidden');
     }
 
     function hideAddToPlaylistPopUp() {
         document.body.style.overflow = 'visible';
-        addToPlaylistForm.classList.add('hidden');
+        delete - videoPlaylistForm.classList.add('hidden');
+    }
+
+    /**
+     * Delete video  Popup Form
+     */
+    const deleteVideoForm = document.getElementById('delete-video-form');
+    const deleteVideoOpenBtns = document.querySelectorAll('.delete-video-open-btn')
+    // console.log(deleteVideoOpenBtns)
+    const deleteVideoCloseBtn = document.querySelector('.delete-video-close-btn').addEventListener('click',
+        hideDeleteVideoForm);
+
+
+    deleteVideoOpenBtns.forEach(btn => {
+        btn.addEventListener('click', showAddToPlaylistPopUp);
+    })
+
+    function showAddToPlaylistPopUp() {
+        console.log('clicked')
+        document.body.style.overflow = 'hidden';
+        deleteVideoForm.classList.remove('hidden');
+    }
+
+    function hideDeleteVideoForm() {
+        document.body.style.overflow = 'visible';
+        deleteVideoForm.classList.add('hidden');
     }
 
     // show and hide video menu

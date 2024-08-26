@@ -66,7 +66,7 @@ class VideoController extends Controller
     {
         $video = $this->upload($request);
         ActivityLogger::log('Video Uploaded', 'you uploaded ' . $video->title . ' to your workspace');
-        return redirect()->route('coach.myvideos')->with('success', 'Video uploded successfuly');
+        return redirect()->route('coach.videos.index')->with('success', 'Video uploded successfuly');
     }
 
     /**
@@ -100,7 +100,7 @@ class VideoController extends Controller
 
         $video->update($attributes);
         ActivityLogger::log('Video Updated ', 'you have updated ' . $video->title);
-        return redirect()->route('coach.myvideos')->with('success', 'Video updated successfuly');
+        return redirect()->route('coach.videos')->with('success', 'Video updated successfuly');
     }
 
     /**
@@ -115,9 +115,9 @@ class VideoController extends Controller
         if ($validator['confirm-deletion'] == $video->title) {
             $video->delete();
             ActivityLogger::log('Video Deleted', 'you have deleted ' . $video->title);
-            return redirect()->route('coach.myvideos')->with('success', 'Video deleted successfuly');
+            return redirect()->route('coach.videos')->with('success', 'Video deleted successfuly');
         } else {
-            return redirect()->route('coach.myvideos')->with('error', 'Invalid title');
+            return redirect()->route('coach.videos')->with('error', 'Invalid title');
         }
     }
 
@@ -152,12 +152,12 @@ class VideoController extends Controller
             $playlist->videos()->detach($video->id);
             ActivityLogger::log('Video Removed From Playlist ', 'you have removed ' . $video->title . ' from ' . $playlist->name . ' playlist');
             return redirect()
-                ->route('coach.viewplaylist', $playlist->id)
+                ->route('coach.playlist.show', $playlist->id)
                 ->with('success', 'Video removed from playlist successfuly');
         }
 
         return redirect()
-            ->route('coach.viewplaylist', $playlist->id)
+            ->route('coach.playlists.show', $playlist->id)
             ->with('error', 'Video Name does not match');
     }
 
