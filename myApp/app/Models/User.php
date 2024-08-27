@@ -83,6 +83,12 @@ class User extends Authenticatable
         return $this->hasMany(Enrollement::class);
     }
 
+    // return in progress courses
+
+    public function inProgressCourses()
+    {
+        return $this->enrollements()->where('status', 'in_progress')->with('course');
+    }
 
     // test if a user is enrolled in a specific course 
     public function isEnrolledIn(Course $course)

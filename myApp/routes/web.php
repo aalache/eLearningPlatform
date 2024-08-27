@@ -16,15 +16,7 @@ Route::view('/home', 'welcome');
 // Route::view('/home', 'home');
 Route::view('/contact', 'contact');
 
-Route::get('/success', function () {
-    return view('payment.success', ['transactionID' => 'kdaktkejkjtkeckngt']);
-});
-Route::get('/error', function () {
-    return view('payment.error');
-});
-Route::get('/payment-declined', function () {
-    return view('payment.payment-declined');
-});
+
 
 
 // !  Routes Mapping using the Role Middleware

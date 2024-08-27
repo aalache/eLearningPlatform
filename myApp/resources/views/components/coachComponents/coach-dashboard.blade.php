@@ -30,32 +30,11 @@
 
                     </p>
                     <div class="  space-x-3 grid grid-cols-5 gap-2">
-                        <div
-                            class=" bg-[#efefef]/70 border-l-4 shadow-md border-blue-600  p-3 space-y-1  text-center  rounded-md  flex flex-col justify-center items-center backdrop-blur-md">
-                            <h2 class="text-3xl text-blue-600">{{ CoachController::metrics('total_videos') }}</h2>
-                            <p class="text-gray-600   leading-normal">Videos</p>
-                        </div>
-                        <div
-                            class=" bg-[#efefef]/70 border-l-4 shadow-md border-blue-600  p-3 space-y-1 text-center  rounded-md  flex flex-col justify-center items-center backdrop-blur-md">
-                            <h2 class="text-3xl text-blue-600">{{ CoachController::metrics('total_playlists') }}</h2>
-                            <p class="text-gray-600   leading-normal">Playlists</p>
-                        </div>
-                        <div
-                            class=" bg-[#efefef]/70 border-l-4 shadow-md border-blue-600  p-3 space-y-1 text-center  rounded-md  flex flex-col justify-center items-center backdrop-blur-md">
-                            <h2 class="text-3xl text-blue-600">{{ CoachController::metrics('total_courses') }}</h2>
-                            <p class="text-gray-600   leading-normal">Courses </p>
-                        </div>
-                        <div
-                            class=" bg-[#efefef]/70 border-l-4 shadow-md border-blue-600  p-3 space-y-1 text-center  rounded-md  flex flex-col justify-center items-center backdrop-blur-md">
-                            <h2 class="text-3xl text-blue-600 ">
-                                {{ CoachController::metrics('total_enrollements') }}</h2>
-                            <p class="text-gray-700   leading-normal"> Enrollements</p>
-                        </div>
-                        <div
-                            class=" bg-[#efefef]/70 border-l-4 shadow-md border-blue-600 p-3 space-y-1 text-center  rounded-md  flex flex-col justify-center items-center backdrop-blur-md">
-                            <h2 class="text-3xl text-blue-600">{{ CoachController::metrics('total_users') }}</h2>
-                            <p class="text-gray-600   leading-normal">Active Users</p>
-                        </div>
+                        <x-cards.metrics-card :data="CoachController::metrics('total_videos')" :label="'Videos'" />
+                        <x-cards.metrics-card :data="CoachController::metrics('total_playlists')" :label="'Playlists'" />
+                        <x-cards.metrics-card :data="CoachController::metrics('total_courses')" :label="'Courses'" />
+                        <x-cards.metrics-card :data="CoachController::metrics('total_enrollements')" :label="'Enrollements'" />
+                        <x-cards.metrics-card :data="CoachController::metrics('total_users')" :label="'Active Users'" />
                     </div>
                 </div>
                 {{--  --}}

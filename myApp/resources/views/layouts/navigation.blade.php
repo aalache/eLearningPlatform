@@ -8,7 +8,7 @@
     $isUserPath = str_starts_with($currentPath, 'user'); // test if the current route is an user route
 @endphp
 
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-black/70 backdrop-blur-3xl ">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -63,7 +63,7 @@
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="hidden sm:flex sm:items-center sm:ms-6 ">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button

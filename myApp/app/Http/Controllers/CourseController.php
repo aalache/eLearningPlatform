@@ -192,23 +192,13 @@ class CourseController extends Controller
     // enroll feature allow users to enroll a specific course
     public static function enroll(Course $course)
     {
-        // $status = '';
         if (Auth::check()) {
             $enrollement = new Enrollement();
             $enrollement->user_id = Auth::user()->id;
             $enrollement->course_id = $course->id;
             $enrollement->save();
             ActivityLogger::log('Enrolled', 'you enrolled to ' . $course->name . ' course');
-            // $status = "you are successfully enrolled ";
         }
-        // else {
-        //     $status = "you have to login to enroll ";
-        // }
-        // $auth_user_playlists = Auth::user()->playlists ?? collect();
-
-
-
-        // return view('courses.show', ['course' => $course, 'playlists' => $auth_user_playlists, 'status' => $status]);
     }
 
     // course progress

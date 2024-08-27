@@ -21,18 +21,27 @@
 
 </head>
 
+<style>
+    .user-hero {
+        background-image: url({{ asset('images/wall1.jpg') }});
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+    }
+</style>
+
 <body class=" antialiased font-sans h-full ">
-    <div class="min-h-full relative bg-white ">
+    <div class="user-hero min-h-full relative ">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
-        @isset($header)
-            <header class="bg-white shadow">
+        {{-- @isset($header)
+            <header class=" shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
             </header>
-        @endisset
+        @endisset --}}
 
         <!-- Page Content -->
         <main class="">

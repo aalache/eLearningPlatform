@@ -8,6 +8,8 @@
     $isUserPath = str_starts_with($currentPath, 'user'); // test if the current route is an user route
 @endphp
 
+
+
 <x-app-layout>
 
 
