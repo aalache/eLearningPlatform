@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('payment_id');
-            $table->string('payer_id');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('course_id')->constrained()->cascadeOnDelete();
+            $table->string('payment_id'); // transaction id
+            $table->string('payer_id'); // transaction owner Id
             $table->float('amount', 10, 2);
             $table->string('currency');
             $table->string('payment_status');

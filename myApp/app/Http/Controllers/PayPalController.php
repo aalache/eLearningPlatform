@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Enrollement;
+
+use App\Models\Course;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Omnipay\Omnipay;
 
 class PayPalController extends Controller
@@ -25,7 +27,7 @@ class PayPalController extends Controller
             $response = $this->gateway->purchase([
                 'amount' => $request->amount,
                 'currency' => env('PAYPAL_CURRENCY'),
-                'returnUrl' => route('user.payment.success'),
+                'returnUrl' => route('user.payment.success', ['course_id' => $request->input('course_id')]),
                 'cancelUrl' => route('user.payment.cancel'),
             ])->send();
 
@@ -55,6 +57,8 @@ class PayPalController extends Controller
 
                 // store transaction info in payment table in our database
                 $payment = new Payment();
+                $payment->user_id = Auth::id();
+                $payment->course_id = $request->input('course_id');
                 $payment->payment_id = $arr['id'];
                 $payment->payer_id = $arr['payer']['payer_info']['payer_id'];
                 $payment->amount = $arr['transactions'][0]['amount']['total'];
@@ -64,20 +68,23 @@ class PayPalController extends Controller
                 $payment->save();
 
                 // store enrollement info 
-                // CourseController::enroll();
+                $course = Course::find($request->input('course_id')); // Retrieve the course by ID
+                if ($course)
+                    CourseController::enroll($course);
 
-                return "Payment is Successfull. Your transaction ID is : " . $arr['id'];
+                return view('payment.success', ['transactionID' =>  $arr['id']]);
             } else {
                 return $response->getMessage();
+                return view('payment.error');
             }
         } else {
-            return "Payment declined !!";
+            return view('payment.payment-declined');
         }
     }
 
 
     public function cancel()
     {
-        return "User declined the payment!!";
+        return redirect()->route('user.courses.index');
     }
 }

@@ -131,6 +131,7 @@
          class="space-y-5 min-w-screen-md grid grid-cols-2 gap-x-2">
          @csrf
          <input type="hidden" name="amount" value="{{ $course->price }}">
+         <input type="hidden" name="course_id" value="{{ $course->id }}">
          <x-formComponents.form-button type='submit'>Pay with Paypal</x-formComponents.form-button>
      </form>
 
