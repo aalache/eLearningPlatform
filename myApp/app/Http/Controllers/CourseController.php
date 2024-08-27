@@ -190,7 +190,7 @@ class CourseController extends Controller
     }
 
     // enroll feature allow users to enroll a specific course
-    public function enroll(Course $course)
+    public static function enroll(Course $course)
     {
         $status = '';
         if (Auth::check()) {

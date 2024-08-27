@@ -37,13 +37,9 @@
                                  @endif
 
                                  @if (request()->routeIs('user.*') && !Auth::user()->isEnrolledIn($course))
-                                     <form action="{{ route('user.courses.enroll', ['course' => $course]) }}"
-                                         method="POST">
-                                         @csrf
-                                         <x-courseComponents.course-enrollbutton class="enroll-open-btn" type='submit'>
-                                             Enroll Now
-                                         </x-courseComponents.course-enrollbutton>
-                                     </form>
+                                     <x-courseComponents.course-enrollbutton class="enroll-open-btn" type='submit'>
+                                         Enroll Now
+                                     </x-courseComponents.course-enrollbutton>
                                  @endif
 
                              </div>
@@ -130,9 +126,11 @@
          </button>
      </x-slot:closeBtn>
 
-     {{--  here form start --}}
-     <form action="" method="POST" class="space-y-5 min-w-screen-md grid grid-cols-2 gap-x-2">
+
+     <form action="{{ route('user.payment.payment') }}" method="POST"
+         class="space-y-5 min-w-screen-md grid grid-cols-2 gap-x-2">
          @csrf
+         <input type="hidden" name="amount" value="{{ $course->price }}">
          <x-formComponents.form-button type='submit'>Pay with Paypal</x-formComponents.form-button>
      </form>
 
