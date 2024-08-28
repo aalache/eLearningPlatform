@@ -14,8 +14,12 @@ class StudentController extends Controller
 
     public function index()
     {
-        $activities = $this->getAtivities();
-        return view('dashboard', ['activities' => $activities]);
+        $inProgressCourses = Auth::user()->inProgressCourses()->take(4)->latest()->get();
+
+        foreach ($inProgressCourses as $enrollment) {
+            $enrollment->progress =  CourseController::progress($enrollment->course);
+        }
+        return view('dashboard', ['inProgressCourses' => $inProgressCourses]);
     }
 
     public function courses() {}
@@ -32,14 +36,6 @@ class StudentController extends Controller
     }
 
 
-    public function getAtivities()
-    {
-        $user = User::find(Auth::id());
-        if (Auth::check()) {
-            $reccentEnrollements = $user->enrollements()->with('course')->take(5)->latest()->get();
-            return $reccentEnrollements;
-        }
-    }
 
 
 

@@ -48,7 +48,7 @@
 
         {{-- user dashboard --}}
         @if (request()->routeIs('user.dashboard'))
-            <x-userComponents.user-dashboard :activities="$activities">
+            <x-userComponents.user-dashboard :inProgressCourses="$inProgressCourses">
 
             </x-userComponents.user-dashboard>
         @endif
