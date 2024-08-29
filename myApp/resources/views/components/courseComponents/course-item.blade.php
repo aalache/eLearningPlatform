@@ -10,23 +10,20 @@
     }
 @endphp
 
-<div class="relative  h-[250px]  rounded-md shadow-md overflow-hidden">
+<div class="relative  h-[250px]  rounded-t-md hover:rounded-md shadow-md overflow-hidden">
     <a href="{{ route($route, ['course' => $course]) }}">
         {{-- course image --}}
-        <img src="{{ asset('upload') }}/courses/{{ $course->image }}" alt=""
-            class="h-[100%] w-full rounded-md object-cover">
+        <img src="{{ asset('upload') }}/courses/{{ $course->image }}" alt="" class="h-[100%] w-full  object-cover">
 
         {{-- course detail --}}
         <div
-            class="group w-full h-full absolute   p-3  hover:p-3 translate-y-[-45%]  hover:translate-y-[-100%]   bg-[#000000]/50 backdrop-blur-xl   overflow-hidden transition-all ease-linear ">
+            class="group rounded-md w-full h-full absolute  p-3  hover:p-3 translate-y-[-45%]  hover:translate-y-[-100%]   bg-black/50 backdrop-blur-lg   overflow-hidden transition-all ease-linear ">
 
 
             <div class="flex justify-start items-center space-x-2 mb-2">
                 <div class="h-10 w-10 rounded-full bg-gray-500/40 border-2"></div>
                 <p class="text-sm text-gray-300"><span class="text-orange-600">@</span>{{ $course->user->name }}</p>
             </div>
-
-
 
             <div class="space-y-3">
                 <div>

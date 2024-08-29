@@ -4,44 +4,46 @@
     $isCurrentRoute = null;
     if ($playlist) {
         $isCurrentRoute =
-            url()->current() == route('coach.playlists.show', ['playlist' => $playlist, 'video' => $video]);
+            request()->routeIs('coach.playlists.show', ['playlist' => $playlist]) && request()->video == $video->id;
     }
     if ($course) {
-        $isCurrentRoute = url()->current() == route('courses.watch', ['course' => $course, 'video' => $video]);
+        $isCurrentRoute =
+            request()->routeIs('*.courses.watch', ['course' => $course]) && request()->video == $video->id;
     }
 
     $isLessonCompleted = VideoProgress::where('video_id', $video->id)
         ->where('user_id', auth()->id())
         ->exists();
 
-    $currentRouteTextColor = $isCurrentRoute ? 'text-blue-600' : 'text-gray-600';
-    $currentRouteBorderColor = $isCurrentRoute ? 'border-blue-600' : 'none';
-    $currentRouteBackground = $isCurrentRoute ? 'border-blue-600' : 'bg-gray-600';
+    $currentRouteTextColor = $isCurrentRoute ? 'text-orange-600' : 'text-gray-400';
+    $currentRouteBorderColor = $isCurrentRoute ? 'border-orange-600' : 'none';
+    $currentRouteBackground = $isCurrentRoute ? 'bg-orange-600' : 'bg-gray-400';
 
-    $lessonCompletedBorderColor = $isLessonCompleted ? 'border-green-600' : 'none';
-    $lessonCompletedBackground = $isLessonCompleted ? 'bg-green-600' : 'none';
+    $lessonCompletedBorderColor = $isLessonCompleted ? 'border-green-500' : 'none';
+    $lessonCompletedBackground = $isLessonCompleted ? 'bg-green-500' : 'none';
 @endphp
 <a {{ $attributes->merge(['class' => '']) }}>
     <li
-        class="group transition-all ease-in border-r-2 hover:border-blue-600 
+        class="group transition-all ease-in border-r-2 hover:border-orange-600 
         {{ $currentRouteBorderColor }} {{ $lessonCompletedBorderColor }}">
         <div class="flex space-x-3 w-full items-center">
             <div class="flex flex-col items-center gap-1">
                 <div
-                    class="w-[2px]  h-4 group-hover:bg-blue-600 transition-all ease-in {{ $currentRouteBackground }} 
+                    class="w-[2px]  h-4 group-hover:bg-orange-600 transition-all ease-in {{ $currentRouteBackground }} 
                     {{ $lessonCompletedBackground }}   ">
                 </div>
                 <div
-                    class="size-1.5 rounded-full  group-hover:bg-blue-600 transition-all ease-in {{ $currentRouteBackground }} 
+                    class="size-1.5 rounded-full  group-hover:bg-orange-600 transition-all ease-in {{ $currentRouteBackground }} 
                     {{ $lessonCompletedBackground }}">
                 </div>
                 <div
-                    class="w-[2px] h-4 grow group-hover:bg-blue-600 transition-all ease-in {{ $currentRouteBackground }} 
+                    class="w-[2px] h-4 grow group-hover:bg-orange-600 transition-all ease-in {{ $currentRouteBackground }} 
                     {{ $lessonCompletedBackground }} ">
                 </div>
             </div>
-            <p class=" group-hover:text-blue-600  {{ $currentRouteTextColor }} transition-all ease-in">
-                {{ $videoTitle }}</p>
+            <p class=" group-hover:text-orange-600 font-semibold  {{ $currentRouteTextColor }} transition-all ease-in">
+                {{ $videoTitle }}
+            </p>
         </div>
     </li>
 </a>

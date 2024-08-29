@@ -1,92 +1,88 @@
 <x-page-layout>
     {{-- ! visible page --}}
-    <section class=" h-auto bg-white min-h-full ">
+    <section class="max-w-7xl mx-auto sm:px-6 lg:px-6  py-4  overflow-hidden  sm:rounded-lg min-h-full">
 
-        <div class="py-6">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden  sm:rounded-lg">
-                    {{-- ? nav menu (go back | edit | delete ) --}}
-                    <div class="px-6 w-full flex justify-between items-center mb-4">
-                        <a href="{{ route('coach.playlists.index') }}" class="text-gray-600 hover:text-blue-600">
-                            <i class="fa-solid fa-arrow-left"></i> Go Back
-                        </a>
-                        <div>
-                            <button
-                                class="add-to-course-open-btn bg-white py-1.5 px-3 rounded-md text-gray-600 hover:text-blue-600">
-                                <i class="text-sm fa-solid fa-plus"></i> Add To Course
-                            </button>
-                            <button
-                                class="remove-from-course-open-btn bg-white py-1.5 px-3 rounded-md text-gray-600 hover:text-blue-600">
-                                <i class="text-sm fa-solid fa-minus"></i> Remove From Course
-                            </button>
-                            <button
-                                class="edit-playlist-open-btn bg-white py-1.5 px-3 rounded-md text-gray-600 hover:text-blue-600">
-                                <i class="text-sm fa-solid fa-pen"></i> Edit
-                            </button>
-                            <button
-                                class="delete-playlist-open-btn bg-white py-1.5 px-1 rounded-md text-gray-600 hover:text-red-600  ">
-                                <i class="text-sm fa-solid fa-trash-can ml-2"></i> Delete
-                            </button>
-                        </div>
+
+        {{-- ? nav menu (go back | edit | delete ) --}}
+        <div class=" w-full flex justify-between items-center mb-4">
+            <a href="{{ route('coach.playlists.index') }}"
+                class=" hover:bg-white/15 hover:shadow-md py-2 px-4 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
+                <i class="fa-solid fa-arrow-left text-orange-600"></i> Go Back
+            </a>
+            <div class="space-x-2">
+                <button
+                    class="add-to-course-open-btn  hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
+                    <i class="text-sm fa-solid fa-plus  text-orange-600"></i> Add To Course
+                </button>
+                <button
+                    class="remove-from-course-open-btn  hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
+                    <i class="text-sm fa-solid fa-minus text-orange-600"></i> Remove From Course
+                </button>
+                <button
+                    class="edit-playlist-open-btn  hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
+                    <i class="text-sm fa-solid fa-pen text-orange-600"></i> Edit
+                </button>
+                <button
+                    class="delete-playlist-open-btn  hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200 ">
+                    <i class="text-sm fa-solid fa-trash-can  text-orange-600"></i> Delete
+                </button>
+            </div>
+        </div>
+        {{-- ? --}}
+        @if ($videoToDisplay)
+            <div class="p-6 text-gray-900 grid grid-cols-6 gap-2 ">
+                {{-- ? Video section --}}
+                <div class="col-span-4 space-y-5">
+                    <video class="lesson rounded-md w-full bg-gray-600 " controls muted>
+                        <source src="{{ asset('upload/videos/' . $videoToDisplay->video) }}" type="video/mp4" />
+                    </video>
+                    <div class="flex items-center justify-between">
+                        <p class="border-l-4 border-orange-600 px-2 text-xl text-gray-300 font-semibold">
+                            {{ $videoToDisplay->title }}
+                        </p>
+                        <button
+                            class="hover:bg-white/15 hover:shadow-md py-2 px-3 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
+                            <i class="text-sm fa-solid fa-trash-can text-orange-600"></i> Remove from Playlist
+                        </button>
                     </div>
-                    {{-- ? --}}
-                    @if ($videoToDisplay)
-                        <div class="p-6 text-gray-900 grid grid-cols-6 gap-2 ">
-                            {{-- ? Video section --}}
-                            <div class="col-span-4 space-y-5">
-                                <video class="lesson rounded-md w-full bg-gray-600 " controls muted>
-                                    <source src="{{ asset('upload/videos/' . $videoToDisplay->video) }}"
-                                        type="video/mp4" />
-                                </video>
-                                <div class="flex items-center justify-between">
-                                    <p class="border-l-4 border-blue-600 px-2 text-lg text-black">
-                                        {{ $videoToDisplay->title }}
-                                    </p>
-                                    <button
-                                        class="remove-from-playlist-open-btn bg-white py-1.5 px-1 rounded-md text-gray-600 hover:text-red-600">
-                                        <i class="text-sm fa-solid fa-trash-can ml-2"></i> Remove from Playlist
-                                    </button>
-                                </div>
-                            </div>
-                            {{-- ? --}}
-                            {{-- ? Playlist section --}}
-                            <div class="col-span-2 p-4 space-y-5">
-                                <div class="bg-white rounded-md ">
-                                    <h2 class="text-2xl border-l-4 border-blue-600 px-2  text-gray-900">
-                                        {{ $playlist->name }}
-                                    </h2>
-                                </div>
+                </div>
+                {{-- ? --}}
+                {{-- ? Playlist section --}}
+                <div class="col-span-2 p-4 space-y-5">
+                    <div>
+                        <h2 class="text-2xl text-white font-semibold border-l-4 border-orange-600 px-2  ">
+                            {{ $playlist->name }}
+                        </h2>
+                    </div>
 
-                                <ul class="  mx-[-1px] space-y-0 ">
-                                    @foreach ($playlist->videos as $video)
-                                        <x-courseComponents.playlist-item
-                                            href="{{ route('coach.playlists.show', ['playlist' => $playlist, 'video' => $video]) }}"
-                                            :videoTitle="$video->title" :video="$video" :playlist="$playlist" />
-                                    @endforeach
+                    <ul class="  mx-[-1px] space-y-0 ">
+                        @foreach ($playlist->videos as $video)
+                            <x-courseComponents.playlist-item
+                                href="{{ route('coach.playlists.show', ['playlist' => $playlist, 'video' => $video->id]) }}"
+                                :videoTitle="$video->title" :video="$video" :playlist="$playlist" />
+                        @endforeach
 
-                                </ul>
-                            </div>
-                            {{-- ? --}}
-                        </div>
-                    @else
-                        <div class="w-full p-5 space-y-8">
-                            <div class="bg-white rounded-md ">
-                                <h2 class="text-2xl border-l-4 border-blue-600 px-2  text-gray-900">
-                                    {{ $playlist->name }}
-                                </h2>
-                            </div>
-                            <div class="rounded-lg w-full  bg-orange-100 p-3 shadow-sm">
+                    </ul>
+                </div>
+                {{-- ? --}}
+            </div>
+        @else
+            <div class="w-full mt-10 px-3 py-5 space-y-8">
+                <div class=" rounded-md ">
+                    <h2 class="text-2xl text-white border-l-4 border-orange-600 px-2  font-semibold ">
+                        {{ $playlist->name }}
+                    </h2>
+                </div>
+                <div class="rounded-lg w-full  bg-orange-600/30 p-3 shadow-sm">
 
-                                <p class="text-lg  text-orange-400   ">
-                                    No video available to play :(
-                                </p>
-                            </div>
-                        </div>
-                    @endif
-
-
+                    <p class="text-lg  text-orange-500   ">
+                        No video available to play :(
+                    </p>
                 </div>
             </div>
+        @endif
+
+
     </section>
     {{-- ! end --}}
 

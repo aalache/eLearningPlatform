@@ -14,7 +14,7 @@
         </div>
 
         <div class="space-y-2">
-            <div class="flex justify-between items-center text-orange-600">
+            <div class="flex justify-between items-center text-gray-300">
                 <p class="text-xs font-bold">Progress</p>
                 <p class="text-xs font-bold">{{ $enrollement->progress }}%</p>
             </div>

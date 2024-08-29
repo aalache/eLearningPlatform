@@ -2,51 +2,54 @@
 
 
 
-<div class="py-4  max-w-7xl mx-auto sm:px-6 lg:px-8">
+<div class="py-10 px-3 backdrop-blur-3xl bg-black/50  min-h-[100vh]">
 
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg  p-6 text-gray-900 space-y-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 overflow-hidden shadow-sm sm:rounded-lg  p-6 text-gray-900 space-y-12">
 
         <section class="space-y-5 ">
-            <div class=" space-y-0">
-                <h2 class="border-l-4 px-2 border-blue-600 text-2xl font-meduim ">My Videos</h2>
-                <p class="border-l-4 px-2 text-sm border-blue-600 text-blue-600 ">Where Vision Meets Reality</p>
+
+            <div class=" space-y-2">
+                <h2 class="border-l-4 px-2 border-orange-600 text-2xl text-[#ffffff] font-semibold ">My Videos</h2>
+                <p class="border-l-4 px-2 text-sm font-semibold border-[#efefef]/50 text-[#efefef]/50 ">
+                    Where Vision Meets Reality</p>
             </div>
 
-            <div class="border border-gray-500/30 rounded-md p-4 flex justify-between items-center">
+            <div class="backdrop-blur-lg rounded-md p-4 shadow-lg flex justify-between items-center">
                 <div>
-                    <h3 class="text-md text-black">You don't have any videos uploaded yet</h3>
-                    <p class=" text-sm text-gray-600">Upload your first video to get started</p>
+                    <h3 class="text-md text-gray-200 font-semibold">You don't have any videos uploaded yet</h3>
+                    <p class=" text-sm text-orange-600">Upload your first video to get started</p>
                 </div>
                 <button
-                    class="upload-open-btn bg-blue-500 hover:bg-blue-700 hover:shadow-md py-2 px-4 rounded-md text-white ">
+                    class="upload-open-btn bg-white/10 hover:bg-black/10 hover:shadow-md py-2 px-4 rounded-md text-white hover:text-orange-600 font-semibold ">
                     Upload Video
                 </button>
             </div>
+
         </section>
 
 
-        <section class="space-y-3 ">
-            <h2 class=" text-black text-xl font-">Video Library</h2>
+        <section class="space-y-3 backdrop-blur-3xl rounded-2xl p-4  ">
+            <h2 class=" text-xl border-l-4 px-2 border-orange-600  text-[#ffffff] font-semibold">Video Library</h2>
             <div class="space-y-3">
-                <ul class=" border-b  border-gray-500/20  flex justify-start items-center space-x-4">
-                    <li class="py-2 border-b-2 border-black w-fit">List</li>
-                    <li class="text-gray-600">Grid</li>
+                <ul class=" border-b  border-gray-200/20  flex justify-start items-center space-x-4">
+                    <li class="py-2 border-b-2 text-gray-200 border-orange-600">List</li>
+                    <li class="text-gray-500 w-fit">Grid</li>
                 </ul>
-                <div class="w-full space-y-3  ">
+                <div class="w-full space-y-3 py-2  ">
                     @foreach ($myVideos as $video)
                         <div
-                            class="flex relative justify-between items-center space-x-4 w-full  hover:border-x-4 border-blue-600 rounded-md  transition-all ease-in">
+                            class="flex p-2 relative justify-between items-center space-x-4 w-full bg-white/10 hover:border-r-4 border-orange-600 rounded-md  transition-all ease-in">
                             <video class="rounded-md w-40 shadow-md" controls>
                                 <source src="{{ asset('upload/videos') }}/{{ $video->video }}" type="video/mp4" />
                             </video>
                             <div class="flex justify-between items-center w-full">
-                                <div>
-                                    <h3 class=" text-black">{{ $video->title }}</h3>
-                                    <p class="text-sm text-blue-600">
+                                <div class="space-y-1">
+                                    <h3 class="text-lg text-[#efefef] font-semibold ">{{ $video->title }}</h3>
+                                    <p class="text-sm text-gray-400">
                                         Uploaded on {{ $video->updated_at->format('M d,Y | h:m a') }}
                                     </p>
                                 </div>
-                                <button title="view menu" class="video-menu-btn px-3">
+                                <button title="view menu" class="video-menu-btn p-3  text-gray-400">
                                     <i class="fa-solid fa-ellipsis"></i>
                                 </button>
                                 <!-- Hidden video menu -->

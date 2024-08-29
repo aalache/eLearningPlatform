@@ -1,37 +1,43 @@
 @props(['courses' => collect()])
 
 
-<div class="py-0 px-3 bg-white">
+<div class="py-10 px-3 backdrop-blur-3xl bg-black/50  min-h-[100vh] ">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class=" overflow-hidden shadow-sm sm:rounded-lg">
             {{-- header --}}
             <div class="py-6  text-gray-900 space-y-6  flex justify-between items-center">
-
-
-                <div class=" space-y-0">
-                    <h2 class="border-l-4 px-2 border-blue-600 text-2xl font-meduim ">All available courses</h2>
-                    <p class="border-l-4 px-2 text-sm border-blue-600 text-blue-600 ">Discover, Curate, Enjoy</p>
+                <div class=" space-y-2">
+                    <h2 class="border-l-4 px-2 border-orange-600 text-2xl text-[#ffffff] font-semibold ">
+                        All available courses
+                    </h2>
+                    <p class="border-l-4 px-2 text-sm font-semibold border-[#efefef]/50 text-[#efefef]/50 ">
+                        Discover, Curate, Enjoy
+                    </p>
                 </div>
-                <button class="create-course-open-btn bg-blue-600 py-1.5 px-3 rounded-md text-white hover:bg-blue-500">
-                    <i class="text-sm fa-solid fa-plus"></i> Create Course
-                </button>
 
+                <button
+                    class="create-course-open-btn bg-white/10 py-2 px-3 rounded-md text-white font-semibold hover:bg-black/10 transition ease-in">
+                    <i class="text-sm fa-solid fa-plus text-orange-600"></i> Create Course
+                </button>
             </div>
 
-            <div class="h-full w-full grid gap-3  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 ">
 
+            <div class="h-full w-full grid gap-3  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 ">
                 @foreach ($courses as $course)
                     <x-courseComponents.course-item :course="$course" />
                 @endforeach
             </div>
+
         </div>
     </div>
+    {{-- notfication  --}}
     @session('success')
         <x-notificationCards.notif-success>{{ session('success') }}</x-notificationCards.notif-success>
     @endsession
     @session('error')
         <x-notificationCards.notif-error>{{ session('error') }}</x-notificationCards.notif-error>
     @endsession
+
 </div>
 
 {{-- ? Create Course PopUp form --}}
@@ -47,7 +53,6 @@
         class="space-y-5 min-w-screen-md grid grid-cols-2 gap-x-2">
         @csrf
 
-
         {{-- Course name field --}}
         <x-formComponents.form-field>
             <x-formComponents.form-label for="name">Name</x-formComponents.form-label>
@@ -55,9 +60,6 @@
                 :value="old('name')" required></x-formComponents.form-input>
             <x-formComponents.form-error name="name" />
         </x-formComponents.form-field>
-
-
-
 
         {{-- duration field --}}
         <x-formComponents.form-field>
