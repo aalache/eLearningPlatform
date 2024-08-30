@@ -7,110 +7,112 @@
 @endphp
 <x-page-layout>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{-- header --}}
-                    <div class="p-4 text-gray-900 space-y-6">
+    <div class=" max-w-7xl mx-auto sm:px-6 lg:px-6  py-4  overflow-hidden  sm:rounded-lg min-h-full">
 
-                        <div class=" flex justify-between  items-baseline">
-                            <div class="flex min-w-72 flex-col space-y-1">
-                                <p class="text-[#0d151c] tracking-light text-[32px]  leading-tight">{{ $course->name }}
-                                </p>
-                                <p class="text-[#49779c] text-sm font-normal leading-normal">By:
-                                    {{ $course->user->name }}
-                                </p>
-                            </div>
-                            @if (Auth::user()->hasRole('instructor') && request()->routeIs('coach.*'))
-                                <div>
-                                    <button
-                                        class="edit-course-open-btn  py-1.5 hover:bg-[#efefef] px-1 rounded-md text-gray-600 hover:text-blue-600">
-                                        <i class="text-sm fa-solid fa-pen p-1.5"></i>Edit Course
-                                    </button>
-                                    <button
-                                        class="delete-course-open-btn  py-1.5 hover:bg-[#efefef] px-1 rounded-md text-gray-600 hover:text-red-600">
-                                        <i class="text-sm fa-solid fa-trash-can p-1.5"></i>Delete Course
-                                    </button>
-                                </div>
-                            @endif
-                        </div>
+        <div class=" flex justify-between items-baseline">
 
-                        <div
-                            class="h-full  w-full grid gap-3  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-6 ">
-                            @if ($videoToDisplay)
-                                {{-- Video Section --}}
-                                <div class="col-span-4 space-y-3 ">
-                                    <video id="video-{{ $videoToDisplay->id }}" data-user-id="{{ auth()->user()->id }}"
-                                        data-video-id="{{ $videoToDisplay->id }}"
-                                        class="lesson rounded-md w-full bg-gray-600 shadow-lg" controls muted>
-                                        <source src="{{ asset('upload/videos/' . $videoToDisplay->video) }}"
-                                            type="video/mp4" />
-                                    </video>
-                                    <h4 class="text-xl text-black px-2">{{ $videoToDisplay->title }}</h4>
-                                </div>
-                                {{--  --}}
-                                {{-- Playlists Section --}}
-                                <div class="col-span-2 space-y-3 px-4">
-                                    @foreach ($course->playlists as $playlist)
-                                        @php
-                                            $playlist = Playlist::with('videos')->find($playlist->id);
-                                        @endphp
-
-                                        {{-- ? Playlist section --}}
-                                        <div class="col-span-2 p-4 space-y-5">
-                                            <div
-                                                class="playlist group w-full flex justify-between items-center bg-white rounded-md ">
-                                                <h2 class="text-md border-l-4 border-blue-600 px-2  text-gray-900">
-                                                    {{ $playlist->name }}
-                                                </h2>
-                                                <i class="fa-solid fa-angle-right group-hover:rotate-90"></i>
-                                            </div>
-
-                                            <ul class="list-items hidden  mx-[-1px] space-y-0 ">
-
-                                                @if (request()->route('coach.*'))
-                                                    @foreach ($playlist->videos as $video)
-                                                        <x-courseComponents.playlist-item id="link-{{ $video->id }}"
-                                                            href="{{ route('coach.courses.watch', ['course' => $course, 'video' => $video]) }}"
-                                                            :videoTitle="$video->title" :video="$video" :course="$course" />
-                                                    @endforeach
-                                                @endif
-                                                @if (request()->route('user.*'))
-                                                    @foreach ($playlist->videos as $video)
-                                                        <x-courseComponents.playlist-item id="link-{{ $video->id }}"
-                                                            href="{{ route('user.courses.watch', ['course' => $course, 'video' => $video]) }}"
-                                                            :videoTitle="$video->title" :video="$video" :course="$course" />
-                                                    @endforeach
-                                                @endif
-
-                                            </ul>
-                                        </div>
-                                        {{-- ? --}}
-                                    @endforeach
-                                </div>
-                                {{--  --}}
-                            @else
-                                <p class="text-lg text-gray-500 w-[300px]  ">No video available to play :(
-                                </p>
-                            @endif
-                            {{--  --}}
-
-
-                        </div>
-                        {{--  --}}
-                    </div>
+            <a href="{{ route('coach.playlists.index') }}"
+                class=" hover:bg-white/15 hover:shadow-md py-2 px-4 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
+                <i class="fa-solid fa-arrow-left text-orange-600"></i> Go Back
+            </a>
+            @if (Auth::user()->hasRole('instructor') && request()->routeIs('coach.*'))
+                <div>
+                    <button
+                        class="edit-course-open-btn  hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
+                        <i class="text-sm fa-solid fa-pen text-orange-600"></i> Edit Course
+                    </button>
+                    <button
+                        class="delete-course-open-btn   hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
+                        <i class="text-sm fa-solid fa-trash-can text-orange-600"></i> Delete Course
+                    </button>
                 </div>
-            </div>
-        </div>
+            @endif
 
-        {{-- notifications --}}
-        @session('success')
-            <x-notificationCards.notif-success>{{ session('success') }}</x-notificationCards.notif-success>
-        @endsession
-        @session('error')
-            <x-notificationCards.notif-error>{{ session('error') }}</x-notificationCards.notif-error>
-        @endsession
+        </div>
+        <div class=" space-y-10">
+            <div class="mt-7 space-y-2">
+                <p
+                    class="text-white font-semibold border-l-4 border-orange-600 px-2 tracking-light text-4xl  leading-tight">
+                    {{ $course->name }}
+                </p>
+                <p class="text-gray-400 px-3 border-l-4 border-gray-400 font-semibold text-lg leading-normal">By:
+                    {{ $course->user->name }}
+                </p>
+            </div>
+            <div class="h-full  w-full grid gap-3  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-6 ">
+                @if ($videoToDisplay)
+                    {{-- Video Section --}}
+                    <div class="col-span-4 space-y-3 ">
+                        <video id="video-{{ $videoToDisplay->id }}" data-user-id="{{ auth()->user()->id }}"
+                            data-video-id="{{ $videoToDisplay->id }}"
+                            class="lesson rounded-md w-full bg-gray-600 shadow-lg" controls muted>
+                            <source src="{{ asset('upload/videos/' . $videoToDisplay->video) }}" type="video/mp4" />
+                        </video>
+                        <h4 class="text-xl text-black px-2">{{ $videoToDisplay->title }}</h4>
+                    </div>
+                    {{--  --}}
+                    {{-- Playlists Section --}}
+                    <div class="col-span-2 space-y-3 px-4">
+                        @foreach ($course->playlists as $playlist)
+                            @php
+                                $playlist = Playlist::with('videos')->find($playlist->id);
+                            @endphp
+
+                            {{-- ? Playlist section --}}
+                            <div class="col-span-2 p-4 space-y-5">
+                                <div
+                                    class="playlist group w-full flex justify-between items-center bg-white rounded-md ">
+                                    <h2 class="text-md border-l-4 border-blue-600 px-2  text-gray-900">
+                                        {{ $playlist->name }}
+                                    </h2>
+                                    <i class="fa-solid fa-angle-right group-hover:rotate-90"></i>
+                                </div>
+
+                                <ul class="list-items hidden  mx-[-1px] space-y-0 ">
+
+                                    @if (request()->route('coach.*'))
+                                        @foreach ($playlist->videos as $video)
+                                            <x-courseComponents.playlist-item id="link-{{ $video->id }}"
+                                                href="{{ route('coach.courses.watch', ['course' => $course, 'video' => $video]) }}"
+                                                :videoTitle="$video->title" :video="$video" :course="$course" />
+                                        @endforeach
+                                    @endif
+                                    @if (request()->route('user.*'))
+                                        @foreach ($playlist->videos as $video)
+                                            <x-courseComponents.playlist-item id="link-{{ $video->id }}"
+                                                href="{{ route('user.courses.watch', ['course' => $course, 'video' => $video]) }}"
+                                                :videoTitle="$video->title" :video="$video" :course="$course" />
+                                        @endforeach
+                                    @endif
+
+                                </ul>
+                            </div>
+                            {{-- ? --}}
+                        @endforeach
+                    </div>
+                    {{--  --}}
+                @else
+                    <div class="rounded-lg col-span-6  bg-orange-600/30 p-3 shadow-sm">
+
+                        <p class="text-lg  text-orange-500   ">
+                            No video available to play :(
+                        </p>
+                    </div>
+                @endif
+            </div>
+            {{--  --}}
+        </div>
+    </div>
+    {{--  --}}
+
+
+    {{-- notifications --}}
+    @session('success')
+        <x-notificationCards.notif-success>{{ session('success') }}</x-notificationCards.notif-success>
+    @endsession
+    @session('error')
+        <x-notificationCards.notif-error>{{ session('error') }}</x-notificationCards.notif-error>
+    @endsession
 
 </x-page-layout>
 
