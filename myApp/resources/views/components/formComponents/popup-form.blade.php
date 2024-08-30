@@ -1,6 +1,6 @@
 <div
-    {{ $attributes->merge(['class' => 'hidden w-full bg-black/30 backdrop-blur-sm min-h-full h-full fixed top-0 left-0 z-50 flex justify-center items-center shadow-md']) }}>
-    <div class="bg-[#172868] rounded-lg  shadow-lg mx-auto min-w-[500px]">
+    {{ $attributes->merge(['class' => 'hidden w-full bg-black/40 backdrop-blur-sm min-h-full fixed top-0 left-0 z-50 flex justify-center items-center shadow-md']) }}>
+    <div class="bg-[#172868] rounded-lg  shadow-lg mx-auto min-w-[500px] overflow-hidden">
 
         {{-- ? form start --}}
         <div class="w-full ">

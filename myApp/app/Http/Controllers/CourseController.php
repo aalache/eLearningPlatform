@@ -166,6 +166,7 @@ class CourseController extends Controller
     // return the course view wich render all the course data ( palaylists & videos)
     public function watch(Course $course, Video $video)
     {
+
         $course = Course::with('playlists.videos')->findOrFail($course->id);
 
         $videoToDisplay = null;

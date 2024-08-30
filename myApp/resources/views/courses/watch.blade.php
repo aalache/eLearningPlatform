@@ -7,11 +7,11 @@
 @endphp
 <x-page-layout>
 
-    <div class=" max-w-7xl mx-auto sm:px-6 lg:px-6  py-4  overflow-hidden  sm:rounded-lg min-h-full">
+    <div class=" max-w-7xl mx-auto px-3 sm:px-6 lg:px-6  py-4  overflow-hidden  sm:rounded-lg min-h-full">
 
         <div class=" flex justify-between items-baseline">
 
-            <a href="{{ route('coach.playlists.index') }}"
+            <a href="{{ url()->previous() }}"
                 class=" hover:bg-white/15 hover:shadow-md py-2 px-4 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
                 <i class="fa-solid fa-arrow-left text-orange-600"></i> Go Back
             </a>
@@ -29,55 +29,56 @@
             @endif
 
         </div>
-        <div class=" space-y-10">
+        <div class=" space-y-10 px-2">
             <div class="mt-7 space-y-2">
                 <p
                     class="text-white font-semibold border-l-4 border-orange-600 px-2 tracking-light text-4xl  leading-tight">
                     {{ $course->name }}
                 </p>
-                <p class="text-gray-400 px-3 border-l-4 border-gray-400 font-semibold text-lg leading-normal">By:
-                    {{ $course->user->name }}
+                <p class="text-gray-400 px-3 border-l-4 border-gray-400 font-semibold text-lg leading-normal">
+                    By: {{ $course->user->name }}
                 </p>
             </div>
             <div class="h-full  w-full grid gap-3  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-6 ">
                 @if ($videoToDisplay)
                     {{-- Video Section --}}
-                    <div class="col-span-4 space-y-3 ">
+                    <div class="col-span-4 space-y-5 ">
                         <video id="video-{{ $videoToDisplay->id }}" data-user-id="{{ auth()->user()->id }}"
                             data-video-id="{{ $videoToDisplay->id }}"
                             class="lesson rounded-md w-full bg-gray-600 shadow-lg" controls muted>
                             <source src="{{ asset('upload/videos/' . $videoToDisplay->video) }}" type="video/mp4" />
                         </video>
-                        <h4 class="text-xl text-black px-2">{{ $videoToDisplay->title }}</h4>
+                        <h4 class="text-xl text-gray-400 font-semibold border-l-4 border-orange-600 px-2">
+                            {{ $videoToDisplay->title }}</h4>
                     </div>
                     {{--  --}}
                     {{-- Playlists Section --}}
-                    <div class="col-span-2 space-y-3 px-4">
+                    <div class="col-span-2 space-y-3 px-4  h-full overflow-y-scroll">
                         @foreach ($course->playlists as $playlist)
                             @php
                                 $playlist = Playlist::with('videos')->find($playlist->id);
                             @endphp
 
                             {{-- ? Playlist section --}}
-                            <div class="col-span-2 p-4 space-y-5">
-                                <div
-                                    class="playlist group w-full flex justify-between items-center bg-white rounded-md ">
-                                    <h2 class="text-md border-l-4 border-blue-600 px-2  text-gray-900">
+                            <div class="col-span-2 p-4 space-y-5 bg-black/50 rounded-md">
+                                <div class="playlist group w-full flex justify-between items-center  ">
+                                    <h2
+                                        class="text-md lg:text-lg text-gray-300 font-semibold border-l-4 border-orange-600 px-2">
                                         {{ $playlist->name }}
                                     </h2>
-                                    <i class="fa-solid fa-angle-right group-hover:rotate-90"></i>
+                                    <i class="fa-solid fa-angle-right text-orange-600 group-hover:rotate-90"></i>
                                 </div>
 
-                                <ul class="list-items hidden  mx-[-1px] space-y-0 ">
+                                <ul style="display: block" class="list-items   mx-[-1px] space-y-0 ">
 
-                                    @if (request()->route('coach.*'))
+                                    @if (request()->routeIs('coach.*'))
                                         @foreach ($playlist->videos as $video)
                                             <x-courseComponents.playlist-item id="link-{{ $video->id }}"
                                                 href="{{ route('coach.courses.watch', ['course' => $course, 'video' => $video]) }}"
                                                 :videoTitle="$video->title" :video="$video" :course="$course" />
                                         @endforeach
                                     @endif
-                                    @if (request()->route('user.*'))
+                                    @if (request()->routeIs('user.*'))
                                         @foreach ($playlist->videos as $video)
                                             <x-courseComponents.playlist-item id="link-{{ $video->id }}"
                                                 href="{{ route('user.courses.watch', ['course' => $course, 'video' => $video]) }}"

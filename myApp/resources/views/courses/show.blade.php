@@ -4,16 +4,17 @@
      $course = Course::with('playlists')->find($course->id);
  @endphp
  <x-page-layout>
-     <div class="py-5 max-w-8xl mx-auto sm:px-6 lg:px-8">
+     <div class="sm:py-5 max-w-8xl mx-auto sm:px-6 lg:px-8">
          <div class="backdrop-blur-3xl bg-black/50  overflow-hidden shadow-sm sm:rounded-lg">
              {{-- header --}}
-             <div class="p-10 space-y-6">
+             <div class="p-5 sm:p-10 space-y-6">
 
                  {{-- ? image and couse title and description section --}}
-                 <div class="h-full w-full grid grid-cols-2 gap-2 space-x-2">
+                 <div class="h-full w-full grid gap-y-4 md:grid-cols-2 md:gap-2 ">
 
-                     <div class=" w-full  space-y-5 overflow-y-scroll">
-                         <h2 class="course-name text-5xl  tracking-wide text-white font-semibold mb-4">
+                     <div class=" w-full space-y-5 overflow-y-scroll">
+                         <h2
+                             class="course-name text-3xl sm:text-4xl  lg:text-5xl tracking-wide text-white font-semibold mb-4">
                              {{ $course->name }}
                          </h2>
                          <p class="course-description text-gray-400   leading-relaxed">
@@ -45,7 +46,6 @@
                      </div>
 
                      <div class="  shadow-lg w-full max-h-[350px] rounded-md">
-
                          <img src="{{ asset('upload/courses') }}/{{ $course->image }}"
                              class="w-full h-full object-cover rounded-md" alt="">
                      </div>
@@ -55,26 +55,27 @@
                  {{-- ? coure detail section --}}
                  <div class="border-t-2 border-gray-400/10  w-full"></div>
 
-                 <div class="w-full flex justify-evenly items-baseline  ">
+                 <div class="w-full flex flex-wrap  justify-evenly items-baseline  ">
                      <div class=" w-fit  rounded-md  flex flex-col items-center justify-center space-y-2">
-                         <span class="text-lg text-gray-200 font-semibold">Category</span>
-                         <span class="rounded-md w-fit  font-semibold text-gray-400 ">
+                         <span class="text-sm md:text-md lg:text-lg text-gray-200 font-semibold">Category</span>
+                         <span class="text-sm md:text-md  rounded-md w-fit  font-semibold text-gray-400 ">
                              #{{ $course->category }} </span>
                      </div>
 
                      <div class=" w-fit  rounded-md  flex flex-col items-center justify-center space-y-2">
-                         <span class="text-lg text-gray-200 font-semibold"> Purshace for</span>
-                         <span class="text-gray-400 font-semibold">$
+                         <span class="text-sm md:text-md lg:text-lg text-gray-200 font-semibold"> Purshace for</span>
+                         <span class="text-sm md:text-md  text-gray-400 font-semibold">$
                              {{ $course->price }}</span>
                      </div>
 
                      <div class=" w-fit  rounded-md  flex flex-col items-center justify-center space-y-2">
-                         <span class="text-lg text-gray-200 font-semibold">Istemeted Time </span>
-                         <span class="text-gray-400 font-semibold">{{ $course->duration }} weeks</span>
+                         <span class="text-sm md:text-md lg:text-lg text-gray-200 font-semibold">Istemeted Time </span>
+                         <span class="text-sm md:text-md  text-gray-400 font-semibold">{{ $course->duration }}
+                             weeks</span>
                      </div>
                      <div class="w-fit  rounded-md  flex flex-col items-center justify-center space-y-2">
-                         <span class="text-lg text-gray-200 font-semibold">Level</span>
-                         <span class="text-gray-400 font-semibold">{{ $course->level }}</span>
+                         <span class="text-sm md:text-md lg:text-lg text-gray-200 font-semibold">Level</span>
+                         <span class="text-sm md:text-md  text-gray-400 font-semibold">{{ $course->level }}</span>
                      </div>
 
                  </div>
@@ -82,7 +83,8 @@
                  <div class="border-t-2 border-gray-400/10   w-full"></div>
 
                  <div class=" space-y-8">
-                     <h2 class="text-2xl border-l-4 border-orange-600 px-2 text-white font-semibold ">Course content
+                     <h2 class="text-xl  lg:text-2xl  border-l-4 border-orange-600 px-2 text-white font-semibold ">
+                         Course content
                      </h2>
                      <div class=" w-full space-y-3">
 
@@ -94,7 +96,7 @@
                                  {{-- ? Playlist section --}}
                                  <div class="space-y-3">
                                      <div class="playlist group w-full flex justify-between items-center  rounded-md ">
-                                         <h2 class="font-semibold text-lg  px-2  text-gray-300">
+                                         <h2 class="font-semibold text-md  lg:text-lg  px-2  text-gray-300">
                                              {{ $playlist->name }}
                                          </h2>
                                          <i class="fa-solid fa-angle-right text-orange-600 group-hover:rotate-90"></i>

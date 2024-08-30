@@ -1,7 +1,7 @@
 @props(['myplaylists'])
 
 {{-- ! Visible page  --}}
-<div class=" py-10 px-3 backdrop-blur-3xl bg-black/50  min-h-[100vh]">
+<div class=" py-10 px-3  min-h-[100vh]">
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8  overflow-hidden  sm:rounded-lg p-6 text-gray-900 space-y-12">
         <div class="space-y-8 ">

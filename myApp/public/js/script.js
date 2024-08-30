@@ -62,7 +62,7 @@ function markVideoAsCompleted(videoElement) {
           let playlistItems = this.nextElementSibling;
  
  
-          if (playlistItems.style.display === 'none' || playlistItems.style.display === '') {
+          if (playlistItems.style.display === 'none' || playlistItems.style.display === '' ) {
               playlistItems.style.display = 'block';
               arrowIcon.classList.add('rotate-90');
           } else {

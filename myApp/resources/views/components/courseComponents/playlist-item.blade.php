@@ -3,12 +3,17 @@
     use App\Models\VideoProgress;
     $isCurrentRoute = null;
     if ($playlist) {
-        $isCurrentRoute =
-            request()->routeIs('coach.playlists.show', ['playlist' => $playlist]) && request()->video == $video->id;
+        if (request()->video) {
+            $isCurrentRoute =
+                request()->routeIs('coach.playlists.show', ['playlist' => $playlist]) &&
+                request()->video->id == $video->id;
+        }
     }
     if ($course) {
-        $isCurrentRoute =
-            request()->routeIs('*.courses.watch', ['course' => $course]) && request()->video == $video->id;
+        if (request()->video) {
+            $isCurrentRoute =
+                request()->routeIs('*.courses.watch', ['course' => $course]) && request()->video->id == $video->id;
+        }
     }
 
     $isLessonCompleted = VideoProgress::where('video_id', $video->id)

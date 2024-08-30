@@ -2,7 +2,7 @@
 
 
 
-<div class="py-10 px-3 backdrop-blur-3xl bg-black/50  min-h-[100vh]">
+<div class=" py-10 px-3  min-h-[100vh]">
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 overflow-hidden shadow-sm sm:rounded-lg  p-6 text-gray-900 space-y-12">
 
@@ -197,7 +197,7 @@
 {{-- ? --------------------------------------------------------------------------------- --}}
 
 {{-- ? ###### Add To Playlist PopUp Form Start ########## --}}
-<x-formComponents.popup-form id="delete-video-form">
+<x-formComponents.popup-form id="addTo-video-form">
     <x-slot:closeBtn>
         <button class="addTo-close-btn hover:scale-125 transition-all ease-in">
             <i class="fa-solid fa-xmark"></i>
@@ -266,18 +266,19 @@
     /**
      * upload popUp
      */
-    const uploadPopUp = document.getElementById('upload-form');
-    const uploadOpenBtn = document.querySelector('.upload-open-btn').addEventListener('click', showUploadPopUp);
-    const uploadCloseBtn = document.querySelector('.upload-close-btn').addEventListener('click', hideUploadPopUp);
+    const uploadForm = document.getElementById('upload-form');
+    const uploadOpenBtn = document.querySelector('.upload-open-btn').addEventListener('click', showUploadForm);
+    const uploadCloseBtn = document.querySelector('.upload-close-btn').addEventListener('click', hideUploadForm);
+    console.log(uploadForm)
 
-    function showUploadPopUp() {
+    function showUploadForm() {
         document.body.style.overflow = 'hidden';
-        uploadPopUp.classList.remove('hidden');
+        uploadForm.classList.remove('hidden');
     }
 
-    function hideUploadPopUp() {
+    function hideUploadForm() {
         document.body.style.overflow = 'visible';
-        uploadPopUp.classList.add('hidden');
+        uploadForm.classList.add('hidden');
     }
 
     /**
@@ -329,25 +330,25 @@
     /**
      * Add video to playlist Popup Form
      */
-    const addToPlaylistForm = document.getElementById('delete-video-form');
-    const addToOpenBtns = document.querySelectorAll('.delete-video-open-btn') /
-        const delete - videoCloseBtn = document.querySelector('.delete-video-close-btn').addEventListener('click',
-            hideAddToPlaylistPopUp);
+    const addToPlaylistForm = document.getElementById('addTo-video-form');
+    const addToOpenBtns = document.querySelectorAll('.addTo-open-btn')
+    const addToCloseBtn = document.querySelector('.addTo-close-btn').addEventListener('click',
+        hideAddToPlaylistPopUp);
 
 
-    delete - videoOpenBtns.forEach(btn => {
+    addToOpenBtns.forEach(btn => {
         btn.addEventListener('click', showAddToPlaylistPopUp);
     })
 
     function showAddToPlaylistPopUp() {
         console.log('clicked')
         document.body.style.overflow = 'hidden';
-        delete - videoPlaylistForm.classList.remove('hidden');
+        addToPlaylistForm.classList.remove('hidden');
     }
 
     function hideAddToPlaylistPopUp() {
         document.body.style.overflow = 'visible';
-        delete - videoPlaylistForm.classList.add('hidden');
+        addToPlaylistForm.classList.add('hidden');
     }
 
     /**

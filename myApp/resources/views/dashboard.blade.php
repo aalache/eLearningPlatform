@@ -21,13 +21,13 @@
                 @endif
             </h2>
 
-            @if (request()->routeIs('user.courses') || request()->routeIs('coach.courses'))
+            @if (request()->routeIs('user.courses.index') || request()->routeIs('coach.courses.index'))
                 @php
                     $route = null;
-                    if (request()->routeIs('user.courses')) {
+                    if (request()->routeIs('user.courses.index')) {
                         $route = 'user.courses.search';
                     }
-                    if (request()->routeIs('coach.courses')) {
+                    if (request()->routeIs('coach.courses.index')) {
                         $route = 'coach.courses.search';
                     }
                 @endphp
