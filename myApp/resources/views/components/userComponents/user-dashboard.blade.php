@@ -8,7 +8,7 @@
 
 
 
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-6 py-4">
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-6 py-4 min-h-full">
     <div class=" overflow-hidden shadow-sm sm:rounded-lg">
 
         <div class="px-2 pt-8 pb-4 text-gray-900 space-y-6">

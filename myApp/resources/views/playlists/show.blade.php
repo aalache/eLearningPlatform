@@ -41,7 +41,7 @@
                             {{ $videoToDisplay->title }}
                         </p>
                         <button
-                            class="hover:bg-white/15 hover:shadow-md py-2 px-3 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
+                            class="remove-from-playlist-open-btn hover:bg-white/15 hover:shadow-md py-2 px-3 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
                             <i class="text-sm fa-solid fa-trash-can text-orange-600"></i> Remove from Playlist
                         </button>
                     </div>
@@ -102,16 +102,21 @@
         <form action="{{ route('coach.playlists.addToCourse', ['playlist' => $playlist]) }}" method="POST"
             enctype="multipart/form-data" class="space-y-5">
             @csrf
-            <select name="course_id" id="course_id"
-                class="w-full rounded-md border-0  text-gray-200 shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400 backdrop-blur-sm bg-gray-300/20 p-2">
-                @if ($courses->isNotEmpty())
-                    @foreach ($courses as $course)
-                        <option value="{{ $course->id }}">{{ $course->name }}</option>
-                    @endforeach
-                @else
-                    <option value=""> No playlist available</option>
-                @endif
-            </select>
+            <div class="space-y-2">
+                <x-formComponents.form-label for="course_id">
+                    Select the course name where this playlist will be added :
+                </x-formComponents.form-label>
+                <select name="course_id" id="course_id"
+                    class="block w-full rounded-md border-0  text-orange-700 font-medium shadow-sm  placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400 backdrop-blur-sm bg-white/5">
+                    @if ($courses->isNotEmpty())
+                        @foreach ($courses as $course)
+                            <option value="{{ $course->id }}">{{ $course->name }}</option>
+                        @endforeach
+                    @else
+                        <option value=""> No playlist available</option>
+                    @endif
+                </select>
+            </div>
             <x-formComponents.form-button type='submit'>Add To Course</x-formComponents.form-button>
 
         </form>
@@ -131,16 +136,21 @@
         <form action="{{ route('coach.playlists.removeFromCourse', ['playlist' => $playlist]) }}" method="POST"
             enctype="multipart/form-data" class="space-y-5">
             @csrf
-            <select name="course_id" id="course_id"
-                class="w-full rounded-md border-0  text-gray-200 shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400 backdrop-blur-sm bg-gray-300/20 p-2">
-                @if ($coursesContainingPlaylist->isNotEmpty())
-                    @foreach ($coursesContainingPlaylist as $course)
-                        <option value="{{ $course->id }}">{{ $course->name }}</option>
-                    @endforeach
-                @else
-                    <option value=""> No playlist available</option>
-                @endif
-            </select>
+            <div class="space-y-2">
+                <x-formComponents.form-label for="course_id">
+                    Select the course name where this playlist will be removed from :
+                </x-formComponents.form-label>
+                <select name="course_id" id="course_id"
+                    class="block w-full rounded-md border-0  text-orange-700 font-medium shadow-sm  placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400 backdrop-blur-sm bg-white/5">
+                    @if ($coursesContainingPlaylist->isNotEmpty())
+                        @foreach ($coursesContainingPlaylist as $course)
+                            <option value="{{ $course->id }}">{{ $course->name }}</option>
+                        @endforeach
+                    @else
+                        <option value=""> No playlist available</option>
+                    @endif
+                </select>
+            </div>
             <x-formComponents.form-button type='submit'>Remove From Course</x-formComponents.form-button>
 
         </form>
@@ -164,7 +174,8 @@
 
             {{-- playlist name field --}}
             <x-formComponents.form-field>
-                <label for="name" class="text-white text-sm">Playlist Name</label>
+                <x-formComponents.form-label for="name">Playlist
+                    Name</x-formComponents.form-label>
                 <x-formComponents.form-input type="text" id="name" name="name" placeholder="playlist name"
                     value="{{ $playlist->name }}" required></x-formComponents.form-input>
                 <x-formComponents.form-error name="name" />
@@ -193,9 +204,9 @@
 
             {{-- playlist name delete confirmation field --}}
             <x-formComponents.form-field>
-                <label for="name" class="text-white text-sm">
+                <x-formComponents.form-label for="name">
                     Type the playlist name <strong>{{ $playlist->name }}</strong> to confirm deletion:
-                </label>
+                </x-formComponents.form-label>
                 <x-formComponents.form-input type="text" id="confirm-delete" name="confirm-delete"
                     placeholder="'{{ $playlist->name }}'" required></x-formComponents.form-input>
                 <x-formComponents.form-error name="confirm-delete" />
@@ -225,9 +236,10 @@
 
                 {{-- video name delete confirmation field --}}
                 <x-formComponents.form-field>
-                    <label for="name" class="text-white text-sm">
-                        Type the video name <strong>{{ $videoToDisplay->title }}</strong> to confirm removing:
-                    </label>
+                    <x-formComponents.form-label for="name">
+                        Type the video name <strong>{{ $videoToDisplay->title }}</strong> to confirm
+                        removing:
+                    </x-formComponents.form-label>
                     <x-formComponents.form-input type="text" id="confirm-remove" name="confirm-remove"
                         placeholder="'{{ $videoToDisplay->title }}'" required></x-formComponents.form-input>
                     <x-formComponents.form-error name="confirm-remove" />
@@ -329,6 +341,7 @@
     const removeFromPlaylistForm = document.getElementById('remove-from-playlist-form');
     document.querySelector('.remove-from-playlist-open-btn').addEventListener('click', showRemoveFromPlaylistForm);
     document.querySelector('.remove-from-playlist-close-btn').addEventListener('click', hideRemoveFromPlaylistForm);
+    console.log(removeFromPlaylistForm);
 
     function showRemoveFromPlaylistForm() {
         document.body.overflow = "hidden";

@@ -157,6 +157,44 @@
 </x-formComponents.popup-form>
 {{-- ? ----------------------------------------------------------------------------------- --}}
 
+{{-- ? ###### Add To Playlist PopUp Form Start ########## --}}
+<x-formComponents.popup-form id="addTo-video-form">
+    <x-slot:closeBtn>
+        <button class="addTo-close-btn hover:scale-125 transition-all ease-in">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </x-slot:closeBtn>
+    {{-- form start --}}
+    <form action="" method="POST" enctype="multipart/form-data"
+        class="  rounded-lg  shadow-lg mx-auto  space-y-5">
+        @csrf
+
+        <div class="space-y-2">
+            <x-formComponents.form-label for="course_id">
+                Select the playlist name where this video will be added :
+            </x-formComponents.form-label>
+            <select name="addedTo" id="addedTo"
+                class="block w-full rounded-md border-0  text-orange-700 font-medium shadow-sm  placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400 backdrop-blur-sm bg-white/5">
+                @if ($playlists->isNotEmpty())
+                    @foreach ($playlists as $playlist)
+                        @php
+                            $selectedPlaylist = $playlist;
+                        @endphp
+                        <option value="{{ $playlist->id }}">{{ $playlist->name }}</option>
+                    @endforeach
+                @else
+                    <option value=""> No playlist available</option>
+                @endif
+            </select>
+        </div>
+        <x-formComponents.form-button type='submit'>Add To Playlist</x-formComponents.form-button>
+
+
+    </form>
+    {{--  form end --}}
+</x-formComponents.popup-form>
+{{-- ? ----------------------------------------------------------------------------------- --}}
+
 {{-- ? ######### Video Edit Pop up Form  start ######### --}}
 <x-formComponents.popup-form id="edit-video-form">
     <x-slot:closeBtn>
@@ -196,39 +234,6 @@
 </x-formComponents.popup-form>
 {{-- ? --------------------------------------------------------------------------------- --}}
 
-{{-- ? ###### Add To Playlist PopUp Form Start ########## --}}
-<x-formComponents.popup-form id="addTo-video-form">
-    <x-slot:closeBtn>
-        <button class="addTo-close-btn hover:scale-125 transition-all ease-in">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-    </x-slot:closeBtn>
-    {{-- form start --}}
-    <form action="" method="POST" enctype="multipart/form-data"
-        class="edit-form bg-[#172868] rounded-lg  shadow-lg mx-auto  space-y-4">
-        @csrf
-
-
-        <select name="addedTo" id="addedTo"
-            class="w-full rounded-md border-0  text-gray-200 shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400 backdrop-blur-sm bg-gray-300/20 p-2">
-            @if ($playlists->isNotEmpty())
-                @foreach ($playlists as $playlist)
-                    @php
-                        $selectedPlaylist = $playlist;
-                    @endphp
-                    <option value="{{ $playlist->id }}">{{ $playlist->name }}</option>
-                @endforeach
-            @else
-                <option value=""> No playlist available</option>
-            @endif
-        </select>
-        <x-formComponents.form-button type='submit'>Add To Playlist</x-formComponents.form-button>
-
-
-    </form>
-    {{--  form end --}}
-</x-formComponents.popup-form>
-{{-- ? ----------------------------------------------------------------------------------- --}}
 
 {{-- ? ###### Delete Video PopUp Form Start ########## --}}
 <x-formComponents.popup-form id="delete-video-form">
@@ -244,9 +249,9 @@
 
         {{-- playlist name delete confirmation field --}}
         <x-formComponents.form-field>
-            <label for="name" class="text-white text-sm">
+            <x-formComponents.form-label for="name">
                 Type the playlist name <strong>{{ $playlist->name }}</strong> to confirm deletion:
-            </label>
+            </x-formComponents.form-label>
             <x-formComponents.form-input type="text" id="confirm-delete" name="confirm-delete"
                 placeholder="'{{ $playlist->name }}'" required></x-formComponents.form-input>
             <x-formComponents.form-error name="confirm-delete" />
@@ -279,6 +284,30 @@
     function hideUploadForm() {
         document.body.style.overflow = 'visible';
         uploadForm.classList.add('hidden');
+    }
+
+    /**
+     * Add video to playlist Popup Form
+     */
+    const addToPlaylistForm = document.getElementById('addTo-video-form');
+    const addToOpenBtns = document.querySelectorAll('.addTo-open-btn')
+    const addToCloseBtn = document.querySelector('.addTo-close-btn').addEventListener('click',
+        hideAddToPlaylistPopUp);
+
+
+    addToOpenBtns.forEach(btn => {
+        btn.addEventListener('click', showAddToPlaylistPopUp);
+    })
+
+    function showAddToPlaylistPopUp() {
+        console.log('clicked')
+        document.body.style.overflow = 'hidden';
+        addToPlaylistForm.classList.remove('hidden');
+    }
+
+    function hideAddToPlaylistPopUp() {
+        document.body.style.overflow = 'visible';
+        addToPlaylistForm.classList.add('hidden');
     }
 
     /**
@@ -327,29 +356,7 @@
     }
 
 
-    /**
-     * Add video to playlist Popup Form
-     */
-    const addToPlaylistForm = document.getElementById('addTo-video-form');
-    const addToOpenBtns = document.querySelectorAll('.addTo-open-btn')
-    const addToCloseBtn = document.querySelector('.addTo-close-btn').addEventListener('click',
-        hideAddToPlaylistPopUp);
 
-
-    addToOpenBtns.forEach(btn => {
-        btn.addEventListener('click', showAddToPlaylistPopUp);
-    })
-
-    function showAddToPlaylistPopUp() {
-        console.log('clicked')
-        document.body.style.overflow = 'hidden';
-        addToPlaylistForm.classList.remove('hidden');
-    }
-
-    function hideAddToPlaylistPopUp() {
-        document.body.style.overflow = 'visible';
-        addToPlaylistForm.classList.add('hidden');
-    }
 
     /**
      * Delete video  Popup Form

@@ -153,12 +153,12 @@ class CourseController extends Controller
 
         if ($request->routeIs('user.courses.search')) {
             // dd($courses);
-            return redirect()->route('user.courses')->with('courses', $courses);
+            return redirect()->route('user.courses.index')->with('courses', $courses);
         }
 
         if ($request->routeIs('coach.courses.search')) {
             // dd($courses);
-            return redirect()->route('coach.courses')->with('courses', $courses);
+            return redirect()->route('coach.courses.index')->with('courses', $courses);
         }
     }
 

@@ -15,11 +15,7 @@
 
     <x-slot name="header">
         <div class="flex justify-end items-center  ">
-            <h2 class="text-xl text-gray-800 leading-tight">
-                @if (request()->routeIs('admin.users'))
-                    {{ __('Users') }}
-                @endif
-            </h2>
+
 
             @if (request()->routeIs('user.courses.index') || request()->routeIs('coach.courses.index'))
                 @php
@@ -33,10 +29,10 @@
                 @endphp
 
                 <form action="{{ route($route) }}" method="POST"
-                    class=" w-[30%] hover:w-[40%] hover:shadow-sm h-12 rounded-xl transition-all ease-in border-2 ">
+                    class=" w-[30%] hover:w-[40%] hover:shadow-sm h-12 rounded-xl transition-all ease-in shadow-md">
                     @csrf
                     <input type="text" placeholder="Search..." name="query" id="query"
-                        class=" border-none outlin-none w-full  h-full bg-[#efefef] rounded-xl text-gray-700">
+                        class=" border-none outlin-none w-full  h-full bg-white/15 rounded-xl text-gray-300 font-medium px-3">
                 </form>
             @endif
 
