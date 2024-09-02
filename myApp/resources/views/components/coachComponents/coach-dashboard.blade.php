@@ -7,7 +7,7 @@
 @props(['activities'])
 
 
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-6">
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-6 min-h-[100vh]">
     <div class=" overflow-hidden  sm:rounded-lg">
         <div class="px-2 pt-8 pb-4 text-gray-900 space-y-8">
             {{-- welcom heading and summary heading --}}

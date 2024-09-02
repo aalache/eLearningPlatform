@@ -107,6 +107,7 @@
                 <x-formComponents.form-label for="description">
                     Description</x-formComponents.form-label>
                 <x-formComponents.form-textarea id="description" name="description"
+                    class="block w-full rounded-md border-0  text-orange-700 font-medium shadow-sm  placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400 backdrop-blur-sm bg-white/5"
                     placeholder="description of your course content" :value="old('description')" required />
                 <x-formComponents.form-error name="description" />
             </x-formComponents.form-field>

@@ -64,43 +64,47 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        $video = $this->upload($request);
-        ActivityLogger::log('Video Uploaded', 'you uploaded ' . $video->title . ' to your workspace');
-        return redirect()->route('coach.videos.index')->with('success', 'Video uploded successfuly');
+        // $video = $this->upload($request);
+        $request->validate(
+            [
+                'title' => ['required', 'max:256'],
+                'description' => ['required'],
+                'youtube_url' => ['required', 'url', 'active_url'],
+            ]
+        );
+        $video = Video::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'youtube_url' => $request->youtube_url,
+            'user_id' => Auth::id(),
+        ]);
+
+        if ($video) {
+
+            ActivityLogger::log('Video Uploaded', 'you uploaded ' . $video->title . ' to your workspace');
+            return redirect()->route('coach.videos.index')->with('success', 'Video uploded successfuly');
+        }
+        return redirect()->route('coach.videos.index')->with('error', 'Failed to upload video');
     }
 
-    /**
-     * Display the specified Video.
-     */
-    // public function show(Video $video)
-    // {
-    //     return view('videos.show', ['video' => $video]);
-    // }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    // public function edit(Video $video)
-    // {
-    //     return view('videos.edit', ['video' => $video]);
-    // }
 
     /**
      * Update the specified Video in storage.
      */
     public function update(Request $request, Video $video)
     {
-        dd('hello');
+
         $attributes = $request->validate(
             [
                 'title' => ['required', 'max:256'],
-                'duration' => ['required']
+                'description' => ['required'],
+                'youtube_url' => ['required', 'url', 'active_url'],
             ]
         );
 
         $video->update($attributes);
         ActivityLogger::log('Video Updated ', 'you have updated ' . $video->title);
-        return redirect()->route('coach.videos')->with('success', 'Video updated successfuly');
+        return redirect()->route('coach.videos.index')->with('success', 'Video updated successfuly');
     }
 
     /**
@@ -108,16 +112,18 @@ class VideoController extends Controller
      */
     public function destroy(Request $request, Video $video)
     {
+
         $validator = $request->validate([
             'confirm-deletion' => ['required', 'string']
         ]);
 
+
         if ($validator['confirm-deletion'] == $video->title) {
             $video->delete();
             ActivityLogger::log('Video Deleted', 'you have deleted ' . $video->title);
-            return redirect()->route('coach.videos')->with('success', 'Video deleted successfuly');
+            return redirect()->route('coach.videos.index')->with('success', 'Video deleted successfuly');
         } else {
-            return redirect()->route('coach.videos')->with('error', 'Invalid title');
+            return redirect()->route('coach.videos.index')->with('error', 'Video Name does not match');
         }
     }
 
@@ -127,12 +133,26 @@ class VideoController extends Controller
      * @param $playlist  specified playlist where the video will be added
      */
 
-    public function addToPlaylist(Request $request, Playlist $playlist)
+    public function addToPlaylist($playlistId, $videoId)
     {
-        $video = $this->upload($request);
-        $playlist->videos()->attach($video);
-        ActivityLogger::log('Video Added To Playlist ', 'you have added ' . $video->title . ' to ' . $playlist->name . ' playlist');
-        return redirect()->route('playlists.show', $playlist->id);
+
+        $playlist = Playlist::find($playlistId);
+        $video = Video::find($videoId);
+        // dd($video);
+
+        if ($playlist && $video && !$playlist->videos->contains($video)) {
+            $playlist->videos()->attach($video);
+            ActivityLogger::log('Video Added To Playlist ', 'you have added ' . $video->title . ' to ' . $playlist->name . ' playlist');
+            return redirect()->route('coach.playlists.show', $playlist->id)->with('success', 'video added successfuly to ' . $playlist->name);
+        }
+
+        if ($playlist->videos->contains($video)) {
+            return redirect()->route('coach.playlists.show', $playlist->id)->with(
+                'error',
+                'Video is already in this playlist'
+            );
+        }
+        return redirect()->route('coach.videos.index')->with('error', 'something went wrong, please try again');
     }
 
     /**
@@ -152,7 +172,7 @@ class VideoController extends Controller
             $playlist->videos()->detach($video->id);
             ActivityLogger::log('Video Removed From Playlist ', 'you have removed ' . $video->title . ' from ' . $playlist->name . ' playlist');
             return redirect()
-                ->route('coach.playlist.show', $playlist->id)
+                ->route('coach.playlists.show', $playlist->id)
                 ->with('success', 'Video removed from playlist successfuly');
         }
 

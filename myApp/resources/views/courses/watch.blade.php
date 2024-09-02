@@ -43,11 +43,12 @@
                 @if ($videoToDisplay)
                     {{-- Video Section --}}
                     <div class="col-span-4 space-y-5 ">
-                        <video id="video-{{ $videoToDisplay->id }}" data-user-id="{{ auth()->user()->id }}"
+                        <iframe id="video-{{ $videoToDisplay->id }}" data-user-id="{{ auth()->user()->id }}"
                             data-video-id="{{ $videoToDisplay->id }}"
-                            class="lesson rounded-md w-full bg-gray-600 shadow-lg" controls muted>
-                            <source src="{{ asset('upload/videos/' . $videoToDisplay->video) }}" type="video/mp4" />
-                        </video>
+                            class="lesson rounded-md w-full bg-gray-600 shadow-lg"
+                            src="{{ str_replace('watch?v=', 'embed/', $videoToDisplay->youtube_url) }}" frameborder="0"
+                            allowfullscreen></iframe>
+
                         <h4 class="text-xl text-gray-400 font-semibold border-l-4 border-orange-600 px-2">
                             {{ $videoToDisplay->title }}</h4>
                     </div>

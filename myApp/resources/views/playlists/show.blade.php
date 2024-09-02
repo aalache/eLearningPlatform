@@ -33,15 +33,17 @@
             <div class="p-6 text-gray-900 grid grid-cols-6 gap-2 ">
                 {{-- ? Video section --}}
                 <div class="col-span-4 space-y-5">
-                    <video class="lesson rounded-md w-full bg-gray-600 " controls muted>
-                        <source src="{{ asset('upload/videos/' . $videoToDisplay->video) }}" type="video/mp4" />
-                    </video>
+                    {{--  --}}
+                    <iframe class="lesson rounded-md w-full h-[450px] "
+                        src="{{ str_replace('watch?v=', 'embed/', $videoToDisplay->youtube_url) }}" frameborder="0"
+                        allowfullscreen></iframe>
+                    {{--  --}}
                     <div class="flex items-center justify-between">
-                        <p class="border-l-4 border-orange-600 px-2 text-xl text-gray-300 font-semibold">
+                        <p class="border-l-4 basis-3/4 border-orange-600 px-2 text-xl text-gray-300 font-semibold">
                             {{ $videoToDisplay->title }}
                         </p>
                         <button
-                            class="remove-from-playlist-open-btn hover:bg-white/15 hover:shadow-md py-2 px-3 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
+                            class="remove-from-playlist-open-btn basis-1/4 hover:bg-white/15 hover:shadow-md py-2 px-2 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
                             <i class="text-sm fa-solid fa-trash-can text-orange-600"></i> Remove from Playlist
                         </button>
                     </div>

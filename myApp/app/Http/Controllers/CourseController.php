@@ -65,8 +65,11 @@ class CourseController extends Controller
             'image' => $image,
             'user_id' => Auth::id(),
         ]);
-        ActivityLogger::log('Course Added', 'you added ' . $course->name . ' course to your workspace');
-        return redirect()->route('coach.courses')->with('success', 'Course Created successfuly');
+        if ($course) {
+            return redirect()->route('coach.courses.index')->with('success', 'Course created successfully');
+            ActivityLogger::log('Course Added', 'you added ' . $course->name . ' course to your workspace');
+        }
+        return redirect()->route('coach.courses.index')->with('error', 'Course creation failed');
     }
 
     /**

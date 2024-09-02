@@ -2,7 +2,7 @@
 
 
 
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-4 pb-10 h-full min-h-full">
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-4 pb-10  min-h-[100vh]">
     <div class=" overflow-hidden shadow-sm sm:rounded-lg">
         {{-- header --}}
         <div class="py-6 px-6 text-gray-900 space-y-6">

@@ -19,6 +19,8 @@ Route::view('/contact', 'contact');
 
 
 
+
+
 // !  Routes Mapping using the Role Middleware
 
 // ? Student Role routes mapping
@@ -84,8 +86,8 @@ Route::middleware(['auth', 'role:instructor'])->group(function () {
         Route::get('/{video}', [VideoController::class, 'show'])->name('show');
         Route::post('/', [VideoController::class, 'store'])->name('store');
         Route::patch('/{video}/edit', [VideoController::class, 'update'])->name('update');
-        Route::delete('/{video}', [VideoController::class, 'destroy'])->name('destroy');
-        Route::post('/{playlist}', [VideoController::class, 'addToPlaylist'])->name('addToPlaylist');
+        Route::post('/{video}', [VideoController::class, 'destroy'])->name('destroy');
+        Route::post('/{playlist}/add/{video}', [VideoController::class, 'addToPlaylist'])->name('addToPlaylist');
         Route::post('/playlist/{playlist}/remove/{video}', [VideoController::class, 'removeFromPlaylist'])->name('removeFromPlaylist');
     });
 });

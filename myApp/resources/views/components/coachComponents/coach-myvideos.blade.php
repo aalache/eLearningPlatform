@@ -38,10 +38,17 @@
                 <div class="w-full space-y-3 py-2  ">
                     @foreach ($myVideos as $video)
                         <div
-                            class="flex p-2 relative justify-between items-center space-x-4 w-full bg-white/10 hover:border-r-4 border-orange-600 rounded-md  transition-all ease-in">
-                            <video class="rounded-md w-40 shadow-md" controls>
+                            class="flex  relative justify-between items-center space-x-4 w-full bg-white/10 hover:border-r-4 border-orange-600 rounded-md  transition-all ease-in ">
+                            {{-- <video class="rounded-md w-40 shadow-md" controls>
                                 <source src="{{ asset('upload/videos') }}/{{ $video->video }}" type="video/mp4" />
-                            </video>
+                            </video> --}}
+                            @if ($video->youtube_url)
+                                <iframe class="rounded-l-md w-80 h-32 shadow-md"
+                                    src="{{ str_replace('watch?v=', 'embed/', $video->youtube_url) }}" frameborder="0"
+                                    allowfullscreen></iframe>
+                            @else
+                                <!-- Handle case for uploaded videos or display a message -->
+                            @endif
                             <div class="flex justify-between items-center w-full">
                                 <div class="space-y-1">
                                     <h3 class="text-lg text-[#efefef] font-semibold ">{{ $video->title }}</h3>
@@ -60,7 +67,7 @@
 
                                         <li
                                             class="video-menu-item  w-full text-gray-700 hover:bg-blue-600 hover:text-white ">
-                                            <button
+                                            <button data-videoId="{{ $video->id }}"
                                                 class="addTo-open-btn p-2 w-full  flex justify-between items-center">
                                                 Add To playlist <i class="fa-solid fa-list-ul"></i>
                                             </button>
@@ -68,7 +75,8 @@
 
                                         <li class="  w-full text-gray-700 hover:bg-blue-600 hover:text-white ">
                                             <button data-id="{{ $video->id }}" data-title="{{ $video->title }}"
-                                                data-duration="{{ $video->duration }}"
+                                                data-url="{{ $video->youtube_url }}"
+                                                data-description="{{ $video->description }}"
                                                 class="video-menu-item video-edit-open-btn  p-2 w-full flex justify-between items-center">
                                                 Edit <i class="fa-solid fa-pen"></i>
                                             </button>
@@ -77,7 +85,8 @@
 
                                         <li
                                             class="video-menu-item w-full text-red-600 hover:bg-red-600 hover:text-white flex justify-between items-center">
-                                            <button type="submit"
+                                            <button data-videoId="{{ $video->id }}" data-title="{{ $video->title }}"
+                                                type="submit"
                                                 class="delete-video-open-btn   p-2 w-full  flex justify-between items-center">
                                                 Delete
                                                 <i class="fa-solid fa-trash-can ml-2"></i>
@@ -114,7 +123,7 @@
 
 
 {{-- ? ###### Video Upload PopUp Form Start ########## --}}
-<x-formComponents.popup-form id="upload-form">
+<x-formComponents.popup-form id="upload-popup">
     <x-slot:closeBtn>
         <button class="upload-close-btn hover:scale-125 transition-all ease-in">
             <i class="fa-solid fa-xmark"></i>
@@ -133,20 +142,22 @@
             <x-formComponents.form-error name="title" />
         </x-formComponents.form-field>
 
-        {{-- duration field --}}
-        <x-formComponents.form-field>
-            <x-formComponents.form-label for="duration">Duration</x-formComponents.form-label>
-            <x-formComponents.form-input type="text" id="duration" name="duration"
-                placeholder="Video duration in minite" required></x-formComponents.form-input>
-            <x-formComponents.form-error name="duration" />
-        </x-formComponents.form-field>
-
         {{-- Video file upload field --}}
         <x-formComponents.form-field>
-            <x-formComponents.form-label for="video"></x-formComponents.form-label>
-            <x-formComponents.form-input type="file" id="video" name="video"
-                required></x-formComponents.form-input>
+            <x-formComponents.form-label for="youtube_url"></x-formComponents.form-label>
+            <x-formComponents.form-input type="url" id="youtube_url" name="youtube_url"
+                placeholder="https://www.youtube.com/watch?v=example" required></x-formComponents.form-input>
             <x-formComponents.form-error name="video" />
+        </x-formComponents.form-field>
+
+        {{-- Description field --}}
+        <x-formComponents.form-field>
+            <x-formComponents.form-label for="description">
+                Description</x-formComponents.form-label>
+            <x-formComponents.form-textarea id="description" name="description"
+                class="block w-full rounded-md border-0  text-orange-700 font-medium shadow-sm  placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400 backdrop-blur-sm bg-white/5"
+                placeholder="description of your video content" :value="old('description')" required />
+            <x-formComponents.form-error name="description" />
         </x-formComponents.form-field>
 
         {{--  upload button --}}
@@ -158,14 +169,14 @@
 {{-- ? ----------------------------------------------------------------------------------- --}}
 
 {{-- ? ###### Add To Playlist PopUp Form Start ########## --}}
-<x-formComponents.popup-form id="addTo-video-form">
+<x-formComponents.popup-form id="addTo-video-popup">
     <x-slot:closeBtn>
         <button class="addTo-close-btn hover:scale-125 transition-all ease-in">
             <i class="fa-solid fa-xmark"></i>
         </button>
     </x-slot:closeBtn>
     {{-- form start --}}
-    <form action="" method="POST" enctype="multipart/form-data"
+    <form id="addToPlaylistForm" method="POST" enctype="multipart/form-data"
         class="  rounded-lg  shadow-lg mx-auto  space-y-5">
         @csrf
 
@@ -176,6 +187,7 @@
             <select name="addedTo" id="addedTo"
                 class="block w-full rounded-md border-0  text-orange-700 font-medium shadow-sm  placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400 backdrop-blur-sm bg-white/5">
                 @if ($playlists->isNotEmpty())
+                    <option value="">--- select your playlist ---</option>
                     @foreach ($playlists as $playlist)
                         @php
                             $selectedPlaylist = $playlist;
@@ -196,14 +208,14 @@
 {{-- ? ----------------------------------------------------------------------------------- --}}
 
 {{-- ? ######### Video Edit Pop up Form  start ######### --}}
-<x-formComponents.popup-form id="edit-video-form">
+<x-formComponents.popup-form id="edit-video-popup">
     <x-slot:closeBtn>
         <button class="video-edit-close-btn hover:scale-125 transition-all ease-in">
             <i class="fa-solid fa-xmark"></i>
         </button>
     </x-slot:closeBtn>
     {{--  here form start --}}
-    <form method="POST" action="" enctype="multipart/form-data" class="space-y-5">
+    <form method="POST" id="edit-video-form" enctype="multipart/form-data" class="space-y-5">
         @csrf
         @method('PATCH')
 
@@ -211,17 +223,27 @@
         <x-formComponents.form-field>
             <x-formComponents.form-label for="title">Title</x-formComponents.form-label>
             <x-formComponents.form-input type="text" id="edit-title" name="title" placeholder="Video title"
-                required value="{{ $video->title }}"></x-formComponents.form-input>
+                required></x-formComponents.form-input>
             <x-formComponents.form-error name="title" />
         </x-formComponents.form-field>
 
-        {{-- duration field --}}
+
+        {{-- url field --}}
         <x-formComponents.form-field>
-            <x-formComponents.form-label for="duration">Duration</x-formComponents.form-label>
-            <x-formComponents.form-input type="text" id="edit-duration" name="duration"
-                placeholder="Video duration in minite" required
-                value="{{ $video->duration }}"></x-formComponents.form-input>
-            <x-formComponents.form-error name="duration" />
+            <x-formComponents.form-label for="youtube_url"></x-formComponents.form-label>
+            <x-formComponents.form-input type="url" id="edit-youtube_url" name="youtube_url"
+                placeholder="https://www.youtube.com/watch?v=example" required></x-formComponents.form-input>
+            <x-formComponents.form-error name="video" />
+        </x-formComponents.form-field>
+
+        {{-- Description field --}}
+        <x-formComponents.form-field>
+            <x-formComponents.form-label for="description">
+                Description</x-formComponents.form-label>
+            <x-formComponents.form-textarea id="edit-description" name="description"
+                class="block w-full rounded-md border-0  text-orange-700 font-medium shadow-sm  placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400 backdrop-blur-sm bg-white/5"
+                placeholder="description of your video content" :value="old('description')" required />
+            <x-formComponents.form-error name="description" />
         </x-formComponents.form-field>
 
         {{--  upload button --}}
@@ -236,24 +258,23 @@
 
 
 {{-- ? ###### Delete Video PopUp Form Start ########## --}}
-<x-formComponents.popup-form id="delete-video-form">
+<x-formComponents.popup-form id="delete-video-popup">
     <x-slot:closeBtn>
         <button class="delete-video-close-btn hover:scale-125 transition-all ease-in">
             <i class="fa-solid fa-xmark"></i>
         </button>
     </x-slot:closeBtn>
     {{-- form start --}}
-    <form action="" method="POST" enctype="multipart/form-data" class="space-y-5">
+    <form id="delete-video-form" method="POST" enctype="multipart/form-data" class="space-y-5">
         @csrf
-        @method('DELETE')
 
         {{-- playlist name delete confirmation field --}}
         <x-formComponents.form-field>
             <x-formComponents.form-label for="name">
-                Type the playlist name <strong>{{ $playlist->name }}</strong> to confirm deletion:
+                Type the playlist name <strong id="video-label"></strong> to confirm deletion:
             </x-formComponents.form-label>
-            <x-formComponents.form-input type="text" id="confirm-delete" name="confirm-delete"
-                placeholder="'{{ $playlist->name }}'" required></x-formComponents.form-input>
+            <x-formComponents.form-input type="text" id="confirm-deletion" name="confirm-deletion"
+                required></x-formComponents.form-input>
             <x-formComponents.form-error name="confirm-delete" />
         </x-formComponents.form-field>
 
@@ -271,54 +292,77 @@
     /**
      * upload popUp
      */
-    const uploadForm = document.getElementById('upload-form');
-    const uploadOpenBtn = document.querySelector('.upload-open-btn').addEventListener('click', showUploadForm);
-    const uploadCloseBtn = document.querySelector('.upload-close-btn').addEventListener('click', hideUploadForm);
-    console.log(uploadForm)
+    const uploadPopup = document.getElementById('upload-popup');
+    const uploadOpenBtn = document.querySelector('.upload-open-btn').addEventListener('click', showUploadPopup);
+    const uploadCloseBtn = document.querySelector('.upload-close-btn').addEventListener('click', hideUploadPopup);
 
-    function showUploadForm() {
+
+    function showUploadPopup() {
         document.body.style.overflow = 'hidden';
-        uploadForm.classList.remove('hidden');
+        uploadPopup.classList.remove('hidden');
     }
 
-    function hideUploadForm() {
+    function hideUploadPopup() {
         document.body.style.overflow = 'visible';
-        uploadForm.classList.add('hidden');
+        uploadPopup.classList.add('hidden');
     }
 
     /**
      * Add video to playlist Popup Form
      */
-    const addToPlaylistForm = document.getElementById('addTo-video-form');
+    const addToPlaylistPopup = document.getElementById('addTo-video-popup');
     const addToOpenBtns = document.querySelectorAll('.addTo-open-btn')
     const addToCloseBtn = document.querySelector('.addTo-close-btn').addEventListener('click',
-        hideAddToPlaylistPopUp);
+        hideAddToPlaylistPopup);
 
+
+    let videoId;
 
     addToOpenBtns.forEach(btn => {
-        btn.addEventListener('click', showAddToPlaylistPopUp);
+        btn.addEventListener('click', showAddToPlaylistPopup);
     })
 
-    function showAddToPlaylistPopUp() {
-        console.log('clicked')
+    function showAddToPlaylistPopup() {
+        videoId = this.getAttribute('data-videoId');
+        console.log(videoId);
         document.body.style.overflow = 'hidden';
-        addToPlaylistForm.classList.remove('hidden');
+        addToPlaylistPopup.classList.remove('hidden');
     }
 
-    function hideAddToPlaylistPopUp() {
+    function hideAddToPlaylistPopup() {
         document.body.style.overflow = 'visible';
-        addToPlaylistForm.classList.add('hidden');
+        addToPlaylistPopup.classList.add('hidden');
     }
+
+    document.getElementById('addedTo').addEventListener('change', function() {
+        console.log('changed');
+        let playlistId = this.value;
+
+        let form = document.getElementById('addToPlaylistForm');
+        console.log(form)
+
+        if (playlistId) {
+            let actionUrl = `{{ route('coach.videos.addToPlaylist', [':playlistId', ':videoId']) }}`;
+            actionUrl = actionUrl.replace(':playlistId', playlistId).replace(':videoId', videoId);
+
+            console.log(actionUrl)
+            form.setAttribute('action', actionUrl);
+        } else {
+            form.setAttribute('action', ''); // handle case where no playlist is selected
+        }
+    });
 
     /**
      * edit video  popUp Form 
      */
-    const editVideoForm = document.getElementById('edit-video-form')
+    const editVideoPopup = document.getElementById('edit-video-popup')
     const videoEditOpenBtns = document.querySelectorAll('.video-edit-open-btn')
-    document.querySelector('.video-edit-close-btn').addEventListener('click', hideEditVideoForm);
+    document.querySelector('.video-edit-close-btn').addEventListener('click', hideEditVideoPopup);
+    const editVideoForm = document.getElementById('edit-video-form');
 
     const videoEditTitle = document.getElementById('edit-title');
-    const videoEditDuration = document.getElementById('edit-duration');
+    const videoEditYoutubeUrl = document.getElementById('edit-youtube_url');
+    const videoEditDescription = document.getElementById('edit-description');
 
     videoEditOpenBtns.forEach(btn => {
         btn.addEventListener('click', function() {
@@ -327,32 +371,26 @@
             // console.log(this.getAttribute('data-title'));
 
             videoEditTitle.value = this.getAttribute('data-title');
-            videoEditDuration.value = this.getAttribute('data-duration');
+            videoEditYoutubeUrl.value = this.getAttribute('data-url');
+            videoEditDescription.value = this.getAttribute('data-description');
 
 
-            const updateUrl = `{{ url('/coach/myvideos') }}/${videoId}`;
+            // const updateUrl = `{{ url('/coach/myvideos') }}/${videoId}`;
+            let actionUrl = `{{ route('coach.videos.update', ':videoId') }}`
+            actionUrl = actionUrl.replace(':videoId', videoId);
 
-            if (editVideoForm) {
-                editVideoForm.setAttribute('action', updateUrl);
-                console.log('Form action set to:', editVideoForm.getAttribute('action'));
-
-
-            } else {
-                console.error('Form element not found');
-            }
-            // Set the form's action attribute to the dynamically constructed URL
-            // editVideoForm.action = updateUrl;
+            editVideoForm.action = actionUrl;
 
             document.body.style.overflow = 'hidden';
-            editVideoForm.classList.remove('hidden');
+            editVideoPopup.classList.remove('hidden');
         });
     });
 
 
-    function hideEditVideoForm() {
+    function hideEditVideoPopup() {
         console.log('clicked');
         document.body.style.overflow = 'visible';
-        editVideoForm.classList.add('hidden');
+        editVideoPopup.classList.add('hidden');
     }
 
 
@@ -361,29 +399,52 @@
     /**
      * Delete video  Popup Form
      */
-    const deleteVideoForm = document.getElementById('delete-video-form');
+    const deleteVideoPopup = document.getElementById('delete-video-popup');
     const deleteVideoOpenBtns = document.querySelectorAll('.delete-video-open-btn')
     // console.log(deleteVideoOpenBtns)
     const deleteVideoCloseBtn = document.querySelector('.delete-video-close-btn').addEventListener('click',
-        hideDeleteVideoForm);
+        hideDeleteVideoPopup);
+
+    const videoDeleteLabel = document.getElementById('video-label');
+    const videoConfirmDeleteInputPlaceholder = document.getElementById('confirm-deletion');
+    console.log(videoConfirmDeleteInputPlaceholder);
+
+
 
 
     deleteVideoOpenBtns.forEach(btn => {
-        btn.addEventListener('click', showAddToPlaylistPopUp);
+        btn.addEventListener('click', showDeleteVideoPopup);
     })
 
-    function showAddToPlaylistPopUp() {
-        console.log('clicked')
+    function showDeleteVideoPopup() {
+        const videoId = this.getAttribute('data-videoId');
+        const videoName = this.getAttribute('data-title');
+
+        videoDeleteLabel.innerText = videoName;
+
+        let placeholder = ` '${videoName}' `
+        console.log(placeholder)
+        videoConfirmDeleteInputPlaceholder.setAttribute('placeholder', placeholder)
+
+        form = document.getElementById('delete-video-form');
+
+        actionUrl = `{{ route('coach.videos.destroy', ':videoId') }}`;
+        actionUrl = actionUrl.replace(':videoId', videoId);
+        form.action = actionUrl;
+
         document.body.style.overflow = 'hidden';
-        deleteVideoForm.classList.remove('hidden');
+        deleteVideoPopup.classList.remove('hidden');
     }
 
-    function hideDeleteVideoForm() {
+    function hideDeleteVideoPopup() {
         document.body.style.overflow = 'visible';
-        deleteVideoForm.classList.add('hidden');
+        deleteVideoPopup.classList.add('hidden');
     }
 
-    // show and hide video menu
+    /**
+     *  show and hide video menu
+     */
+
     let videoMenuBtns = document.querySelectorAll('.video-menu-btn');
     let videoMenuBtnClicked = false;
     videoMenuBtns.forEach(btn => {

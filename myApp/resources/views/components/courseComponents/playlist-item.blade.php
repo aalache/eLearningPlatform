@@ -1,18 +1,25 @@
 @props(['videoTitle', 'playlist' => null, 'video', 'course' => null])
 @php
     use App\Models\VideoProgress;
+    use App\Models\Video;
+
+    $videoId = request()->video;
+    $videoFromRequest = Video::find($videoId);
+
     $isCurrentRoute = null;
+
     if ($playlist) {
-        if (request()->video) {
+        if ($videoFromRequest) {
             $isCurrentRoute =
                 request()->routeIs('coach.playlists.show', ['playlist' => $playlist]) &&
-                request()->video->id == $video->id;
+                $videoFromRequest->id == $video->id;
         }
     }
+
     if ($course) {
-        if (request()->video) {
+        if ($videoFromRequest) {
             $isCurrentRoute =
-                request()->routeIs('*.courses.watch', ['course' => $course]) && request()->video->id == $video->id;
+                request()->routeIs('*.courses.watch', ['course' => $course]) && $videoFromRequest->id == $video->id;
         }
     }
 
@@ -21,7 +28,7 @@
         ->exists();
 
     $currentRouteTextColor = $isCurrentRoute ? 'text-orange-600' : 'text-gray-400';
-    $currentRouteBorderColor = $isCurrentRoute ? 'border-orange-600' : 'none';
+    $currentRouteBorderColor = $isCurrentRoute ? 'border-orange-600' : 'border-gray-400';
     $currentRouteBackground = $isCurrentRoute ? 'bg-orange-600' : 'bg-gray-400';
 
     $lessonCompletedBorderColor = $isLessonCompleted ? 'border-green-500' : 'none';
@@ -46,7 +53,8 @@
                     {{ $lessonCompletedBackground }} ">
                 </div>
             </div>
-            <p class=" group-hover:text-orange-600 font-semibold  {{ $currentRouteTextColor }} transition-all ease-in">
+            <p
+                class=" group-hover:text-orange-600 text-sm font-semibold  {{ $currentRouteTextColor }} transition-all ease-in">
                 {{ $videoTitle }}
             </p>
         </div>
