@@ -11,7 +11,7 @@
 
         <div class=" flex justify-between items-baseline">
 
-            <a href="{{ url()->previous() }}"
+            <a href="{{ url()->route('coach.courses.index') }}"
                 class=" hover:bg-white/15 hover:shadow-md py-2 px-4 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
                 <i class="fa-solid fa-arrow-left text-orange-600"></i> Go Back
             </a>
@@ -45,7 +45,7 @@
                     <div class="col-span-4 space-y-5 ">
                         <iframe id="video-{{ $videoToDisplay->id }}" data-user-id="{{ auth()->user()->id }}"
                             data-video-id="{{ $videoToDisplay->id }}"
-                            class="lesson rounded-md w-full bg-gray-600 shadow-lg"
+                            class="lesson rounded-md w-full bg-gray-600 shadow-lg h-[450px]"
                             src="{{ str_replace('watch?v=', 'embed/', $videoToDisplay->youtube_url) }}" frameborder="0"
                             allowfullscreen></iframe>
 
@@ -178,7 +178,7 @@
             <x-formComponents.form-input type="file" id="image" name="image"></x-formComponents.form-input>
             <!-- Show the name of the previously uploaded file, if it exists -->
             @if ($course->image)
-                <p class="text-sm text-gray-400 px-3">Current file: {{ $course->image }}</p>
+                <p class="text-sm text-gray-500 px-3">Current file: {{ $course->image }}</p>
             @endif
             <x-formComponents.form-error name="image" />
         </x-formComponents.form-field>
@@ -217,9 +217,9 @@
         @method('DELETE')
         {{-- playlist name delete confirmation field --}}
         <x-formComponents.form-field>
-            <label for="confirm-deletion" class="text-white text-sm">
+            <x-formComponents.form-label for="confirm-deletion" class="text-sm">
                 Type the course name <strong>{{ $course->name }}</strong> to confirm deletion:
-            </label>
+            </x-formComponents.form-label>
             <x-formComponents.form-input type="text" id="confirm-deletion" name="confirm-deletion"
                 placeholder="'{{ $course->name }}'" required></x-formComponents.form-input>
             <x-formComponents.form-error name="confirm-deletion" />
@@ -233,21 +233,34 @@
 {{-- scripts --}}
 <script src="{{ asset('js/notif.js') }}"></script>
 <script>
+    let initialScrollPosition;
     /**
      * Edit course Form 
      */
     const editCourseForm = document.getElementById('edit-course-form');
     document.querySelector('.edit-course-open-btn').addEventListener('click', showEditCourseForm);
+
     document.querySelector('.edit-course-close-btn').addEventListener('click', hideEditCourseForm);
 
 
     function showEditCourseForm() {
         document.body.style.overflow = 'hidden';
-        editCourseForm.classList.remove('hidden');
+        initialScrollPosition = window.scrollY;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        setTimeout(() => {
+            editCourseForm.classList.remove('hidden');
+        }, 300);
     }
 
     function hideEditCourseForm() {
         document.body.style.overflow = 'visible';
+        window.scrollTo({
+            top: initialScrollPosition,
+            behavior: 'smooth'
+        });
         editCourseForm.classList.add('hidden');
     }
     /**
@@ -259,11 +272,54 @@
 
     function showDeleteCourseForm() {
         document.body.overflow = "hidden";
-        deleteCourseForm.classList.remove('hidden');
+        initialScrollPosition = window.scrollY;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        setTimeout(() => {
+            deleteCourseForm.classList.remove('hidden');
+        }, 300);
     }
 
     function hideDeleteCourseForm() {
         document.body.overflow = "visible";
+        window.scrollTo({
+            top: initialScrollPosition,
+            behavior: 'smooth'
+        });
         deleteCourseForm.classList.add('hidden');
+    }
+
+    // 
+    var player;
+
+    function onYouTubeIframeAPIReady() {
+        const videoElement = document.querySelector('.lesson');
+
+        const videoId = videoElement.getAttribute('data-video-id');
+        const iframeSrc = videoElement.getAttribute('src');
+        const youtubeVideoId = iframeSrc.split('/embed/')[1];
+
+        console.log(videoElement);
+
+        player = new YT.Player(videoElement.id, {
+            videoId: youtubeVideoId,
+            events: {
+                'onStateChange': onPlayerStateChange
+            }
+        });
+
+    }
+    onYouTubeIframeAPIReady();
+
+    function onPlayerStateChange(event) {
+
+        if (event.data == YT.PlayerState.ENDED) {
+            console.log("The video has ended.");
+
+            const videoElement = document.getElementById(event.target.getIframe().id);
+            markVideoAsCompleted(videoElement);
+        }
     }
 </script>

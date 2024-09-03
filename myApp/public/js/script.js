@@ -7,21 +7,26 @@
 //  * to track video competion and store the progress in the database
 //  */
 
-let lesson = document.querySelector('.lesson');
-if(lesson){
 
-   lesson.addEventListener('ended', function () {
+
+// let lesson = document.querySelector('.lesson');
+// if(lesson){
    
-      console.log('Video ended');
-      markVideoAsCompleted(lesson);
+//    lesson.addEventListener('ended', function () {
+//       console.log(lesson);
    
-   });
-}
+//       console.log('Video ended');
+//       markVideoAsCompleted(lesson);
+   
+//    });
+// }
 
 function markVideoAsCompleted(videoElement) {
 
    const videoId = videoElement.getAttribute('data-video-id');
    const userId = videoElement.getAttribute('data-user-id');
+   console.log(videoId);
+
 
    fetch('/api/video/completed', {
       method: 'POST',

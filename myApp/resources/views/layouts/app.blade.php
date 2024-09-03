@@ -23,6 +23,8 @@
     <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://www.youtube.com/iframe_api" defer></script>
+
 
 </head>
 
@@ -37,7 +39,7 @@
 </style>
 
 <body class=" antialiased h-full ">
-    <div class="user-hero min-h-full relative ">
+    <div class="user-hero min-h-full  relative ">
         <div class=" backdrop-blur-3xl bg-black/50">
             @include('layouts.navigation')
 

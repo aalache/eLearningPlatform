@@ -125,6 +125,7 @@
 
 
 <script>
+    let initialScrollPosition;
     const createCourseForm = document.getElementById('create-course-form');
     document.querySelector('.create-course-open-btn').addEventListener('click', showCreateCourseForm);
     document.querySelector('.create-course-close-btn').addEventListener('click', hideCreateCourseForm);
@@ -132,11 +133,22 @@
 
     function showCreateCourseForm() {
         document.body.style.overflow = 'hidden';
-        createCourseForm.classList.remove('hidden');
+        initialScrollPosition = window.scrollY;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        setTimeout(() => {
+            createCourseForm.classList.remove('hidden');
+        }, 300);
     }
 
     function hideCreateCourseForm() {
         document.body.style.overflow = 'visible';
+        window.scrollTo({
+            top: initialScrollPosition,
+            behavior: 'smooth'
+        });
         createCourseForm.classList.add('hidden');
     }
 </script>

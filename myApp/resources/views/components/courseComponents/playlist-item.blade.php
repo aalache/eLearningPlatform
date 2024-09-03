@@ -5,21 +5,22 @@
 
     $videoId = request()->video;
     $videoFromRequest = Video::find($videoId);
-
     $isCurrentRoute = null;
 
     if ($playlist) {
         if ($videoFromRequest) {
+            $videoFromRequest = $videoFromRequest->first();
             $isCurrentRoute =
                 request()->routeIs('coach.playlists.show', ['playlist' => $playlist]) &&
-                $videoFromRequest->id == $video->id;
+                request()->video->id == $video->id;
         }
     }
 
     if ($course) {
         if ($videoFromRequest) {
+            $videoFromRequest = $videoFromRequest->first();
             $isCurrentRoute =
-                request()->routeIs('*.courses.watch', ['course' => $course]) && $videoFromRequest->id == $video->id;
+                request()->routeIs('*.courses.watch', ['course' => $course]) && request()->video->id == $video->id;
         }
     }
 
@@ -36,13 +37,13 @@
 @endphp
 <a {{ $attributes->merge(['class' => '']) }}>
     <li
-        class="group transition-all ease-in border-r-2 hover:border-orange-600 
+        class="group transition-all ease-in border-r-2 hover:border-orange-600  
         {{ $currentRouteBorderColor }} {{ $lessonCompletedBorderColor }}">
         <div class="flex space-x-3 w-full items-center">
             <div class="flex flex-col items-center gap-1">
                 <div
                     class="w-[2px]  h-4 group-hover:bg-orange-600 transition-all ease-in {{ $currentRouteBackground }} 
-                    {{ $lessonCompletedBackground }}   ">
+                    {{ $lessonCompletedBackground }}  ">
                 </div>
                 <div
                     class="size-1.5 rounded-full  group-hover:bg-orange-600 transition-all ease-in {{ $currentRouteBackground }} 

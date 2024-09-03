@@ -86,6 +86,7 @@
 @endsession
 
 <script>
+    let initialScrollPosition = 0;
     /**
      *  hide & show Add playlist form 
      */
@@ -96,11 +97,22 @@
 
     function showAddPlaylistForm() {
         document.body.style.overflow = 'hidden';
-        addPlaylistForm.classList.remove('hidden');
+        initialScrollPosition = window.scrollY;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        setTimeout(() => {
+            addPlaylistForm.classList.remove('hidden');
+        }, 300);
     }
 
     function hideAddPlaylistForm() {
         document.body.style.overflow = 'visible';
+        window.scrollTo({
+            top: initialScrollPosition,
+            behavior: 'smooth'
+        });
         addPlaylistForm.classList.add('hidden');
     }
 </script>

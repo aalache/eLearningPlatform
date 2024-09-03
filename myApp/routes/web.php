@@ -72,7 +72,7 @@ Route::middleware(['auth', 'role:instructor'])->group(function () {
     // Playlists Group
     Route::prefix('/coach/playlists')->name('coach.playlists.')->group(function () {
         Route::get('/', [CoachController::class, 'playlists'])->name('index');
-        Route::get('/{playlist}', [CoachController::class, 'viewplaylist'])->name('show');
+        Route::get('/{playlist}/view/{video?}', [CoachController::class, 'viewplaylist'])->name('show');
         Route::post('/', [PlaylistController::class, 'store'])->name('store');
         Route::patch('/{playlist}/edit', [PlaylistController::class, 'update'])->name('update');
         Route::delete('/{playlist}', [PlaylistController::class, 'destroy'])->name('destroy');

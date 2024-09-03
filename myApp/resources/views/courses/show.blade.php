@@ -128,11 +128,19 @@
      </x-slot:closeBtn>
 
 
-     <form action="{{ route('user.payment.payment') }}" method="POST"
-         class="space-y-5 min-w-screen-md grid grid-cols-2 gap-x-2">
+     <form action="{{ route('user.payment.payment') }}" method="POST" class="w-full space-y-5 min-w-screen-md ">
          @csrf
          <input type="hidden" name="amount" value="{{ $course->price }}">
          <input type="hidden" name="course_id" value="{{ $course->id }}">
+         <!-- PayPal Logo -->
+
+
+         <div class="w-full flex justify-center items-center">
+             <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" border="0"
+                 alt="PayPal Logo" class="">
+         </div>
+
+         <!-- PayPal Logo -->
          <x-formComponents.form-button type='submit'>Pay with Paypal</x-formComponents.form-button>
      </form>
 

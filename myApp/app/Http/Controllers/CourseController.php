@@ -127,12 +127,12 @@ class CourseController extends Controller
         $validator = $request->validate([
             'confirm-deletion' => ['required', 'string'],
         ]);
-        if ($validator['confirm-deletion'] == 'delete') {
+        if ($validator['confirm-deletion'] == $course->name) {
             $course->delete();
             ActivityLogger::log('Course Deleted', 'you have deleted ' . $course->name . ' course ');
-            return redirect()->route('courses.index')->with('success', 'Course deleted successfully');
+            return redirect()->route('coach.courses.index')->with('success', 'Course deleted successfully');
         }
-        return redirect()->back()->with('error', 'Course Name does not match !!!');
+        return redirect()->route('coach.courses.watch', ['course' => $course])->with('error', 'Course Name does not match !!!');
     }
 
     /**

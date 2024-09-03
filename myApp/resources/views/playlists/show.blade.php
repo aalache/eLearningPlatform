@@ -60,8 +60,11 @@
                     <ul class="  mx-[-1px] space-y-0 ">
                         @foreach ($playlist->videos as $video)
                             <x-courseComponents.playlist-item
-                                href="{{ route('coach.playlists.show', ['playlist' => $playlist, 'video' => $video->id]) }}"
+                                href="{{ route('coach.playlists.show', ['playlist' => $playlist, 'video' => $video]) }}"
                                 :videoTitle="$video->title" :video="$video" :playlist="$playlist" />
+                            {{-- <x-courseComponents.playlist-item id="link-{{ $video->id }}"
+                                href="{{ route('user.courses.watch', ['course' => $course, 'video' => $video]) }}"
+                                :videoTitle="$video->title" :video="$video" :course="$course" /> --}}
                         @endforeach
 
                     </ul>
@@ -271,6 +274,7 @@
 
 
 <script>
+    let initialScrollPosition;
     /**
      * Add To Course pop Up form handling
      */
@@ -280,11 +284,22 @@
 
     function showAddToCourseForm() {
         document.body.overflow = "hidden";
-        addToCourseForm.classList.remove('hidden');
+        initialScrollPosition = window.scrollY;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        setTimeout(() => {
+            addToCourseForm.classList.remove('hidden');
+        }, 300);
     }
 
     function hideAddToCourseForm() {
         document.body.overflow = "visible";
+        window.scrollTo({
+            top: initialScrollPosition,
+            behavior: 'smooth'
+        });
         addToCourseForm.classList.add('hidden');
     }
     /**
@@ -296,11 +311,22 @@
 
     function showRemoveFromCourseForm() {
         document.body.overflow = "hidden";
-        removeFromCourseForm.classList.remove('hidden');
+        initialScrollPosition = window.scrollY;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        setTimeout(() => {
+            removeFromCourseForm.classList.remove('hidden');
+        }, 300);
     }
 
     function hideRemoveFromCourseForm() {
         document.body.overflow = "visible";
+        window.scrollTo({
+            top: initialScrollPosition,
+            behavior: 'smooth'
+        });
         removeFromCourseForm.classList.add('hidden');
     }
     /**
@@ -312,11 +338,22 @@
 
     function showEditPlaylistForm() {
         document.body.overflow = "hidden";
-        editPlaylistForm.classList.remove('hidden');
+        initialScrollPosition = window.scrollY;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        setTimeout(() => {
+            editPlaylistForm.classList.remove('hidden');
+        }, 300);
     }
 
     function hideEditPlaylistForm() {
         document.body.overflow = "visible";
+        window.scrollTo({
+            top: initialScrollPosition,
+            behavior: 'smooth'
+        });
         editPlaylistForm.classList.add('hidden');
     }
 
@@ -329,11 +366,22 @@
 
     function showDeletePlaylistForm() {
         document.body.overflow = "hidden";
-        deletePlaylistForm.classList.remove('hidden');
+        initialScrollPosition = window.scrollY;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        setTimeout(() => {
+            deletePlaylistForm.classList.remove('hidden');
+        }, 300);
     }
 
     function hideDeletePlaylistForm() {
         document.body.overflow = "visible";
+        window.scrollTo({
+            top: initialScrollPosition,
+            behavior: 'smooth'
+        });
         deletePlaylistForm.classList.add('hidden');
     }
 
@@ -347,11 +395,22 @@
 
     function showRemoveFromPlaylistForm() {
         document.body.overflow = "hidden";
-        removeFromPlaylistForm.classList.remove('hidden');
+        initialScrollPosition = window.scrollY;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        setTimeout(() => {
+            removeFromPlaylistForm.classList.remove('hidden');
+        }, 300);
     }
 
     function hideRemoveFromPlaylistForm() {
         document.body.overflow = "visible";
+        window.scrollTo({
+            top: initialScrollPosition,
+            behavior: 'smooth'
+        });
         removeFromPlaylistForm.classList.add('hidden');
     }
 </script>

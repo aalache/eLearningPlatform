@@ -62,18 +62,18 @@
                                 <!-- Hidden video menu -->
                                 <div
                                     class="video-menu w-52 z-50 absolute top-[65%] right-3
-                                  shadow-md rounded-md bg-[#efefef] overflow-hidden hidden">
+                                  shadow-md rounded-md bg-white/80 overflow-hidden hidden">
                                     <ul class="text-sm text-black">
 
                                         <li
-                                            class="video-menu-item  w-full text-gray-700 hover:bg-blue-600 hover:text-white ">
+                                            class="video-menu-item  w-full text-gray-700 hover:bg-black/50 hover:text-white ">
                                             <button data-videoId="{{ $video->id }}"
                                                 class="addTo-open-btn p-2 w-full  flex justify-between items-center">
                                                 Add To playlist <i class="fa-solid fa-list-ul"></i>
                                             </button>
                                         </li>
 
-                                        <li class="  w-full text-gray-700 hover:bg-blue-600 hover:text-white ">
+                                        <li class="  w-full text-gray-700 hover:bg-black/50 hover:text-white ">
                                             <button data-id="{{ $video->id }}" data-title="{{ $video->title }}"
                                                 data-url="{{ $video->youtube_url }}"
                                                 data-description="{{ $video->description }}"
@@ -288,6 +288,7 @@
 
 
 <script>
+    let initialScrollPosition;
     // popup show and hide events using click event
     /**
      * upload popUp
@@ -299,11 +300,24 @@
 
     function showUploadPopup() {
         document.body.style.overflow = 'hidden';
-        uploadPopup.classList.remove('hidden');
+        initialScrollPosition = window.scrollY;
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        setTimeout(() => {
+            uploadPopup.classList.remove('hidden');
+        }, 300);
     }
 
     function hideUploadPopup() {
         document.body.style.overflow = 'visible';
+        window.scrollTo({
+            top: initialScrollPosition,
+            behavior: 'smooth'
+        });
+
         uploadPopup.classList.add('hidden');
     }
 
@@ -326,11 +340,24 @@
         videoId = this.getAttribute('data-videoId');
         console.log(videoId);
         document.body.style.overflow = 'hidden';
-        addToPlaylistPopup.classList.remove('hidden');
+
+        initialScrollPosition = window.scrollY;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        setTimeout(() => {
+            addToPlaylistPopup.classList.remove('hidden');
+        }, 300);
     }
 
     function hideAddToPlaylistPopup() {
         document.body.style.overflow = 'visible';
+
+        window.scrollTo({
+            top: initialScrollPosition,
+            behavior: 'smooth'
+        });
         addToPlaylistPopup.classList.add('hidden');
     }
 
@@ -382,7 +409,15 @@
             editVideoForm.action = actionUrl;
 
             document.body.style.overflow = 'hidden';
-            editVideoPopup.classList.remove('hidden');
+
+            initialScrollPosition = window.scrollY;
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            setTimeout(() => {
+                editVideoPopup.classList.remove('hidden');
+            }, 300);
         });
     });
 
@@ -390,6 +425,11 @@
     function hideEditVideoPopup() {
         console.log('clicked');
         document.body.style.overflow = 'visible';
+        window.scrollTo({
+            top: initialScrollPosition,
+            behavior: 'smooth'
+        });
+
         editVideoPopup.classList.add('hidden');
     }
 
@@ -433,11 +473,22 @@
         form.action = actionUrl;
 
         document.body.style.overflow = 'hidden';
-        deleteVideoPopup.classList.remove('hidden');
+        initialScrollPosition = window.scrollY;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        setTimeout(() => {
+            deleteVideoPopup.classList.remove('hidden');
+        }, 300);
     }
 
     function hideDeleteVideoPopup() {
         document.body.style.overflow = 'visible';
+        window.scrollTo({
+            top: initialScrollPosition,
+            behavior: 'smooth'
+        });
         deleteVideoPopup.classList.add('hidden');
     }
 

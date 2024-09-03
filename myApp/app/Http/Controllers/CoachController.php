@@ -46,7 +46,6 @@ class CoachController extends Controller
      */
     public function viewplaylist(Playlist $playlist, Video $video)
     {
-        $videoToDisplay = $playlist->videos()->first(); // get the first video of the playlist if $video is null
         $courses = Course::with('playlists')->get();   // all courses
         $coursesContainingPlaylist = collect();
 
@@ -57,6 +56,20 @@ class CoachController extends Controller
             }
         }
 
+        $playlist = Playlist::with('videos')->find($playlist->id);
+        $videoToDisplay = null;
+
+        // Check if the playlist has any  videos
+        if ($playlist->videos->isNotEmpty()) {
+            $videoToDisplay = $playlist->videos->first();
+        }
+
+        // If a specific video is provided, find and set it
+        if ($video) {
+            if ($playlist->videos->contains($video)) {
+                $videoToDisplay = $video;
+            }
+        }
 
         if ($video) {
             $playlist = Playlist::with('videos')->find($playlist->id);
