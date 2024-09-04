@@ -14,7 +14,7 @@ use App\Http\Controllers\PayPalController;
 Route::view('/', 'welcome');
 Route::view('/home', 'welcome');
 // Route::view('/home', 'home');
-Route::view('/contact', 'contact');
+// Route::view('/contact', 'contact');
 
 
 
