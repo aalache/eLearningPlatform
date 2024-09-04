@@ -45,6 +45,21 @@ class User extends Authenticatable
         return $this->roles()->where('name', $role)->exists();
     }
 
+    /**
+     * check if user has paid a specific course
+     * 
+     * @param string $role
+     * @return bool
+     */
+    public function hasPaidCourse(Course $course): bool
+    {
+        return $this->payments()
+            ->where('course_id', $course->id)
+            ->where('payment_status', 'approved')
+            ->exists();
+    }
+
+    ///////
     public static function students()
     {
         $allUsers = User::all();
@@ -117,7 +132,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Video::class, 'video_progress');
     }
-
+    //? ################################ payments Table  relationships ################################
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 
 
 

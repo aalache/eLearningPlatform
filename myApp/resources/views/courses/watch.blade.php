@@ -10,11 +10,18 @@
     <div class=" max-w-7xl mx-auto px-3 sm:px-6 lg:px-6  py-4  overflow-hidden  sm:rounded-lg min-h-full">
 
         <div class=" flex justify-between items-baseline">
+            @if (request()->routeIs('coach.*'))
+                <a href="{{ url()->route('coach.courses.index') }}"
+                    class=" hover:bg-white/15 hover:shadow-md py-2 px-4 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
+                    <i class="fa-solid fa-arrow-left text-orange-600"></i> Go Back
+                </a>
+            @else
+                <a href="{{ url()->route('user.courses.index') }}"
+                    class=" hover:bg-white/15 hover:shadow-md py-2 px-4 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
+                    <i class="fa-solid fa-arrow-left text-orange-600"></i> Go Back
+                </a>
+            @endif
 
-            <a href="{{ url()->route('coach.courses.index') }}"
-                class=" hover:bg-white/15 hover:shadow-md py-2 px-4 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
-                <i class="fa-solid fa-arrow-left text-orange-600"></i> Go Back
-            </a>
             @if (Auth::user()->hasRole('instructor') && request()->routeIs('coach.*'))
                 <div>
                     <button
@@ -46,8 +53,8 @@
                         <iframe id="video-{{ $videoToDisplay->id }}" data-user-id="{{ auth()->user()->id }}"
                             data-video-id="{{ $videoToDisplay->id }}"
                             class="lesson rounded-md w-full bg-gray-600 shadow-lg h-[450px]"
-                            src="{{ str_replace('watch?v=', 'embed/', $videoToDisplay->youtube_url) }}" frameborder="0"
-                            allowfullscreen></iframe>
+                            src="{{ str_replace('watch?v=', 'embed/', $videoToDisplay->youtube_url) }}?enablejsapi=1"
+                            frameborder="0" allowfullscreen></iframe>
 
                         <h4 class="text-xl text-gray-400 font-semibold border-l-4 border-orange-600 px-2">
                             {{ $videoToDisplay->title }}</h4>
@@ -232,6 +239,7 @@
 
 {{-- scripts --}}
 <script src="{{ asset('js/notif.js') }}"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
     let initialScrollPosition;
     /**
@@ -291,34 +299,22 @@
         deleteCourseForm.classList.add('hidden');
     }
 
-    // 
+    // video Tracking
     var player;
 
     function onYouTubeIframeAPIReady() {
-        const videoElement = document.querySelector('.lesson');
-
-        const videoId = videoElement.getAttribute('data-video-id');
-        const iframeSrc = videoElement.getAttribute('src');
-        const youtubeVideoId = iframeSrc.split('/embed/')[1];
-
-        console.log(videoElement);
-
-        player = new YT.Player(videoElement.id, {
-            videoId: youtubeVideoId,
+        player = new YT.Player('video-{{ $videoToDisplay->id }}', {
             events: {
                 'onStateChange': onPlayerStateChange
             }
         });
-
     }
-    onYouTubeIframeAPIReady();
 
     function onPlayerStateChange(event) {
-
-        if (event.data == YT.PlayerState.ENDED) {
-            console.log("The video has ended.");
-
-            const videoElement = document.getElementById(event.target.getIframe().id);
+        console.log('function called');
+        if (event.data === YT.PlayerState.ENDED) {
+            console.log('video ended successfuly');
+            const videoElement = document.getElementById('video-{{ $videoToDisplay->id }}');
             markVideoAsCompleted(videoElement);
         }
     }

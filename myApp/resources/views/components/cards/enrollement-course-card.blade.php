@@ -25,13 +25,13 @@
                 {{--  --}}
             </div>
 
-            @if ($enrollment->status != 'completed')
+            @if ($enrollment->status == 'completed')
+                <p class="w-fit text-sm font-semibold leading-normal  text-green-600">Completed</p>
+            @else
                 <a href="{{ route('user.courses.show', $enrollment->course->id) }}"
                     class="w-fit inline-block text-blue-500 text-sm font-semibold leading-normal  hover:underline">
                     Continue Course
                 </a>
-            @else
-                <p class="w-fit text-sm font-semibold leading-normal  text-green-600">Completed</p>
             @endif
         </div>
     </div>

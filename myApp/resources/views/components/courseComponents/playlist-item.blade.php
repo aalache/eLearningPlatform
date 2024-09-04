@@ -32,25 +32,25 @@
     $currentRouteBorderColor = $isCurrentRoute ? 'border-orange-600' : 'border-gray-400';
     $currentRouteBackground = $isCurrentRoute ? 'bg-orange-600' : 'bg-gray-400';
 
-    $lessonCompletedBorderColor = $isLessonCompleted ? 'border-green-500' : 'none';
-    $lessonCompletedBackground = $isLessonCompleted ? 'bg-green-500' : 'none';
+    $lessonCompletedBorderColor = $isLessonCompleted ? 'border-green-500' : 'border-gray-400';
+    $lessonCompletedBackground = $isLessonCompleted ? 'bg-green-500' : 'bg-gray-400';
 @endphp
 <a {{ $attributes->merge(['class' => '']) }}>
     <li
         class="group transition-all ease-in border-r-2 hover:border-orange-600  
-        {{ $currentRouteBorderColor }} {{ $lessonCompletedBorderColor }}">
+        {{ $lessonCompletedBorderColor }}">
         <div class="flex space-x-3 w-full items-center">
             <div class="flex flex-col items-center gap-1">
                 <div
-                    class="w-[2px]  h-4 group-hover:bg-orange-600 transition-all ease-in {{ $currentRouteBackground }} 
+                    class="w-[2px]  h-4 group-hover:bg-orange-600 transition-all ease-in 
                     {{ $lessonCompletedBackground }}  ">
                 </div>
                 <div
-                    class="size-1.5 rounded-full  group-hover:bg-orange-600 transition-all ease-in {{ $currentRouteBackground }} 
+                    class="size-1.5 rounded-full  group-hover:bg-orange-600 transition-all ease-in  
                     {{ $lessonCompletedBackground }}">
                 </div>
                 <div
-                    class="w-[2px] h-4 grow group-hover:bg-orange-600 transition-all ease-in {{ $currentRouteBackground }} 
+                    class="w-[2px] h-4 grow group-hover:bg-orange-600 transition-all ease-in 
                     {{ $lessonCompletedBackground }} ">
                 </div>
             </div>

@@ -272,6 +272,7 @@
 </x-page-layout>
 
 
+<script src="{{ asset('js/notif.js') }}"></script>
 
 <script>
     let initialScrollPosition;
@@ -414,4 +415,3 @@
         removeFromPlaylistForm.classList.add('hidden');
     }
 </script>
-<script src="{{ asset('js/notif.js') }}"></script>

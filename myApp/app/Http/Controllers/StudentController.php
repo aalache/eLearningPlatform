@@ -44,7 +44,10 @@ class StudentController extends Controller
     // return number of enrollement for a specific user;
     public static function enrollements(): int
     {
-        return Enrollement::count();
+        return Enrollement::where(
+            'user_id',
+            Auth::id()
+        )->count();
     }
 
     // return number of course in progress for a specific user;

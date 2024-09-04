@@ -18,7 +18,7 @@ Route::view('/contact', 'contact');
 
 
 
-
+Route::post('/api/video/completed', [VideoController::class, 'markAsCompleted']);
 
 
 // !  Routes Mapping using the Role Middleware
@@ -41,7 +41,9 @@ Route::middleware(['auth', 'role:student'])->group(function () {
         Route::post('/search', [CourseController::class, 'search'])->name('search');
         Route::get('/{course}', [CourseController::class, 'show'])->name('show');
         Route::post('/{course}/enroll', [CourseController::class, 'enroll'])->name('enroll');
-        Route::get('/{course}/watch/{video?}', [CourseController::class, 'watch'])->name('watch');
+        Route::get('/{course}/watch/{video?}', [CourseController::class, 'watch'])
+            ->name('watch')
+            ->middleware('payment:{course}');
     });
 
     // Payment Group

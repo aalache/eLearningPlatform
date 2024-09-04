@@ -14,9 +14,18 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
-                    @foreach ($enrollments as $enrollment)
-                        <x-cards.enrollement-course-card :enrollment="$enrollment" />
-                    @endforeach
+                    @if ($enrollments->isNotEmpty())
+                        @foreach ($enrollments as $enrollment)
+                            <x-cards.enrollement-course-card :enrollment="$enrollment" />
+                        @endforeach
+                    @else
+                        <div class="rounded-lg col-span-6  bg-orange-600/30 p-3 shadow-sm">
+
+                            <p class="text-lg  text-orange-500   ">
+                                Your Learning Path is Waiting!
+                            </p>
+                        </div>
+                    @endif
                 </div>
 
             </div>

@@ -42,7 +42,7 @@
                 <div class="space-y-2 backdrop-blur-sm  rounded-2xl">
                     <div class=" space-y-5 p-4  rounded-2xl">
                         <h2 class="text-xl text-white font-semibold border-l-4 border-orange-600 px-2">
-                            Your Course
+                            Course In Progress
                         </h2>
                         <div class=" space-y-2">
                             <div class="grid grid-cols-4 gap-2">

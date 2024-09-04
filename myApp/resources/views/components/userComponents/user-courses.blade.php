@@ -18,10 +18,18 @@
             </div>
 
             <div class="h-full w-full grid gap-3  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 ">
+                @if ($courses->isNotEmpty())
+                    @foreach ($courses as $course)
+                        <x-courseComponents.course-item :course="$course" />
+                    @endforeach
+                @else
+                    <div class="rounded-lg col-span-6  bg-orange-600/30 p-3 shadow-sm">
 
-                @foreach ($courses as $course)
-                    <x-courseComponents.course-item :course="$course" />
-                @endforeach
+                        <p class="text-lg  text-orange-500   ">
+                            No Courses to Show!
+                        </p>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

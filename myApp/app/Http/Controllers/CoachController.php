@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\Enrollement;
 use App\Models\User;
 use App\Http\Controllers\Activity;
+use Illuminate\Support\Facades\DB;
 
 class CoachController extends Controller
 {
@@ -103,7 +104,7 @@ class CoachController extends Controller
     {
         $user_id = Auth::user()->id;
         $metrics = [
-            'total_users' => User::students()->count(),
+            'total_users' => DB::table('sessions')->select('user_id')->distinct()->whereNotNull('user_id')->count(),
             'total_courses' => Course::where('user_id', $user_id)->count(),
             'total_enrollements' => Enrollement::count(),
             'total_videos' => Video::where('user_id', $user_id)->count(),

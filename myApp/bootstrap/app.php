@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckCoursePaymentMiddleware;
 use App\Http\Middleware\UserRoleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -13,7 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'role' => UserRoleMiddleware::class
+            'role' => UserRoleMiddleware::class,
+            'payment' => CheckCoursePaymentMiddleware::class,
         ]);
         //
     })

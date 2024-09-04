@@ -4,7 +4,7 @@
 
 // /**
 //  *  Add event listeners to all video elements
-//  * to track video competion and store the progress in the database
+//  * to track video completion and store the progress in the database
 //  */
 
 
@@ -26,6 +26,7 @@ function markVideoAsCompleted(videoElement) {
    const videoId = videoElement.getAttribute('data-video-id');
    const userId = videoElement.getAttribute('data-user-id');
    console.log(videoId);
+   console.log(userId);
 
 
    fetch('/api/video/completed', {
@@ -38,13 +39,12 @@ function markVideoAsCompleted(videoElement) {
          video_id: videoId,
          user_id: userId
       })
-   })
-      .then(response => response.json())
-      .then(data => {
-         if (data.success) {
-            alert('Video marked as completed!');
-         }
-      });
+   }).then(response => response.json())
+   .then(data => {
+      if (data.success) {
+         alert('Video marked as completed! refresh the page to see the changes');
+      }
+   });
 
    console.log('done video marked')
 

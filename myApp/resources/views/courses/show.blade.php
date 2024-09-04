@@ -118,6 +118,15 @@
                  </div>
 
              </div>
+         </div>
+     </div>
+     {{-- notifications --}}
+     @session('success')
+         <x-notificationCards.notif-success>{{ session('success') }}</x-notificationCards.notif-success>
+     @endsession
+     @session('error')
+         <x-notificationCards.notif-error>{{ session('error') }}</x-notificationCards.notif-error>
+     @endsession
  </x-page-layout>
 
  <x-formComponents.popup-form id="go-to-payment-popup">
@@ -147,6 +156,7 @@
  </x-formComponents.popup-form>
 
 
+ <script src="{{ asset('js/notif.js') }}"></script>
  <script>
      /**
       * Go to payment popup page 
