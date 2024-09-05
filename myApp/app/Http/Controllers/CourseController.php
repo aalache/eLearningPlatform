@@ -170,7 +170,7 @@ class CourseController extends Controller
     public function watch(Course $course, Video $video)
     {
 
-        $course = Course::with('playlists.videos')->findOrFail($course->id);
+        $course = Course::with('playlists.videos.comments')->findOrFail($course->id);
 
         $videoToDisplay = null;
 

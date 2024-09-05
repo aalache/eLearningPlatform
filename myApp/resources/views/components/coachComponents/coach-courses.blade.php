@@ -16,8 +16,9 @@
                 </div>
 
                 <button
-                    class="create-course-open-btn bg-white/10 py-2 px-3 rounded-md text-white font-semibold hover:bg-black/10 transition ease-in">
-                    <i class="text-sm fa-solid fa-plus text-orange-600"></i> Create Course
+                    class="create-course-open-btn flex justify-between items-center md:space-x-1 bg-white/10 py-2 px-3 rounded-md text-white font-semibold hover:bg-black/10 transition ease-in">
+                    <i class="text-sm fa-solid fa-plus text-orange-600"></i> <span class="hidden md:flex">Create
+                        Course</span>
                 </button>
             </div>
 

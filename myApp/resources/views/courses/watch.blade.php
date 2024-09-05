@@ -7,7 +7,7 @@
 @endphp
 <x-page-layout>
 
-    <div class=" max-w-7xl mx-auto px-3 sm:px-6 lg:px-6  py-4  overflow-hidden  sm:rounded-lg min-h-full">
+    <div class=" max-w-7xl mx-auto md:px-3 sm:px-6 lg:px-6  py-4  overflow-hidden  sm:rounded-lg min-h-full">
 
         <div class=" flex justify-between items-baseline">
             @if (request()->routeIs('coach.*'))
@@ -23,14 +23,16 @@
             @endif
 
             @if (Auth::user()->hasRole('instructor') && request()->routeIs('coach.*'))
-                <div>
-                    <button
-                        class="edit-course-open-btn  hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
-                        <i class="text-sm fa-solid fa-pen text-orange-600"></i> Edit Course
+                <div class="flex items-center space-x-2">
+                    <button title="Edit course"
+                        class="edit-course-open-btn flex justify-between items-center space-x-1 hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
+                        <i class="text-sm fa-solid fa-pen text-orange-600"></i> <span class="hidden md:flex">Edit
+                            Course</span>
                     </button>
-                    <button
-                        class="delete-course-open-btn   hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
-                        <i class="text-sm fa-solid fa-trash-can text-orange-600"></i> Delete Course
+                    <button title="Delete course"
+                        class="delete-course-open-btn flex justify-between items-center space-x-1  hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
+                        <i class="text-sm fa-solid fa-trash-can text-orange-600"></i> <span
+                            class="hidden md:flex">Delete Course</span>
                     </button>
                 </div>
             @endif
@@ -46,10 +48,10 @@
                     By: {{ $course->user->name }}
                 </p>
             </div>
-            <div class="h-full  w-full grid gap-3  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-6 ">
+            <div class="h-full  w-full grid gap-y-5 xl:gap-3  grid-cols-6 ">
                 @if ($videoToDisplay)
                     {{-- Video Section --}}
-                    <div class="col-span-4 space-y-5 ">
+                    <div class="col-span-full xl:col-span-4 space-y-5 ">
                         <iframe id="video-{{ $videoToDisplay->id }}" data-user-id="{{ auth()->user()->id }}"
                             data-video-id="{{ $videoToDisplay->id }}"
                             class="lesson rounded-md w-full bg-gray-600 shadow-lg h-[450px]"
@@ -61,7 +63,7 @@
                     </div>
                     {{--  --}}
                     {{-- Playlists Section --}}
-                    <div class="col-span-2 space-y-3 px-4  h-full overflow-y-scroll">
+                    <div class=" col-span-full xl:col-span-2 space-y-3  h-full overflow-y-scroll">
                         @foreach ($course->playlists as $playlist)
                             @php
                                 $playlist = Playlist::with('videos')->find($playlist->id);
@@ -86,6 +88,7 @@
                                                 :videoTitle="$video->title" :video="$video" :course="$course" />
                                         @endforeach
                                     @endif
+
                                     @if (request()->routeIs('user.*'))
                                         @foreach ($playlist->videos as $video)
                                             <x-courseComponents.playlist-item id="link-{{ $video->id }}"
@@ -93,10 +96,49 @@
                                                 :videoTitle="$video->title" :video="$video" :course="$course" />
                                         @endforeach
                                     @endif
-
                                 </ul>
                             </div>
                             {{-- ? --}}
+                        @endforeach
+                    </div>
+                    {{--  --}}
+                    {{-- comment form section --}}
+                    <div class="col-span-full xl:col-span-4 space-y-2 mt-6 px-0">
+                        <h2 class="font-semibold text-gray-300">
+                            {{ $videoToDisplay->comments->where('course_id', $course->id)->count() }} Comments</h2>
+                        <form method="POST"
+                            action="{{ route('user.courses.comments.store', ['course' => $course, 'video' => $videoToDisplay]) }}"
+                            class="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-x-2">
+                            @csrf
+                            <div class="w-full">
+                                <x-formComponents.form-textarea id="comment" name="comment"
+                                    placeholder="Leave a comment..." required class="bg-black/40 text-gray-300 " />
+                                <x-formComponents.form-error name="comment" />
+                            </div>
+                            <x-formComponents.form-button type="submit" class="w-full sm:max-w-32">Add
+                                comment</x-formComponents.form-button>
+                        </form>
+                    </div>
+                    {{--  --}}
+                    {{-- comments section --}}
+                    <div class="col-span-full xl:col-span-4 space-y-2 mt-6 ">
+                        @foreach ($videoToDisplay->comments()->where('course_id', $course->id)->with('user')->latest()->take(20)->get() as $comment)
+                            <div class="bg-black/70 p-3 rounded-md flex space-x-4 shadow-md">
+                                <div class="space-y-2">
+                                    <img src="{{ $comment->user->profile_picture }}" alt=""
+                                        class="w-16 h-16 rounded-lg object-cover">
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="space-y-1">
+                                        <h2 class="text-gray-300 text-sm font-semibold ">@ {{ $comment->user->name }}
+                                        </h2>
+                                        <p class="text-orange-600 text-xs">Posted
+                                            {{ $comment->updated_at->diffForHumans() }}
+                                        </p>
+                                    </div>
+                                    <p class="text-gray-400 text-sm font-medium">{{ $comment->content }}</p>
+                                </div>
+                            </div>
                         @endforeach
                     </div>
                     {{--  --}}
@@ -116,12 +158,13 @@
 
 
     {{-- notifications --}}
-    @session('success')
+    @if (session('success'))
         <x-notificationCards.notif-success>{{ session('success') }}</x-notificationCards.notif-success>
-    @endsession
-    @session('error')
+    @endif
+
+    @if (session('error'))
         <x-notificationCards.notif-error>{{ session('error') }}</x-notificationCards.notif-error>
-    @endsession
+    @endif
 
 </x-page-layout>
 
@@ -303,7 +346,7 @@
     var player;
 
     function onYouTubeIframeAPIReady() {
-        player = new YT.Player('video-{{ $videoToDisplay->id }}', {
+        player = new YT.Player('video-' + @json($videoToDisplay->id), {
             events: {
                 'onStateChange': onPlayerStateChange
             }
@@ -314,7 +357,7 @@
         console.log('function called');
         if (event.data === YT.PlayerState.ENDED) {
             console.log('video ended successfuly');
-            const videoElement = document.getElementById('video-{{ $videoToDisplay->id }}');
+            const videoElement = document.getElementById('video-' + @json($videoToDisplay->id))
             markVideoAsCompleted(videoElement);
         }
     }

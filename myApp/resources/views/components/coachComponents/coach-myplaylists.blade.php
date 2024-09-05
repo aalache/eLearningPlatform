@@ -3,7 +3,8 @@
 {{-- ! Visible page  --}}
 <div class=" py-10 px-3  min-h-[100vh]">
 
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8  overflow-hidden  sm:rounded-lg p-6 text-gray-900 space-y-12">
+    <div
+        class="max-w-7xl mx-auto  sm:px-6 lg:px-8  overflow-hidden  sm:rounded-lg py-6 text-gray-900 space-y-8 lg:space-y-12">
         <div class="space-y-8 ">
             {{-- <h1 class="border-l-4 px-2 border-blue-600 text-black text-3xl ">My Playlists</h1> --}}
             <div class=" space-y-2">
@@ -12,29 +13,34 @@
                     Crafting the Perfect Playlist Experience.</p>
             </div>
 
-            <div class=" backdrop-blur-lg rounded-md p-4 shadow-lg flex justify-between items-center">
+            <div
+                class=" backdrop-blur-lg space-y-3 sm:space-y-0 rounded-md p-4 shadow-lg flex flex-col sm:flex-row  sm:justify-between sm:items-center">
                 <div>
-                    <h3 class="text-md text-gray-200 font-semibold">You don't have any playlist created yet</h3>
-                    <p class=" text-sm text-orange-600">create your first playlist to get started</p>
+                    <h3 class="text-sm sm:text-md text-gray-200 font-semibold">You don't have any playlist created yet
+                    </h3>
+                    <p class="text-xs sm:text-sm text-orange-600">create your first playlist to get started</p>
                 </div>
                 <button
-                    class="add-playlist-open-btn bg-white/10 hover:bg-black/10 hover:shadow-md py-2 px-4 rounded-md text-white hover:text-orange-600 font-semibold ">
+                    class="add-playlist-open-btn text-sm sm:text-md w-full sm:w-auto bg-orange-700 hover:bg-black/10 hover:shadow-md py-2 px-4 rounded-md text-white hover:text-orange-600 font-semibold ">
                     Add Playlist
                 </button>
             </div>
         </div>
 
-        <div class="space-y-3 backdrop-blur-3xl rounded-2xl p-4 ">
+        <div class="space-y-3 backdrop-blur-3xl rounded-2xl py-4  px-2 md:p-4 ">
             <div class="space-y-2">
-                <h2 class="text-xl border-l-4 px-2 border-orange-600  text-[#ffffff] font-semibold">Playlist Library
+                <h2
+                    class="text-md sm:text-lg md:text-xl border-l-4 px-2 border-orange-600  text-[#ffffff] font-semibold">
+                    Playlist Library
                 </h2>
                 {{-- <p class="text-blue-600 text-sm ">Crafting the Perfect Playlist Experience.</p> --}}
             </div>
             <ul class=" border-b  border-gray-200/20  flex justify-start items-center space-x-4">
-                <li class="text-gray-500 w-fit">List</li>
-                <li class="w-fit py-2 border-b-2 text-gray-200 border-orange-600">Grid</li>
+                <li class="w-fit py-2 border-b-2 text-gray-200 border-orange-600 md:text-gray-500 md:border-none ">List
+                </li>
+                <li class="w-fit text-gray-500 md:py-2 md:border-b-2 md:text-gray-200 md:border-orange-600">Grid</li>
             </ul>
-            <div class=" w-full  grid grid-cols-2 gap-5 py-2 ">
+            <div class=" w-full  grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-5 py-2 ">
                 @foreach ($myplaylists as $playlist)
                     <x-coachComponents.coach-playlist-item :playlist="$playlist" />
                 @endforeach

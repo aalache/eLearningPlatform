@@ -1,5 +1,5 @@
 @props(['data', 'label'])
-<div class="  backdrop-blur-md  border-l-4 shadow-md border-orange-700  rounded-md p-3 space-y-3   ">
-    <h2 class="text-white font-semibold text-xl  leading-normal">{{ $label }}</h2>
-    <p class="text-4xl font-semibold text-orange-600">{{ $data }}</p>
+<div class="  backdrop-blur-md col-span-1  border-l-4 shadow-md border-orange-700  rounded-md p-3 space-y-3   ">
+    <h2 class="text-white font-semibold text-md md:text-lg  lg:text-xl  leading-normal">{{ $label }}</h2>
+    <p class="text-2xl md:text-3xl lg:text-4xl font-semibold text-orange-600">{{ $data }}</p>
 </div>

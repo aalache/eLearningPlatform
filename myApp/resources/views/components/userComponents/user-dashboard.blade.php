@@ -27,7 +27,7 @@
                         CourseController::progress($enrollement->course);
                     }
                 @endphp
-                <div class="  space-x-3 grid grid-cols-3 gap-2">
+                <div class=" grid grid-cols-1 sm:grid-cols-3  gap-2">
                     <x-cards.metrics-card :data="StudentController::enrollements()" :label="'Courses Enrolled In'" />
                     <x-cards.metrics-card :data="StudentController::inProgress()" :label="'In Progress'" />
                     <x-cards.metrics-card :data="StudentController::completed()" :label="'Courses completed'" />

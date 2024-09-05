@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CoachController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\PlaylistController;
@@ -41,10 +42,12 @@ Route::middleware(['auth', 'role:student'])->group(function () {
         Route::post('/search', [CourseController::class, 'search'])->name('search');
         Route::get('/{course}', [CourseController::class, 'show'])->name('show');
         Route::post('/{course}/enroll', [CourseController::class, 'enroll'])->name('enroll');
+        Route::post('/{course}/videos/{video}/comments', [CommentController::class, 'store'])->name('comments.store');
         Route::get('/{course}/watch/{video?}', [CourseController::class, 'watch'])
             ->name('watch')
             ->middleware('payment:{course}');
     });
+
 
     // Payment Group
     Route::prefix('/user/payment')->name('user.payment.')->group(function () {

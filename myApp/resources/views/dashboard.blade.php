@@ -29,10 +29,10 @@
                 @endphp
 
                 <form action="{{ route($route) }}" method="POST"
-                    class=" w-[30%] hover:w-[40%] hover:shadow-sm h-12 rounded-xl transition-all ease-in shadow-md">
+                    class="w-full sm:w-[50%] sm:hover:w-[60%] md:w[40%] md:hover:w[50%] lg:w-[30%] lg:hover:w-[40%] hover:shadow-sm h-12 rounded-xl transition-all ease-in shadow-md">
                     @csrf
                     <input type="text" placeholder="Search..." name="query" id="query"
-                        class=" border-none outlin-none w-full  h-full bg-white/15 rounded-xl text-gray-300 font-medium px-3">
+                        class=" border-none outline-none w-full  h-full bg-white/15 rounded-lg text-gray-300 font-medium px-3">
                 </form>
             @endif
 

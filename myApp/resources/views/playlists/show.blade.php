@@ -1,6 +1,6 @@
 <x-page-layout>
     {{-- ! visible page --}}
-    <section class="max-w-7xl mx-auto sm:px-6 lg:px-6  py-4  overflow-hidden  sm:rounded-lg min-h-full">
+    <section class="max-w-7xl mx-auto sm:px-6 lg:px-6  p-3  overflow-hidden  sm:rounded-lg min-h-full">
 
 
         {{-- ? nav menu (go back | edit | delete ) --}}
@@ -9,48 +9,52 @@
                 class=" hover:bg-white/15 hover:shadow-md py-2 px-4 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
                 <i class="fa-solid fa-arrow-left text-orange-600"></i> Go Back
             </a>
-            <div class="space-x-2">
-                <button
-                    class="add-to-course-open-btn  hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
-                    <i class="text-sm fa-solid fa-plus  text-orange-600"></i> Add To Course
+            <div class="space-x-2 flex justify-between items-center">
+                <button title="Add to course"
+                    class="add-to-course-open-btn flex justify-between items-center space-x-1 hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
+                    <i class="text-sm fa-solid fa-plus  text-orange-600"></i> <span class="hidden md:flex">Add To
+                        Course</span>
                 </button>
-                <button
-                    class="remove-from-course-open-btn  hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
-                    <i class="text-sm fa-solid fa-minus text-orange-600"></i> Remove From Course
+                <button title="Remove from course"
+                    class="remove-from-course-open-btn flex justify-between items-center space-x-1 hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
+                    <i class="text-sm fa-solid fa-minus text-orange-600"></i> <span class="hidden md:flex"> Remove From
+                        Course </span>
                 </button>
-                <button
-                    class="edit-playlist-open-btn  hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
-                    <i class="text-sm fa-solid fa-pen text-orange-600"></i> Edit
+                <button title="Edit playlist"
+                    class="edit-playlist-open-btn flex justify-between items-center space-x-1 hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
+                    <i class="text-sm fa-solid fa-pen text-orange-600"></i> <span class="hidden md:flex">Edit</span>
                 </button>
-                <button
-                    class="delete-playlist-open-btn  hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200 ">
-                    <i class="text-sm fa-solid fa-trash-can  text-orange-600"></i> Delete
+                <button title="Delete playlist"
+                    class="delete-playlist-open-btn flex justify-between items-center space-x-1 hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200 ">
+                    <i class="text-sm fa-solid fa-trash-can  text-orange-600"></i> <span
+                        class="hidden md:flex">Delete</span>
                 </button>
             </div>
         </div>
         {{-- ? --}}
         @if ($videoToDisplay)
-            <div class="p-6 text-gray-900 grid grid-cols-6 gap-2 ">
+            <div class="py-6 text-gray-900 grid grid-cols-6 gap-y-10 xl:gap-2 ">
                 {{-- ? Video section --}}
-                <div class="col-span-4 space-y-5">
+                <div class="col-span-full xl:col-span-4 space-y-5">
                     {{--  --}}
                     <iframe class="lesson rounded-md w-full h-[450px] "
                         src="{{ str_replace('watch?v=', 'embed/', $videoToDisplay->youtube_url) }}" frameborder="0"
                         allowfullscreen></iframe>
                     {{--  --}}
                     <div class="flex items-center justify-between">
-                        <p class="border-l-4 basis-3/4 border-orange-600 px-2 text-xl text-gray-300 font-semibold">
+                        <p class="border-l-4  border-orange-600 px-2 text-xl text-gray-300 font-semibold">
                             {{ $videoToDisplay->title }}
                         </p>
-                        <button
-                            class="remove-from-playlist-open-btn basis-1/4 hover:bg-white/15 hover:shadow-md py-2 px-2 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
-                            <i class="text-sm fa-solid fa-trash-can text-orange-600"></i> Remove from Playlist
+                        <button title="Remove from playlist"
+                            class="remove-from-playlist-open-btn flex justify-between items-center space-x-1 hover:bg-white/15 hover:shadow-md py-2 px-2 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
+                            <i class="text-sm fa-solid fa-trash-can text-orange-600"></i> <span
+                                class="hidden md:flex sm:w-44">Remove from Playlist</span>
                         </button>
                     </div>
                 </div>
                 {{-- ? --}}
                 {{-- ? Playlist section --}}
-                <div class="col-span-2 p-4 space-y-5">
+                <div class="col-span-full xl:col-span-2 bg-black/50 h-fit p-3 rounded-md space-y-5">
                     <div>
                         <h2 class="text-2xl text-white font-semibold border-l-4 border-orange-600 px-2  ">
                             {{ $playlist->name }}
@@ -62,9 +66,6 @@
                             <x-courseComponents.playlist-item
                                 href="{{ route('coach.playlists.show', ['playlist' => $playlist, 'video' => $video]) }}"
                                 :videoTitle="$video->title" :video="$video" :playlist="$playlist" />
-                            {{-- <x-courseComponents.playlist-item id="link-{{ $video->id }}"
-                                href="{{ route('user.courses.watch', ['course' => $course, 'video' => $video]) }}"
-                                :videoTitle="$video->title" :video="$video" :course="$course" /> --}}
                         @endforeach
 
                     </ul>

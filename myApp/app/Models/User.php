@@ -138,7 +138,12 @@ class User extends Authenticatable
         return $this->hasMany(Payment::class);
     }
 
+    //? ################################ comments Table  relationships ################################
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
 
     /**

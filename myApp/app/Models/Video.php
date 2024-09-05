@@ -35,11 +35,14 @@ class Video extends Model
 
 
     //? ################################ VideoProgress Table  relationships ################################
-
-
-
     public function completedBy()
     {
         return $this->belongsToMany(User::class, 'video_progress');
+    }
+
+    //? ################################ Comment Table  relationships ################################
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

@@ -102,11 +102,9 @@
                                          <i class="fa-solid fa-angle-right text-orange-600 group-hover:rotate-90"></i>
                                      </div>
 
-                                     <ul class="list-items hidden px-8 ">
+                                     <ul class="list-items hidden md:px-8 ">
                                          @foreach ($playlist->videos as $video)
-                                             <x-courseComponents.playlist-item
-                                                 href="{{ route('coach.playlists.show', ['playlist' => $playlist, 'video' => $video]) }}"
-                                                 :videoTitle="$video->title" :video="$video" />
+                                             <x-courseComponents.playlist-item :videoTitle="$video->title" :video="$video" />
                                          @endforeach
 
                                      </ul>

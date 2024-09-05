@@ -30,7 +30,7 @@
 
                 @endphp
 
-                <div class="  space-x-3 grid grid-cols-5 gap-2">
+                <div class="  xl:space-x-3 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-2">
                     <x-cards.metrics-card :data="CoachController::metrics('total_videos')" :label="'Videos'" />
                     <x-cards.metrics-card :data="CoachController::metrics('total_playlists')" :label="'Playlists'" />
                     <x-cards.metrics-card :data="CoachController::metrics('total_courses')" :label="'Courses'" />
