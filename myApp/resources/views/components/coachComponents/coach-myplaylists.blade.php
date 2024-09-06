@@ -14,7 +14,7 @@
             </div>
 
             <div
-                class=" backdrop-blur-lg space-y-3 sm:space-y-0 rounded-md p-4 shadow-lg flex flex-col sm:flex-row  sm:justify-between sm:items-center">
+                class=" backdrop-blur-lg  bg-black/40 space-y-3 sm:space-y-0 rounded-md p-4 shadow-lg flex flex-col sm:flex-row  sm:justify-between sm:items-center">
                 <div>
                     <h3 class="text-sm sm:text-md text-gray-200 font-semibold">You don't have any playlist created yet
                     </h3>
@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="space-y-3 backdrop-blur-3xl rounded-2xl py-4  px-2 md:p-4 ">
+        <div class="space-y-3 backdrop-blur-3xl bg-black/40 rounded-2xl py-4  px-2 md:p-4 ">
             <div class="space-y-2">
                 <h2
                     class="text-md sm:text-lg md:text-xl border-l-4 px-2 border-orange-600  text-[#ffffff] font-semibold">

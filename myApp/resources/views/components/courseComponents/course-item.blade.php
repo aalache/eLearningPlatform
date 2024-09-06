@@ -17,11 +17,14 @@
 
         {{-- course detail --}}
         <div
-            class="group rounded-md w-full h-full absolute  p-3  hover:p-3 translate-y-[-45%]  hover:translate-y-[-100%]   bg-black/50 backdrop-blur-lg   overflow-hidden transition-all ease-linear ">
+            class="group rounded-md w-full h-full absolute  p-3  hover:p-3 translate-y-[-45%]  hover:translate-y-[-100%]   bg-black/70 backdrop-blur-lg   overflow-hidden transition-all ease-linear ">
 
 
             <div class="flex justify-start items-center space-x-2 mb-2">
-                <div class="h-10 w-10 rounded-full bg-gray-500/40 border-2"></div>
+                <div class="h-10 w-10 rounded-full bg-gray-500/40 shadow-md overflow-hidden">
+                    <img src="{{ asset('upload/profiles') }}/{{ $course->user->profile_picture }}" alt=""
+                        class="w-full h-full object-cover ">
+                </div>
                 <p class="text-sm text-gray-300"><span class="text-orange-600">@</span>{{ $course->user->name }}</p>
             </div>
 

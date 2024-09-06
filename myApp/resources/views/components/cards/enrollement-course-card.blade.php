@@ -2,7 +2,7 @@
 
 
 <div
-    class=" flex flex-col sm:flex-row justify-between sm:items-center rounded-md bg-[#ffffff]/5 backdrop-blur-xl  sm:space-x-3 ">
+    class=" flex flex-col sm:flex-row justify-between sm:items-center rounded-md bg-black/40 backdrop-blur-xl  sm:space-x-3 ">
 
     <img src="{{ asset('upload/courses') }}/{{ $enrollment->course->image }}" alt=""
         class="w-full md:w-[35%] h-32 lg:h-full bg-gray-700 rounded-md  object-cover shadow-xl " />

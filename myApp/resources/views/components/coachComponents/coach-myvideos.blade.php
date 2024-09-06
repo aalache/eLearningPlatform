@@ -16,7 +16,7 @@
             </div>
 
             <div
-                class="backdrop-blur-lg space-y-3 sm:space-y-0 rounded-md p-4 shadow-lg flex flex-col sm:flex-row  sm:justify-between sm:items-center">
+                class="backdrop-blur-lg bg-black/40 space-y-3 sm:space-y-0 rounded-md p-4 shadow-lg flex flex-col sm:flex-row  sm:justify-between sm:items-center">
                 <div>
                     <h3 class="text-sm sm:text-md text-gray-200 font-semibold">You don't have any videos uploaded yet
                     </h3>
@@ -31,7 +31,7 @@
         </section>
 
 
-        <section class="space-y-3 backdrop-blur-3xl rounded-2xl p-4  ">
+        <section class="space-y-3 backdrop-blur-3xl bg-black/40 rounded-2xl p-4  ">
             <h2 class=" text-md sm:text-lg md:text-xl border-l-4 px-2 border-orange-600  text-[#ffffff] font-semibold">
                 Video Library</h2>
             <div class="space-y-3">
@@ -136,7 +136,7 @@
     </x-slot:closeBtn>
     {{-- ? form start --}}
     <form action="{{ route('coach.videos.store') }}" method="POST" enctype="multipart/form-data"
-        class="space-y-5  mx-auto shadow-lg">
+        class="space-y-5  mx-auto ">
         @csrf
 
         {{-- Title field --}}
@@ -160,7 +160,6 @@
             <x-formComponents.form-label for="description">
                 Description</x-formComponents.form-label>
             <x-formComponents.form-textarea id="description" name="description"
-                class="block w-full rounded-md border-0  text-orange-700 font-medium shadow-sm  placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400 backdrop-blur-sm bg-white/5"
                 placeholder="description of your video content" :value="old('description')" required />
             <x-formComponents.form-error name="description" />
         </x-formComponents.form-field>
@@ -246,7 +245,6 @@
             <x-formComponents.form-label for="description">
                 Description</x-formComponents.form-label>
             <x-formComponents.form-textarea id="edit-description" name="description"
-                class="block w-full rounded-md border-0  text-orange-700 font-medium shadow-sm  placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6  px-3 py-2.5 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400 backdrop-blur-sm bg-white/5"
                 placeholder="description of your video content" :value="old('description')" required />
             <x-formComponents.form-error name="description" />
         </x-formComponents.form-field>

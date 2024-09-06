@@ -39,7 +39,7 @@
         <div class="px-2 py-8 text-gray-900 space-y-4">
             {{-- Your courses section --}}
             @if (Auth::user()->enrollements->count())
-                <div class="space-y-2 backdrop-blur-sm  rounded-2xl">
+                <div class="space-y-2 backdrop-blur-sm  bg-black/40 rounded-2xl">
                     <div class=" space-y-5 p-4  rounded-2xl">
                         <h2 class="text-xl text-white font-semibold border-l-4 border-orange-600 px-2">
                             Course In Progress
@@ -64,7 +64,7 @@
 
 
             @if (Auth::user()->activities->count())
-                <div class="space-y-2 backdrop-blur-3xl rounded-2xl   ">
+                <div class="space-y-2 backdrop-blur-3xl bg-black/40 rounded-2xl   ">
                     <div class=" space-y-5 p-4  rounded-2xl">
                         <h2 class="text-xl text-white font-semibold border-l-4 border-orange-600 px-2">Activity
                             History

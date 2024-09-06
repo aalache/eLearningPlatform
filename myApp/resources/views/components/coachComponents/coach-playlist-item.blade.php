@@ -4,7 +4,7 @@
 
 <a href="{{ route('coach.playlists.show', ['playlist' => $playlist->id]) }}">
     <div
-        class=" group flex relative justify-between items-center  bg-white/10 space-x-4 w-full  hover:border-r-4 border-orange-600 rounded-md  transition-all ease-in h-auto max-h-[80px] md:h-[100px] overflow-hidden">
+        class=" group flex relative justify-between items-center  bg-white/10 space-x-4 w-full  hover:border-r-4 border-orange-600 rounded-md  transition-all ease-in h-auto max-h-[80px] md:h-[100px] md:max-h-[100px] overflow-hidden">
 
         <div class="relative w-[30%]  h-auto p-2 rounded-lg  bg-[#efefef]  ">
             <img src="{{ asset('images/playlistimage.jpeg') }}" alt=""
