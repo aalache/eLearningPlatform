@@ -9,37 +9,57 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    {{--  --}}
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
 
-<body class="h-full">
-    <div class=" flex min-h-full h-full  justify-center items-center  lg:px-8  bg-hero ">
+
+    {{-- style --}}
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    {{-- scripts --}}
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+</head>
+<style>
+    .user-hero {
+        background-image: url({{ asset('images/library.jpeg') }});
+        background-size: cover;
+        background-position: center;
+        font-family: 'inter';
+        width: 100%;
+    }
+</style>
+
+<body class=" h-full user-hero">
+    <div class=" flex min-h-full h-full  justify-center items-center  lg:px-8   backdrop-blur-md  ">
         <div
-            class="flex  justify-center items-center h-auto w-full  rounded-none border-none sm:max-w-[400px]  sm:border-2  sm:rounded-xl sm:border-dashed  sm:p-10 sm:block sm:border-indigo-500   backdrop-blur-lg bg-indigo-900/20 ">
-            <div class="w-full p-14 sm:p-0">
-                <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+            class="flex  justify-center items-center h-full sm:h-auto  w-full  rounded-none border-none sm:max-w-[400px]  sm:border-2  sm:rounded-xl sm:border-dashed     backdrop-blur-lg bg-[#efefef]/80 shadow-xl ">
+            <div class="w-full p-4 sm:p-6 md:p-8 ">
+                <div class=" ">
                     <a href="/">
                         <img class="mx-auto h-10 w-auto"
                             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
                     </a>
                     @if (request()->is('register'))
-                        <h2 class="mt-3 text-center text-2xl font-bold leading-9 tracking-tight text-gray-200">Create
+                        <h2 class="mt-3 text-center text-2xl font-bold leading-9 tracking-tight text-gray-600">Create
                             your
                             account</h2>
                     @endif
                     @if (request()->is('login'))
-                        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-200">Sign in
+                        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-600">Sign in
                             to
                             your account</h2>
                     @endif
                 </div>
 
-                <div class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm ">
+                <div class="mt-5 ">
                     {{-- ? here form start --}}
 
                     {{ $slot }}

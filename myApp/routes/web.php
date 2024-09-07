@@ -3,7 +3,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CoachController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\StudentController;
@@ -12,10 +12,24 @@ use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PayPalController;
 
-Route::view('/', 'welcome');
-Route::view('/home', 'welcome');
+// Route::view('/', 'welcome');
+// Route::view('/home', 'welcome');
 // Route::view('/home', 'home');
 // Route::view('/contact', 'contact');
+
+
+Route::view('/', 'welcome')->name('index');
+
+
+Route::prefix('/blogs')->name('blogs.')->group(function () {
+    Route::get('/', [BlogController::class, 'index'])->name('index');
+    Route::get('/create', [BlogController::class, 'create'])->name('create');
+    Route::post('/', [BlogController::class, 'store'])->name('store');
+    Route::get('/{slug}', [BlogController::class, 'show'])->name('show');
+    Route::get('/{slug}/edit', [BlogController::class, 'edit'])->name('edit');
+    Route::patch('/{slug}', [BlogController::class, 'update'])->name('update');
+    Route::delete('/{slug}', [BlogController::class, 'destroy'])->name('destroy');
+});
 
 
 

@@ -8,24 +8,27 @@
     <title>Laravel</title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    {{--  --}}
     <script src="https://cdn.tailwindcss.com"></script>
 
 
 </head>
 
-<body class="font-sans antialiased dark:bg-black dark:text-white/50 ">
+<body>
 
 
-    <div class="bg-white">
+    <main class="bg-white">
         <header class=" bg-opacity-30  ">
             <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16 lg:h-20">
                     <div class="flex-shrink-0">
                         <a href="#" title="" class="flex w-auto h-8 text-black text-xl font-bold">
-                            Logo
+                            <x-application-logo />
                         </a>
                     </div>
 
@@ -49,20 +52,35 @@
                     <div class="hidden lg:flex lg:items-center lg:justify-between basis-2/3">
                         <div class="lg:space-x-10 lg:flex lg:items-center lg:justify-center">
                             <a href="#" title=""
-                                class="text-sm text-black transition-all duration-200 hover:text-opacity-80">
-                                Features </a>
+                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 font-medium">
+                                Home
+                            </a>
+
+                            <a href="{{ route('blogs.index') }}" title=""
+                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 font-medium">
+                                Blogs
+                            </a>
 
                             <a href="#" title=""
-                                class="text-sm text-black transition-all duration-200 hover:text-opacity-80">
-                                Solutions </a>
+                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 font-medium">
+                                Features
+                            </a>
 
                             <a href="#" title=""
-                                class="text-sm text-black transition-all duration-200 hover:text-opacity-80">
-                                Resources </a>
+                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 font-medium">
+                                Solutions
+                            </a>
 
                             <a href="#" title=""
-                                class="text-sm text-black transition-all duration-200 hover:text-opacity-80">
-                                Pricing </a>
+                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 font-medium">
+                                Resources
+                            </a>
+
+                            <a href="#" title=""
+                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 font-medium">
+                                Pricing
+                            </a>
+
                         </div>
                         <div>
 
@@ -70,42 +88,43 @@
                                 @auth
                                     @if (Auth::user()->hasRole('student') && Auth::user()->hasRole('instructor'))
                                         <a href="{{ route('coach.dashboard') }}"
-                                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] ">
+                                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none  ">
                                             Dashboard
                                         </a>
                                     @else
                                         @if (Auth::user()->hasRole('instructor'))
                                             <a href="{{ route('coach.dashboard') }}"
-                                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] ">
+                                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none  ">
                                                 Dashboard
                                             </a>
                                         @endif
                                         @if (Auth::user()->hasRole('student'))
                                             <a href="{{ route('user.dashboard') }}"
-                                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] ">
+                                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none  ">
                                                 Dashboard
                                             </a>
                                         @endif
                                     @endif
                                 @else
-                                    <a href="{{ route('login') }}"
-                                        class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] ">
-                                        Log in
-                                    </a>
-
-                                    @if (Route::has('register'))
-                                        <a href="{{ route('register') }}"
-                                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] ">
-                                            Register
+                                    <div
+                                        class="rounded-full bg-[#efefef]  flex justify-center items-center overflow-hidden shadow-sm">
+                                        <a href="{{ route('login') }}"
+                                            class="rounded-full bg-orange-600 text-white  shadow-md px-3 py-2  ring-1 ring-transparent transition hover:text-gray-300 focus:outline-none  ">
+                                            Login
                                         </a>
-                                    @endif
+
+                                        @if (Route::has('register'))
+                                            <a href="{{ route('register') }}"
+                                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none  ">
+                                                Register
+                                            </a>
+                                        @endif
+                                    </div>
                                 @endauth
 
                             @endif
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </header>
@@ -126,9 +145,9 @@
                         </div>
 
                         <a href="#" title=""
-                            class="inline-flex w-fit py-2 px-3 items-center lg:mt-8  text-white transition-all duration-200 bg-blue-600 rounded-full  hover:bg-blue-500 focus:bg-blue-500"
+                            class="inline-flex w-fit py-2 px-4 items-center lg:mt-8  text-white transition-all duration-200 bg-orange-600 rounded-full  hover:bg-orange-500 "
                             role="button">
-                            Join for free
+                            Get Started
                             <svg class="w-6 h-6 ml-8 -mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -147,11 +166,11 @@
                 </div>
             </div>
         </section>
-    </div>
+    </main>
 
 
 
-    <footer class="py-8 text-center text-sm text-black dark:text-white/70">
+    <footer class="py-8 text-center text-sm text-black bg-black dark:text-white/70">
         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
     </footer>
 

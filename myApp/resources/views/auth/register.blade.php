@@ -53,7 +53,7 @@
             <x-formComponents.form-button type="submit">Sign Up</x-formComponents.form-button>
         </div>
 
-        <p class="mt-5 text-center text-sm text-gray-400">
+        <p class="mt-5 text-center text-sm text-gray-600">
             <a href="/login">I allready have account?</a>
         </p>
     </form>
