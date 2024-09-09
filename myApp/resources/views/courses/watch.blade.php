@@ -125,8 +125,8 @@
                         @foreach ($videoToDisplay->comments()->where('course_id', $course->id)->with('user')->latest()->take(20)->get() as $comment)
                             <div class="bg-black/70 p-3 rounded-md flex space-x-4 shadow-md">
                                 <div class="space-y-2">
-                                    <img src="{{ $comment->user->profile_picture }}" alt=""
-                                        class="w-16 h-16 rounded-lg object-cover">
+                                    <img src="{{ asset('upload/profiles') }}/{{ $comment->user->profile_picture }}"
+                                        alt="" class="w-16 h-16 rounded-lg object-cover">
                                 </div>
                                 <div class="space-y-2">
                                     <div class="space-y-1">

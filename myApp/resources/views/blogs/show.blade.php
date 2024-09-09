@@ -39,45 +39,43 @@
 </style>
 
 <body>
-    <div class="user-hero min-h-[100vh]">
-        <div class="backdrop-blur-xl bg-[#efefef]/10 min-h-[100vh]">
-            <section class="max-w-7xl mx-auto py-10  ">
+    <div class="bg-[#111827] min-h-[100vh]">
+        <section class="max-w-7xl mx-auto py-10  ">
 
 
-                <div class="   bg-[#efefef] p-10 rounded-lg space-y-5">
-                    <div class="flex justify-start items-center space-x-2">
-                        @if (Auth::user()->hasRole('instructor'))
-                            <a href="{{ route('blogs.edit', ['slug' => $blog->slug]) }}"
-                                class="rounded-md px-3 py-2 text-white bg-blue-700 hover:bg-blue-600">Edit Article</a>
-                            <form action="{{ route('blogs.destroy', ['slug' => $blog->slug]) }}" method="POST"
-                                enctype="multipart/form-data">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="rounded-md px-3 py-2 text-white bg-red-700 hover:bg-red-600">
-                                    Delete Article
-                                </button>
-                            </form>
-                        @endif
+            <div class="   p-10 rounded-lg space-y-5">
+                <div class="flex justify-start items-center space-x-2">
+                    @if (Auth::user()->hasRole('instructor'))
+                        <a href="{{ route('blogs.edit', ['slug' => $blog->slug]) }}"
+                            class="rounded-md px-3 py-2 text-white bg-indigo-700 hover:bg-indigo-600">Edit Article</a>
+                        <form action="{{ route('blogs.destroy', ['slug' => $blog->slug]) }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="rounded-md px-3 py-2 text-white bg-red-700 hover:bg-red-600">
+                                Delete Article
+                            </button>
+                        </form>
+                    @endif
+                </div>
+                <div class="space-y-5">
+                    <h1 class="font-semibold text-4xl text-white">{{ $blog->title }}</h1>
+                    <p class="text-gray-400">By: {{ $blog->user->name }}</p>
+                    <div class="w-full  overflow-hidden rounded-md shadow-lg">
+                        <img src="{{ asset('upload/blogs') }}/{{ $blog->image }}" alt=""
+                            class="rounded-md h-80 w-full object-cover">
                     </div>
-                    <div class="space-y-5">
-                        <h1 class="font-semibold text-4xl">{{ $blog->title }}</h1>
-                        <p>By: {{ $blog->user->name }}</p>
-                        <div class="w-full  overflow-hidden rounded-md">
-                            <img src="{{ asset('upload/blogs') }}/{{ $blog->image }}" alt=""
-                                class="rounded-md h-80 w-full object-cover">
-                        </div>
-                    </div>
-
-
-                    <div>
-                        {!! $blog->content !!}
-                    </div>
-
                 </div>
 
-            </section>
-        </div>
+
+                <div class="text-gray-300 w-full">
+                    {!! $blog->content !!}
+                </div>
+
+            </div>
+
+        </section>
+
     </div>
 
 
