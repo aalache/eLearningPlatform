@@ -9,6 +9,7 @@ use App\Models\Playlist;
 use App\Models\Video;
 use App\Services\ActivityLogger;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class CourseController extends Controller
 {
@@ -53,7 +54,7 @@ class CourseController extends Controller
         ]);
         $file = $request->file('image');
         $file->move('upload/courses', $file->getClientOriginalName());
-        $image = $file->getClientOriginalName();
+        $imageName = $file->getClientOriginalName();
 
         $course = Course::create([
             'name' => $request->name,
@@ -62,7 +63,7 @@ class CourseController extends Controller
             'level' => $request->level,
             'category' => $request->category,
             'price' => $request->price,
-            'image' => $image,
+            'image' => $imageName,
             'user_id' => Auth::id(),
         ]);
         if ($course) {
@@ -94,15 +95,21 @@ class CourseController extends Controller
             'level' => 'required',
             'category' => 'required',
             'price' => 'required|numeric',
-            // 'image' => 'mimes:png,jpg,webp',
+            'image' => 'mimes:png,jpg,webp',
         ]);
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $image = $file->getClientOriginalName();
-            $file->move('upload/courses', $image);
+            $imageName = $file->getClientOriginalName();
+            $file->move('upload/courses', $imageName);
+            if ($course->image) {
+                $oldImagePath = public_path('upload/courses/' . $course->image);
+                if (File::exists($oldImagePath)) {
+                    File::delete($oldImagePath);
+                }
+            }
         } else {
-            $image = $course->image;
+            $imageName = $course->image;
         }
 
         $course->update([
@@ -112,11 +119,11 @@ class CourseController extends Controller
             'level' => $request->level,
             'category' => $request->category,
             'price' => $request->price,
-            'image' => $image,
+            'image' => $imageName,
         ]);
         ActivityLogger::log('Course Updated', 'you have updated ' . $course->name . ' course ');
 
-        return redirect()->route('courses.watch', ['course' => $course, 'videoToDisplay' => $video])->with('success', 'Course updated successfully');
+        return redirect()->route('coach.courses.watch', ['course' => $course, 'videoToDisplay' => $video])->with('success', 'Course updated successfully');
     }
 
     /**

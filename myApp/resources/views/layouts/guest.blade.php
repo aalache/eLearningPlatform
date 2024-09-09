@@ -43,10 +43,10 @@
             class="flex  justify-center items-center h-full sm:h-auto  w-full  rounded-none border-none sm:max-w-[400px]  sm:border-2  sm:rounded-xl sm:border-dashed     backdrop-blur-lg bg-[#efefef]/80 shadow-xl ">
             <div class="w-full p-4 sm:p-6 md:p-8 ">
                 <div class=" ">
-                    <a href="/">
+                    {{-- <a href="/">
                         <img class="mx-auto h-10 w-auto"
                             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
-                    </a>
+                    </a> --}}
                     @if (request()->is('register'))
                         <h2 class="mt-3 text-center text-2xl font-bold leading-9 tracking-tight text-gray-600">Create
                             your

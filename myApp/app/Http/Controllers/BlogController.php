@@ -13,9 +13,14 @@ class BlogController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $blogs = Blog::all();
+        if ($request->session()->get('blogs')) {
+            $blogs = $request->session()->get('blogs');
+        } else {
+
+            $blogs = Blog::all();
+        }
         return view('blogs.index', ['blogs' => $blogs]);
     }
 
@@ -91,8 +96,8 @@ class BlogController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = $image->getClientOriginalName();
-            $imageName = time() . '_' . $image->getClientOriginalName(); // Unique name to avoid conflicts
-            $image->storeAs('public/upload/blogs', $imageName); // Store in storage folder
+            $image->move('upload/blogs', $imageName);
+
             if ($blog->image) {
                 $oldImagePath = public_path('upload/blogs/' . $blog->image);
                 if (File::exists($oldImagePath)) {
@@ -100,15 +105,14 @@ class BlogController extends Controller
                 }
             }
         } else {
-            $image = $blog->image;
+            $imageName = $blog->image;
         }
 
-        // dd($image);
 
         $blog->update([
             'title' => $request->title,
             'content' => $request->content,
-            'image' => $image,
+            'image' => $imageName,
         ]);
 
         return redirect()->route('blogs.index');
@@ -120,6 +124,26 @@ class BlogController extends Controller
     public function destroy($slug)
     {
 
-        //
+        $blog = Blog::where('slug', $slug);
+        $blog->delete();
+        return redirect()->route('blogs.index');
+    }
+
+    /**
+     * blog search logic
+     */
+    public function search(Request $request)
+    {
+
+        $query = $request->input('query');
+
+        $blogs = Blog::where('title', 'like', '%' . $query . '%')
+            ->orWhere('content', 'like', '%' . $query . '%')
+            ->latest()
+            ->get();
+
+
+
+        return redirect()->route('blogs.index')->with('blogs', $blogs);
     }
 }

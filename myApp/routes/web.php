@@ -29,6 +29,7 @@ Route::prefix('/blogs')->name('blogs.')->group(function () {
     Route::get('/{slug}/edit', [BlogController::class, 'edit'])->name('edit');
     Route::patch('/{slug}', [BlogController::class, 'update'])->name('update');
     Route::delete('/{slug}', [BlogController::class, 'destroy'])->name('destroy');
+    Route::post('/search', [BlogController::class, 'search'])->name('search');
 });
 
 

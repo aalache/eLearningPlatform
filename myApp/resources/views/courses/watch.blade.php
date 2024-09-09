@@ -178,7 +178,7 @@
 
     {{--  here form start --}}
     <form action="{{ route('coach.courses.update', ['course' => $course, 'video' => $videoToDisplay]) }}"
-        method="POST" class="space-y-5 min-w-screen-md grid grid-cols-2 gap-x-2">
+        method="POST" enctype="multipart/form-data" class="space-y-5 min-w-screen-md grid grid-cols-2 gap-x-2">
         @csrf
         @method('PATCH')
 

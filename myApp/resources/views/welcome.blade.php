@@ -7,6 +7,12 @@
 
     <title>Laravel</title>
 
+    {{-- Icons --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{--  --}}
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -76,7 +82,7 @@
                                 Resources
                             </a>
 
-                            <a href="#" title=""
+                            <a href="#pricing" title=""
                                 class="text-sm text-black transition-all duration-200 hover:text-orange-600 font-medium">
                                 Pricing
                             </a>
@@ -167,6 +173,138 @@
             </div>
         </section>
     </main>
+
+    {{-- pricing  section --}}
+    <section id="pricing" class=" min-h-[100vh] bg-[#111827] ">
+        <div class="p-4 sm:p-8 max-w-7xl mx-auto py-20 md:py-32 space-y-14 sm:space-y-24">
+            <div class=" text-center space-y-8">
+                <div class="space-y-2">
+                    <p class="text-lg text-indigo-500 font-medium">Pricing</p>
+                    <h2 class=" font-bold text-white text-3xl  sm:text-4xl lg:text-5xl ">Pricing plans for
+                        teams of all sizes</h2>
+                </div>
+                <p class="text-md sm:text-lg text-gray-300 font-medium ">
+                    Choose an affordable plan that’s packed with the best features for engaging <br>
+                    your audience, creating customer loyalty, and driving sales.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mx-auto">
+                {{-- item --}}
+                <div
+                    class="col-span-1 mx-w-96 rounded-3xl border hover:border-2 border-gray-700 hover:border-[#6366F1] p-6 sm:p-10 bg-[#111827] hover:bg-[#1D2432] space-y-10  transition ease-linear ">
+                    <div class="space-y-4 w-full">
+                        <h3 class="text-white font-semibold text-lg">Freelancer</h3>
+                        <p class="text-gray-400 text-sm">The essentials to provide your best work for clients.</p>
+                        <p class="text-gray-400 font-semibold">
+                            <span class="font-bold text-white text-4xl">$15</span>/month
+                        </p>
+                        <button
+                            class="w-full  bg-[#29303D] hover:bg-[#6366F1] p-2 rounded-md text-sm font-semibold text-white transition ease-linear">
+                            By Plan
+                        </button>
+                    </div>
+
+                    <ul class="space-y-3">
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500 "></i><span>5 Products</span>
+                        </li>
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500"></i><span>Up to 1,000 subscribers</span>
+                        </li>
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500"></i><span>Basic analytics</span>
+                        </li>
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500"></i>
+                            <span>48-hour support response time</span>
+                        </li>
+                    </ul>
+
+                </div>
+                {{-- item --}}
+                {{-- item --}}
+                <div
+                    class="col-span-1 mx-w-96 rounded-3xl border hover:border-2 border-gray-700 hover:border-[#6366F1] p-6 sm:p-10 bg-[#111827] hover:bg-[#1D2432] space-y-10  transition ease-linear ">
+                    <div class="space-y-4 w-full">
+                        <h3 class="text-white font-semibold text-lg">Startup</h3>
+                        <p class="text-gray-400 text-sm">A plan that scales with your rapidly growing business.</p>
+                        <p class="text-gray-400 font-semibold">
+                            <span class="font-bold text-white text-4xl">$30</span>/month
+                        </p>
+                        <button
+                            class="w-full  bg-[#29303D] hover:bg-[#6366F1] p-2 rounded-md text-sm font-semibold text-white transition ease-linear">
+                            By Plan
+                        </button>
+                    </div>
+
+                    <ul class="space-y-3">
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500 "></i><span>25 Products</span>
+                        </li>
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500"></i><span>Up to 10,000 subscribers</span>
+                        </li>
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500"></i><span>Advanced analytics</span>
+                        </li>
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500"></i>
+                            <span>24-hour support response time</span>
+                        </li>
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500"></i><span>Marketing automations</span>
+                        </li>
+                    </ul>
+
+                </div>
+                {{-- item --}}
+                {{-- item --}}
+                <div
+                    class="col-span-1 mx-w-96 rounded-3xl border hover:border-2 border-gray-700 hover:border-[#6366F1] p-6 sm:p-10 bg-[#111827] hover:bg-[#1D2432] space-y-10  transition ease-linear ">
+                    <div class="space-y-4 w-full">
+                        <h3 class="text-white font-semibold text-lg">Enterprise</h3>
+                        <p class="text-gray-400 text-sm">Dedicated support and infrastructure for your company.</p>
+                        <p class="text-gray-400 font-semibold">
+                            <span class="font-bold text-white text-4xl">$48</span>/month
+                        </p>
+                        <button
+                            class="w-full  bg-[#29303D] hover:bg-[#6366F1] p-2 rounded-md text-sm font-semibold text-white transition ease-linear">
+                            By Plan
+                        </button>
+                    </div>
+
+                    <ul class="space-y-3">
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500 "></i>
+                            <span>Unlimited products </span>
+                        </li>
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500"></i><span>Unlimited subscribers</span>
+                        </li>
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500"></i><span>Advanced analytics</span>
+                        </li>
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500"></i>
+                            <span>1-hour, dedicated support response time</span>
+                        </li>
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500"></i><span>Marketing automations</span>
+                        </li>
+                        <li class="flex justify-start space-x-4 items-center text-sm text-gray-400">
+                            <i class="fa-solid fa-check  text-indigo-500"></i><span>Custom reporting tools</span>
+                        </li>
+                    </ul>
+
+                </div>
+                {{-- item --}}
+
+            </div>
+
+        </div>
+    </section>
+    {{-- pricing end section --}}
 
 
 

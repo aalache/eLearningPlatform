@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
 
 <head>
     <meta charset="utf-8">
@@ -38,35 +38,42 @@
     }
 </style>
 
-<body>
-    <div class="user-hero min-h-[100vh]">
+<body class="h-full">
+    <div class="user-hero w-full min-h-[100vh]">
         <div class="backdrop-blur-xl bg-[#efefef]/10 min-h-[100vh]">
-            <section class="max-w-7xl mx-auto py-10  ">
-                <div class="  space-y-5">
-                    <div class="  flex justify-between items-center bg-[#efefef] p-10 rounded-lg">
-                        <div class="space-y-2">
-                            <h1 class="font-semibold text-4xl">Discover Nice Articles Here</h1>
+            <section class="w-full max-w-7xl mx-auto py-10  ">
+                <div class="  lg:space-y-5">
+                    <div
+                        class="  flex flex-col lg:flex-row space-y-5 lg:space-y-0 justify-between lg:items-center bg-[#efefef] p-10  rounded-lg">
+                        <div class="space-y-2 ">
+                            <h1 class=" font-semibold text-4xl">Discover Nice Articles Here</h1>
                             <p class=" capitalize max-w-[500px] text-gray-600">
                                 Welcome to our blog, where we share insights, tips, and updates on topics that inspire
                                 and inform.Explore our latest posts and stay connected with what matters most.
                             </p>
                         </div>
 
-                        <form action="">
+                        <form action="{{ route('blogs.search') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <input type="text" name="query"
+                            <input type="text" name="query" id="query"
                                 class="p-3 outline-none border-none text-gray-600 bg-white rounded-full shadow-sm w-[400px]"
                                 placeholder="Search...">
                         </form>
                     </div>
 
-                    <div class="bg-[#efefef] p-10 rounded-lg space-y-5">
-                        <h2 class="font-semibold text-2xl "> Articles</h2>
-
-                        <div class="">
+                    <div class="bg-[#efefef] p-10 rounded-lg space-y-5 h-auto w-full">
+                        <div class="flex justify-between items-center">
+                            <h2 class="font-semibold text-2xl "> Articles</h2>
+                            @if (Auth::user()->hasRole('instructor'))
+                                <a href="{{ route('blogs.create') }}"
+                                    class="rounded-md px-3 py-2 text-white bg-blue-700 hover:bg-blue-600">Create
+                                    Article</a>
+                            @endif
+                        </div>
+                        <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                             @foreach ($blogs as $blog)
                                 {{-- item start --}}
-                                <div class=" w-80 overflow-hidden rounded-md  ">
+                                <div class="col-span-1  h-auto overflow-hidden rounded-md  ">
                                     <img src="{{ asset('upload/blogs') }}/{{ $blog->image }}"
                                         class="rounded-md h-64 w-full object-cover" alt="">
                                     <div class="p-3 border-b-2 border-gray-400/50 space-y-2">
@@ -74,7 +81,7 @@
                                             {{ $blog->title }}
                                         </h3>
                                         <p class="text-sm  leading-6">
-                                            {!! Str::limit($blog->content, 200, '...') !!}
+                                            {!! Str::limit($blog->content, 80, '...') !!}
                                         </p>
                                     </div>
                                     <div class="p-3 space-y-3">
@@ -93,9 +100,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- item end --}}
+                            @endforeach
                         </div>
-                        {{-- item end --}}
-                        @endforeach
                     </div>
                 </div>
             </section>

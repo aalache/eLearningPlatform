@@ -45,10 +45,21 @@
 
 
                 <div class="   bg-[#efefef] p-10 rounded-lg space-y-5">
-                    @if (Auth::user()->hasRole('instructor'))
-                        <a href="{{ route('blogs.edit', ['slug' => $blog->slug]) }}"
-                            class="rounded-md px-3 py-2 text-white bg-blue-700 hover:bg-blue-600">Edit Post</a>
-                    @endif
+                    <div class="flex justify-start items-center space-x-2">
+                        @if (Auth::user()->hasRole('instructor'))
+                            <a href="{{ route('blogs.edit', ['slug' => $blog->slug]) }}"
+                                class="rounded-md px-3 py-2 text-white bg-blue-700 hover:bg-blue-600">Edit Article</a>
+                            <form action="{{ route('blogs.destroy', ['slug' => $blog->slug]) }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="rounded-md px-3 py-2 text-white bg-red-700 hover:bg-red-600">
+                                    Delete Article
+                                </button>
+                            </form>
+                        @endif
+                    </div>
                     <div class="space-y-5">
                         <h1 class="font-semibold text-4xl">{{ $blog->title }}</h1>
                         <p>By: {{ $blog->user->name }}</p>
