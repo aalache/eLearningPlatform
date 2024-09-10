@@ -19,7 +19,7 @@ use App\Http\Controllers\PayPalController;
 
 
 Route::view('/', 'welcome')->name('index');
-
+Route::view('/home', 'welcome')->name('home');
 
 Route::prefix('/blogs')->name('blogs.')->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('index');

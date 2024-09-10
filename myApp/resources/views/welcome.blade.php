@@ -1,33 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Laravel</title>
-
-    {{-- Icons --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    {{--  --}}
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-        rel="stylesheet">
-    {{--  --}}
-    <script src="https://cdn.tailwindcss.com"></script>
-
-
-</head>
-
-<body>
-
-
+<x-page>
     <main class="bg-white">
         <header class=" bg-opacity-30  ">
             <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -51,39 +22,41 @@
                         <svg class="hidden w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"></path>
+                                d="M6 18L18 6M6 6l12 12">
+                            </path>
                         </svg>
                     </button>
 
                     <div class="hidden lg:flex lg:items-center lg:justify-between basis-2/3">
-                        <div class="lg:space-x-10 lg:flex lg:items-center lg:justify-center">
-                            <a href="#" title=""
-                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 font-medium">
+                        <div data-aos="zoom-in" data-aos-delay="400"
+                            class="lg:space-x-10 lg:flex lg:items-center lg:justify-center">
+                            <a href="{{ route('home') }}" title=""
+                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 ">
                                 Home
                             </a>
 
                             <a href="{{ route('blogs.index') }}" title=""
-                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 font-medium">
+                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 ">
                                 Blogs
                             </a>
 
                             <a href="#" title=""
-                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 font-medium">
+                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 ">
                                 Features
                             </a>
 
                             <a href="#" title=""
-                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 font-medium">
+                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 ">
                                 Solutions
                             </a>
 
                             <a href="#" title=""
-                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 font-medium">
+                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 ">
                                 Resources
                             </a>
 
                             <a href="#pricing" title=""
-                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 font-medium">
+                                class="text-sm text-black transition-all duration-200 hover:text-orange-600 ">
                                 Pricing
                             </a>
 
@@ -140,7 +113,8 @@
                 <div class="grid items-center grid-cols-1 gap-20 lg:gap-12 lg:grid-cols-2">
                     <div class="space-y-8 lg:space-y-16 flex flex-col justify-start  ">
                         <div class="space-y-3">
-                            <p class="text-sm font-semibold tracking-wider text-blue-600 uppercase">A
+                            <p data-aos="fade-in" data-aos-duration="1000" data-aos-delay="300"
+                                class="text-sm font-semibold tracking-wider text-blue-600 uppercase">A
                                 New Platform for learners</p>
                             <h1
                                 class="mt-4 text-4xl text-bold text-black lg:mt-8 sm:text-[3rem] sm:leading-tight md:text-[3rem]  lg:text-[4rem] lg:leading-none md:max-w-[700px] lg:max-w-[480px] ">
@@ -313,6 +287,4 @@
     </footer>
 
 
-</body>
-
-</html>
+</x-page>
