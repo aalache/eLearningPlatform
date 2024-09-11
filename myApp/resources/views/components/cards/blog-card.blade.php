@@ -1,6 +1,6 @@
-@props(['blog'])
+@props(['blog', 'delay'])
 
-<div
+<div data-aos="zoom-in" data-aos-duration="500" data-aos-delay="{{ $delay }}"
     class="  h-[460px]  rounded-md bg-[#111827] hover:bg-[#1D2432] hover:shadow-lg  hover:scale-105  transition-all ease-in ">
 
     {{-- blog image --}}

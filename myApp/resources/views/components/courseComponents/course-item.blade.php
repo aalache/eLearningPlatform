@@ -1,4 +1,4 @@
-@props(['course'])
+@props(['course', 'delay'])
 
 @php
 
@@ -10,7 +10,8 @@
     }
 @endphp
 
-<div class="relative  h-[250px]  rounded-t-md hover:rounded-md shadow-md overflow-hidden">
+<div data-aos="zoom-in" data-aos-duration="400" data-aos-delay="{{ $delay }}"
+    class="relative  h-[250px]  rounded-t-md hover:rounded-md shadow-md overflow-hidden">
     <a href="{{ route($route, ['course' => $course]) }}">
         {{-- course image --}}
         <img src="{{ asset('upload') }}/courses/{{ $course->image }}" alt="" class="h-[100%] w-full  object-cover">

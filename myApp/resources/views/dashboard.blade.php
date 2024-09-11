@@ -28,7 +28,8 @@
                     }
                 @endphp
 
-                <form action="{{ route($route) }}" method="POST"
+                <form action="{{ route($route) }}" method="POST" data-aos="fade-left" data-aos-duration="400"
+                    data-aos-delay="500"
                     class="w-full sm:w-[50%] sm:hover:w-[60%] md:w[40%] md:hover:w[50%] lg:w-[30%] lg:hover:w-[40%] hover:shadow-sm h-12 rounded-xl transition-all ease-in shadow-md">
                     @csrf
                     <input type="text" placeholder="Search..." name="query" id="query"

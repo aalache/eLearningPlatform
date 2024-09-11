@@ -5,55 +5,56 @@
         @csrf
 
         <!-- Name -->
-        <x-formComponents.form-field>
+        <x-formComponents.form-field data-aos="fade-right" data-aos-duration="400" data-aos-delay="300">
             <x-formComponents.form-label for="first_name">
                 Name</x-formComponents.form-label>
 
             <div class="mt-2">
                 <x-formComponents.form-input id="name" type="text" name="name" :value="old('name')" autofocus
-                    autocomplete="name" placeholder="Joe" />
+                    autocomplete="name" placeholder="Joe" required />
                 <x-formComponents.form-error name="name" />
             </div>
         </x-formComponents.form-field>
 
         <!-- Email Address -->
-        <x-formComponents.form-field>
+        <x-formComponents.form-field data-aos="fade-left" data-aos-duration="400" data-aos-delay="500">
             <x-formComponents.form-label for="email">Email</x-formComponents.form-label>
 
             <div class="mt-2">
                 <x-formComponents.form-input id="email" type="email" name="email" :value="old('email')"
-                    autocomplete="username" placeholder="something@exemple.com" />
+                    autocomplete="username" placeholder="something@exemple.com" required />
                 <x-formComponents.form-error name="email" />
             </div>
         </x-formComponents.form-field>
 
         <!-- Password -->
-        <x-formComponents.form-field>
+        <x-formComponents.form-field data-aos="fade-right" data-aos-duration="400" data-aos-delay="700">
             <x-formComponents.form-label for="password">Password</x-formComponents.form-label>
 
             <div class="mt-2">
                 <x-formComponents.form-input id="password" type="password" name="password" autocomplete="new-password"
-                    placeholder="*****" />
+                    placeholder="*****" required />
                 <x-formComponents.form-error name="password" />
             </div>
         </x-formComponents.form-field>
 
         <!-- Confirm Password -->
-        <x-formComponents.form-field>
+        <x-formComponents.form-field data-aos="fade-left" data-aos-duration="400" data-aos-delay="900">
             <x-formComponents.form-label for="password_confirmation">Confirm Password</x-formComponents.form-label>
 
             <div class="mt-2">
                 <x-formComponents.form-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                    name="password_confirmation" autocomplete="new-password" />
+                    name="password_confirmation" autocomplete="new-password" required />
                 <x-formComponents.form-error name="password_confirmation" />
             </div>
         </x-formComponents.form-field>
 
-        <div>
+        <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="1100">
             <x-formComponents.form-button type="submit">Sign Up</x-formComponents.form-button>
         </div>
 
-        <p class="mt-5 text-center text-sm text-gray-600">
+        <p class="mt-5 text-center text-sm text-gray-600" data-aos="fade-right" data-aos-duration="400"
+            data-aos-delay="1200">
             <a href="/login">I allready have account?</a>
         </p>
     </form>

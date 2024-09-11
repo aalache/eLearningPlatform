@@ -7,25 +7,34 @@
             {{-- header --}}
             <div class="py-6  text-gray-900 space-y-6  flex justify-between items-center">
                 <div class=" space-y-2">
-                    <h2 class="border-l-4 px-2 border-orange-600 text-2xl text-[#ffffff] font-semibold ">
+                    <h2 class="border-l-4 px-2 border-orange-600 text-2xl text-[#ffffff] font-semibold "
+                        data-aos="fade-right" data-aos-duration="400" data-aos-delay="500">
                         All available courses
                     </h2>
-                    <p class="border-l-4 px-2 text-sm font-semibold border-[#efefef]/50 text-[#efefef]/50 ">
+                    <p class="border-l-4 px-2 text-sm font-semibold border-[#efefef]/50 text-[#efefef]/50 "
+                        data-aos="fade-right" data-aos-duration="400" data-aos-delay="700">
                         Discover, Curate, Enjoy
                     </p>
                 </div>
 
-                <button
+                <button data-aos="fade-left" data-aos-duration="400" data-aos-delay="800"
                     class="create-course-open-btn flex justify-between items-center md:space-x-1 bg-white/10 py-2 px-3 rounded-md text-white font-semibold hover:bg-black/10 transition ease-in">
-                    <i class="text-sm fa-solid fa-plus text-orange-600"></i> <span class="hidden md:flex">Create
-                        Course</span>
+                    <i class="text-sm fa-solid fa-plus text-orange-600"></i> <span class="hidden md:flex">
+                        Create Course
+                    </span>
                 </button>
             </div>
 
 
             <div class="h-full w-full grid gap-3  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 ">
+                @php
+                    $delay = 1000;
+                @endphp
                 @foreach ($courses as $course)
-                    <x-courseComponents.course-item :course="$course" />
+                    @php
+                        $delay += 200;
+                    @endphp
+                    <x-courseComponents.course-item :delay="$delay" :course="$course" />
                 @endforeach
             </div>
 

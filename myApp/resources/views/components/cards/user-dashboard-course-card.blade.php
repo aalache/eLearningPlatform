@@ -1,7 +1,8 @@
-@props(['enrollement'])
+@props(['enrollement', 'delay'])
 
 
-<a {{ $attributes->merge(['class' => 'relative   rounded-md shadow-md overflow-hidden h-[240px]']) }}>
+<a data-aos="zoom-in" data-aos-duration="400" data-aos-delay="{{ $delay }}"
+    {{ $attributes->merge(['class' => 'relative   rounded-md shadow-md overflow-hidden h-[240px]']) }}>
     <img src="{{ asset('upload/courses') }}/{{ $enrollement->course->image }}" alt=""
         class="h-[100%] w-full  object-cover" />
 

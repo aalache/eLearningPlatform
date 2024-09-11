@@ -16,8 +16,10 @@
 
     {{-- style --}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
     {{-- scripts --}}
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 
 </head>
@@ -42,14 +44,14 @@
                             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
                     </a> --}}
                     @if (request()->is('register'))
-                        <h2 class="mt-3 text-center text-2xl font-bold leading-9 tracking-tight text-gray-600">Create
-                            your
-                            account</h2>
+                        <h2 class="mt-3 text-center text-2xl font-bold leading-9 tracking-tight text-gray-600"
+                            data-aos="zoom-in" data-aos-duration="400" data-aos-delay="100">
+                            Create your account</h2>
                     @endif
                     @if (request()->is('login'))
-                        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-600">Sign in
-                            to
-                            your account</h2>
+                        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-600"
+                            data-aos="zoom-in" data-aos-duration="400" data-aos-delay="300">
+                            Sign in to your account</h2>
                     @endif
                 </div>
 
@@ -64,6 +66,14 @@
             </div>
         </div>
     </div>
+
+    {{-- animation --}}
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    {{--  --}}
 </body>
 
 </html>

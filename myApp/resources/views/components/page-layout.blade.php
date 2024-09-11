@@ -38,7 +38,7 @@
     }
 </style>
 
-<body class="min-h-full user-hero">
+<body class="min-h-full user-hero ">
     <main class="  backdrop-blur-3xl bg-black/50  min-h-[100vh]">
         {{ $slot }}
     </main>

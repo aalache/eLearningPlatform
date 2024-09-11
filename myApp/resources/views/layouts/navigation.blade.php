@@ -15,7 +15,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route(Route::currentRouteName()) }}">
+                    <a href="{{ route(Route::currentRouteName()) }}" data-aos="fade-right" data-aos-duration="300">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-400" />
                     </a>
                 </div>
@@ -25,34 +25,41 @@
 
                     {{-- ? Links for student  --}}
                     @if ($isStudent && $isUserPath)
-                        <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
+                        <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')" data-aos="fade-right" data-aos-duration="400"
+                            data-aos-delay="400">
                             {{ __('Dashboard') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('user.enrollement.index')" :active="request()->routeIs('user.enrollement.index')">
+                        <x-nav-link :href="route('user.enrollement.index')" :active="request()->routeIs('user.enrollement.index')" data-aos="fade-right" data-aos-duration="400"
+                            data-aos-delay="600">
                             {{ __('Enrollement') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('user.courses.index')" :active="request()->routeIs('user.courses.index')">
+                        <x-nav-link :href="route('user.courses.index')" :active="request()->routeIs('user.courses.index')" data-aos="fade-right" data-aos-duration="400"
+                            data-aos-delay="600">
                             {{ __('Courses') }}
                         </x-nav-link>
                     @endif
 
                     {{-- ? Links for Coach  --}}
                     @if ($isInstructor && $isCoachPath)
-                        <x-nav-link :href="route('coach.dashboard')" :active="request()->routeIs('coach.dashboard')">
+                        <x-nav-link :href="route('coach.dashboard')" :active="request()->routeIs('coach.dashboard')" data-aos="fade-right" data-aos-duration="400"
+                            data-aos-delay="400">
                             {{ __('Dashboard') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('coach.courses.index')" :active="request()->routeIs('coach.courses.index')">
+                        <x-nav-link :href="route('coach.courses.index')" :active="request()->routeIs('coach.courses.index')" data-aos="fade-right" data-aos-duration="400"
+                            data-aos-delay="600">
                             {{ __('Courses') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('coach.playlists.index')" :active="request()->routeIs('coach.playlists.index')">
+                        <x-nav-link :href="route('coach.playlists.index')" :active="request()->routeIs('coach.playlists.index')" data-aos="fade-right" data-aos-duration="400"
+                            data-aos-delay="800">
                             {{ __('Playlists') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('coach.videos.index')" :active="request()->routeIs('coach.videos.index')">
+                        <x-nav-link :href="route('coach.videos.index')" :active="request()->routeIs('coach.videos.index')" data-aos="fade-right" data-aos-duration="400"
+                            data-aos-delay="800">
                             {{ __('Videos') }}
                         </x-nav-link>
                     @endif
@@ -66,7 +73,7 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <div
+                        <div data-aos="fade-left" data-aos-duration="400" data-aos-delay="400"
                             class=" flex justify-between items-center bg-black/60 hover:bg-white/15  rounded-full shadow-md ">
                             <div class="h-9 w-9 rounded-full bg-gray-500/40 shadow-md overflow-hidden ">
                                 <img src="{{ asset('upload/profiles') }}/{{ Auth::user()->profile_picture }}"
@@ -79,9 +86,8 @@
                                 <div class="ms-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                            clip-rule="evenodd" />
+                                        <path fill-rule="evenodd" d=" M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414
+                                1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
                             </button>
@@ -128,63 +134,58 @@
         <div class="pt-2 pb-3 space-y-1">
             {{-- ? Links for student  --}}
             @if ($isStudent && $isUserPath)
-                <x-responsive-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
+                <x-responsive-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')" data-aos="fade-right"
+                    data-aos-duration="400" data-aos-delay="400">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('user.enrollement.index')" :active="request()->routeIs('user.enrollement.index')">
+                <x-responsive-nav-link :href="route('user.enrollement.index')" :active="request()->routeIs('user.enrollement.index')" data-aos="fade-right"
+                    data-aos-duration="400" data-aos-delay="600">
                     {{ __('Enrollement') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('user.courses.index')" :active="request()->routeIs('user.courses.index')">
+                <x-responsive-nav-link :href="route('user.courses.index')" :active="request()->routeIs('user.courses.index')" data-aos="fade-right"
+                    data-aos-duration="400" data-aos-delay="800">
                     {{ __('Courses') }}
                 </x-responsive-nav-link>
             @endif
 
             {{-- ? Links for Coach  --}}
             @if ($isInstructor && $isCoachPath)
-                <x-responsive-nav-link :href="route('coach.dashboard')" :active="request()->routeIs('coach.dashboard')">
+                <x-responsive-nav-link :href="route('coach.dashboard')" :active="request()->routeIs('coach.dashboard')" data-aos="fade-right"
+                    data-aos-duration="400" data-aos-delay="400">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('coach.courses.index')" :active="request()->routeIs('coach.courses.index')">
+                <x-responsive-nav-link :href="route('coach.courses.index')" :active="request()->routeIs('coach.courses.index')" data-aos="fade-right"
+                    data-aos-duration="400" data-aos-delay="600">
                     {{ __('Courses') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('coach.playlists.index')" :active="request()->routeIs('coach.playlists.index')">
+                <x-responsive-nav-link :href="route('coach.playlists.index')" :active="request()->routeIs('coach.playlists.index')" data-aos="fade-right"
+                    data-aos-duration="400" data-aos-delay="800">
                     {{ __('Playlists') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('coach.videos.index')" :active="request()->routeIs('coach.videos.index')">
+                <x-responsive-nav-link :href="route('coach.videos.index')" :active="request()->routeIs('coach.videos.index')" data-aos="fade-right"
+                    data-aos-duration="400" data-aos-delay="1000">
                     {{ __('Videos') }}
                 </x-responsive-nav-link>
             @endif
 
-            {{-- ? Links for Admin  --}}
-            @if ($isAdmin && $isAdminPath)
-                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                    {{ __('Dashboard') }}
-                </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('admin.courses')" :active="request()->routeIs('admin.courses')">
-                    {{ __('Courses') }}
-                </x-responsive-nav-link>
-
-                <x-responsive-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">
-                    {{ __('Users') }}
-                </x-responsive-nav-link>
-            @endif
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200/30">
-            <div class="px-4">
+            <div class="px-4" data-aos="fade-right" data-aos-duration="400" data-aos-delay="800">
                 <div class="font-medium text-base text-gray-400">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
+                <x-responsive-nav-link :href="route('profile.edit')" data-aos="fade-right" data-aos-duration="1000"
+                    data-aos-delay="400">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
@@ -192,7 +193,8 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
+                    <x-responsive-nav-link :href="route('logout')" data-aos="fade-right" data-aos-duration="400"
+                        data-aos-delay="1200"
                         onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}

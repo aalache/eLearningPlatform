@@ -8,28 +8,39 @@
         <div class="space-y-8 ">
             {{-- <h1 class="border-l-4 px-2 border-blue-600 text-black text-3xl ">My Playlists</h1> --}}
             <div class=" space-y-2">
-                <h2 class="border-l-4 px-2 border-orange-600 text-2xl text-[#ffffff] font-semibold ">My Playlists</h2>
-                <p class="border-l-4 px-2 text-sm font-semibold border-[#efefef]/50 text-[#efefef]/50 ">
-                    Crafting the Perfect Playlist Experience.</p>
+                <h2 class="border-l-4 px-2 border-orange-600 text-2xl text-[#ffffff] font-semibold " data-aos="fade-right"
+                    data-aos-duration="400" data-aos-delay="500">
+                    My Playlists
+                </h2>
+                <p data-aos="fade-right" data-aos-duration="400" data-aos-delay="600"
+                    class="border-l-4 px-2 text-sm font-semibold border-[#efefef]/50 text-[#efefef]/50 ">
+                    Crafting the Perfect Playlist Experience.
+                </p>
             </div>
 
-            <div
+            <div data-aos="fade-left" data-aos-duration="400" data-aos-delay="700"
                 class=" backdrop-blur-lg  bg-black/40 space-y-3 sm:space-y-0 rounded-md p-4 shadow-lg flex flex-col sm:flex-row  sm:justify-between sm:items-center">
                 <div>
-                    <h3 class="text-sm sm:text-md text-gray-200 font-semibold">You don't have any playlist created yet
+                    <h3 class="text-sm sm:text-md text-gray-200 font-semibold" data-aos="fade-right"
+                        data-aos-duration="400" data-aos-delay="800">
+                        You don't have any playlist created yet
                     </h3>
-                    <p class="text-xs sm:text-sm text-orange-600">create your first playlist to get started</p>
+                    <p class="text-xs sm:text-sm text-orange-600" data-aos="fade-right" data-aos-duration="400"
+                        data-aos-delay="900">
+                        create your first playlist to get started
+                    </p>
                 </div>
-                <button
+                <button data-aos="fade-left" data-aos-duration="400" data-aos-delay="1000"
                     class="add-playlist-open-btn text-sm sm:text-md w-full sm:w-auto bg-orange-700 hover:bg-black/10 hover:shadow-md py-2 px-4 rounded-md text-white hover:text-orange-600 font-semibold ">
                     Add Playlist
                 </button>
             </div>
         </div>
 
-        <div class="space-y-3 backdrop-blur-3xl bg-black/40 rounded-2xl py-4  px-2 md:p-4 ">
+        <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="1100"
+            class="space-y-3 backdrop-blur-3xl bg-black/40 rounded-2xl py-4  px-2 md:p-4 ">
             <div class="space-y-2">
-                <h2
+                <h2 data-aos="fade-right" data-aos-duration="400" data-aos-delay="1300"
                     class="text-md sm:text-lg md:text-xl border-l-4 px-2 border-orange-600  text-[#ffffff] font-semibold">
                     Playlist Library
                 </h2>
@@ -41,8 +52,14 @@
                 <li class="w-fit text-gray-500 md:py-2 md:border-b-2 md:text-gray-200 md:border-orange-600">Grid</li>
             </ul>
             <div class=" w-full  grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-5 py-2 ">
+                @php
+                    $delay = 1400;
+                @endphp
                 @foreach ($myplaylists as $playlist)
-                    <x-coachComponents.coach-playlist-item :playlist="$playlist" />
+                    @php
+                        $delay += 200;
+                    @endphp
+                    <x-coachComponents.coach-playlist-item :delay="$delay" :playlist="$playlist" />
                 @endforeach
             </div>
         </div>

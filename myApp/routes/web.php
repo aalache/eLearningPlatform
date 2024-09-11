@@ -12,6 +12,7 @@ use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PayPalController;
 
+
 // Route::view('/', 'welcome');
 // Route::view('/home', 'welcome');
 // Route::view('/home', 'home');

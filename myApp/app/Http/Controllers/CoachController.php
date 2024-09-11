@@ -18,8 +18,8 @@ class CoachController extends Controller
      */
     public function index()
     {
-        $activities = $this->getAtivities();
-        return view('dashboard', ['activities' => $activities]);
+        // $activities = $this->getAtivities();
+        return view('dashboard');
     }
 
     /**
@@ -84,18 +84,18 @@ class CoachController extends Controller
     /**
      * get the latest user activity
      */
-    public function getAtivities()
-    {
-        $user = User::find(Auth::id());
-        if ($user->hasRole('coach')) {
-            $activities = Activity::where('coach_id', $user->id)->latest()->get();
-        }
-        if (Auth::check()) {
-            $reccentEnrollements = $user->enrollements()->with('course')->take(5)->latest()->get();
+    // public function getAtivities()
+    // {
+    //     $user = User::find(Auth::id());
+    //     if ($user->hasRole('coach')) {
+    //         $activities = Activity::where('coach_id', $user->id)->latest()->get();
+    //     }
+    //     if (Auth::check()) {
+    //         $reccentEnrollements = $user->enrollements()->with('course')->take(5)->latest()->get();
 
-            return $reccentEnrollements;
-        }
-    }
+    //         return $reccentEnrollements;
+    //     }
+    // }
 
     /**
      * Metric functions

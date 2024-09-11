@@ -16,10 +16,12 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     {{-- styles --}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
     <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
-    {{-- <script src="https://www.youtube.com/iframe_api" defer></script> --}}
+
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 
 </head>
@@ -56,6 +58,13 @@
             </main>
         </div>
     </div>
+
+    {{-- animation --}}
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    {{--  --}}
 </body>
 
 </html>

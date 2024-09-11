@@ -1,7 +1,7 @@
-@props(['enrollment'])
+@props(['enrollment', 'delay'])
 
 
-<div
+<div data-aos="zoom-in" data-aos-duration="400" data-aos-delay="{{ $delay }}"
     class=" flex flex-col sm:flex-row justify-between sm:items-center rounded-md bg-black/40 backdrop-blur-xl  sm:space-x-3 ">
 
     <img src="{{ asset('upload/courses') }}/{{ $enrollment->course->image }}" alt=""

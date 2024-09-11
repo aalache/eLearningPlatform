@@ -16,9 +16,11 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     {{--  --}}
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
+    {{--  --}}
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    {{--  --}}
+    <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
 
@@ -65,6 +67,7 @@
 
     {{-- animation --}}
 
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         AOS.init();
     </script>
