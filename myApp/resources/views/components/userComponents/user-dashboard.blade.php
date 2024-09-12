@@ -77,7 +77,8 @@
 
 
             @if (Auth::user()->activities->count())
-                <div class="space-y-2 backdrop-blur-3xl bg-black/40 rounded-2xl   ">
+                <div data-aos="zoom-in" data-aos-duration="400" data-aos-delay="600"
+                    class="space-y-2 backdrop-blur-3xl bg-black/40 rounded-2xl   ">
                     <div class=" space-y-5 p-4  rounded-2xl">
                         <h2 class="text-xl text-white font-semibold border-l-4 border-orange-600 px-2">Activity
                             History

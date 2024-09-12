@@ -1,15 +1,17 @@
 <x-page-layout>
     {{-- ! visible page --}}
-    <section class="max-w-7xl mx-auto sm:px-6 lg:px-6  p-3  overflow-hidden  sm:rounded-lg min-h-full">
+    <section class="max-w-7xl mx-auto sm:px-6 lg:px-6  p-3  overflow-hidden  sm:rounded-lg min-h-full  ">
 
 
         {{-- ? nav menu (go back | edit | delete ) --}}
         <div class=" w-full flex justify-between items-center mb-4">
-            <a href="{{ route('coach.playlists.index') }}"
+            <a data-aos="fade-right" data-aos-duration="400" data-aos-delay="400"
+                href="{{ route('coach.playlists.index') }}"
                 class=" hover:bg-white/15 hover:shadow-md py-2 px-4 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
                 <i class="fa-solid fa-arrow-left text-orange-600"></i> Go Back
             </a>
-            <div class="space-x-2 flex justify-between items-center">
+            <div data-aos="fade-left" data-aos-duration="400" data-aos-delay="400"
+                class="space-x-2 flex justify-between items-center">
                 <button title="Add to course"
                     class="add-to-course-open-btn flex justify-between items-center space-x-1 hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
                     <i class="text-sm fa-solid fa-plus  text-orange-600"></i> <span class="hidden md:flex">Add To
@@ -35,7 +37,8 @@
         @if ($videoToDisplay)
             <div class="py-6 text-gray-900 grid grid-cols-6 gap-y-10 xl:gap-2 ">
                 {{-- ? Video section --}}
-                <div class="col-span-full xl:col-span-4 space-y-5">
+                <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="700"
+                    class="col-span-full xl:col-span-4 space-y-5">
                     {{--  --}}
                     <iframe class="lesson rounded-md w-full h-[450px] "
                         src="{{ str_replace('watch?v=', 'embed/', $videoToDisplay->youtube_url) }}" frameborder="0"
@@ -45,7 +48,7 @@
                         <p class="border-l-4  border-orange-600 px-2 text-xl text-gray-300 font-semibold">
                             {{ $videoToDisplay->title }}
                         </p>
-                        <button title="Remove from playlist"
+                        <button
                             class="remove-from-playlist-open-btn flex justify-between items-center space-x-1 hover:bg-white/15 hover:shadow-md py-2 px-2 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
                             <i class="text-sm fa-solid fa-trash-can text-orange-600"></i> <span
                                 class="hidden md:flex sm:w-44">Remove from Playlist</span>
@@ -54,7 +57,8 @@
                 </div>
                 {{-- ? --}}
                 {{-- ? Playlist section --}}
-                <div class="col-span-full xl:col-span-2 bg-black/50 h-fit p-3 rounded-md space-y-5">
+                <div data-aos="fade-left" data-aos-duration="400" data-aos-delay="1000"
+                    class="col-span-full xl:col-span-2 bg-black/50 h-fit p-3 rounded-md space-y-5">
                     <div>
                         <h2 class="text-2xl text-white font-semibold border-l-4 border-orange-600 px-2  ">
                             {{ $playlist->name }}

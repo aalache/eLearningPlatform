@@ -48,21 +48,16 @@
 
             @if (Auth::user()->activities->count())
                 <div class="space-y-2  backdrop-blur-3xl bg-black/40 rounded-2xl" data-aos="zoom-in"
-                    data-aos-duration="400" data-aos-delay="1600">
+                    data-aos-duration="500" data-aos-delay="1600">
                     <div class=" space-y-5 p-4  rounded-2xl">
                         <h2 data-aos="fade-right" data-aos-duration="400" data-aos-delay="1700"
                             class="text-xl text-white font-semibold border-l-4 border-orange-600 px-2">
                             Activity History
                         </h2>
                         <div class="space-y-2 h-auto">
-                            @php
-                                $delay = 1600;
-                            @endphp
-                            @foreach (Auth::user()->activities()->take(4)->latest()->get() as $activity)
-                                @php
-                                    $delay += 200;
-                                @endphp
-                                <x-cards.activity-card :delay="$delay" :activity="$activity" />
+
+                            @foreach (Auth::user()->activities()->take(6)->latest()->get() as $activity)
+                                <x-cards.activity-card :delay="700" :activity="$activity" />
                             @endforeach
                         </div>
                     </div>

@@ -23,8 +23,10 @@
 
     {{-- style --}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
     {{-- scripts --}}
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 
 </head>
@@ -42,6 +44,14 @@
     <main class="  backdrop-blur-3xl bg-black/50  min-h-[100vh]">
         {{ $slot }}
     </main>
+
+
+    {{-- animation --}}
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    {{--  --}}
     <script src="{{ asset('js/script.js') }}"></script>
 </body>
 

@@ -11,19 +11,22 @@
 
         <div class=" flex justify-between items-baseline">
             @if (request()->routeIs('coach.*'))
-                <a href="{{ url()->route('coach.courses.index') }}"
+                <a href="{{ url()->route('coach.courses.index') }}" data-aos="fade-right" data-aos-duration="400"
+                    data-aos-delay="400"
                     class=" hover:bg-white/15 hover:shadow-md py-2 px-4 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
                     <i class="fa-solid fa-arrow-left text-orange-600"></i> Go Back
                 </a>
             @else
-                <a href="{{ url()->route('user.courses.index') }}"
+                <a href="{{ url()->route('user.courses.index') }}" data-aos="fade-right" data-aos-duration="400"
+                    data-aos-delay="400"
                     class=" hover:bg-white/15 hover:shadow-md py-2 px-4 rounded-md text-gray-400 hover:text-gray-200 font-semibold">
                     <i class="fa-solid fa-arrow-left text-orange-600"></i> Go Back
                 </a>
             @endif
 
             @if (Auth::user()->hasRole('instructor') && request()->routeIs('coach.*'))
-                <div class="flex items-center space-x-2">
+                <div data-aos="fade-left" data-aos-duration="400" data-aos-delay="400"
+                    class="flex items-center space-x-2">
                     <button title="Edit course"
                         class="edit-course-open-btn flex justify-between items-center space-x-1 hover:bg-white/15 py-2 px-3 rounded-md text-gray-400 font-semibold hover:text-gray-200">
                         <i class="text-sm fa-solid fa-pen text-orange-600"></i> <span class="hidden md:flex">Edit
@@ -40,37 +43,41 @@
         </div>
         <div class=" space-y-10 px-2">
             <div class="mt-7 space-y-2">
-                <p
+                <p data-aos="fade-right" data-aos-duration="400" data-aos-delay="500"
                     class="text-white font-semibold border-l-4 border-orange-600 px-2 tracking-light text-4xl  leading-tight">
                     {{ $course->name }}
                 </p>
-                <p class="text-gray-400 px-3 border-l-4 border-gray-400 font-semibold text-lg leading-normal">
+                <p data-aos="fade-right" data-aos-duration="400" data-aos-delay="600"
+                    class="text-gray-400 px-3 border-l-4 border-gray-400 font-semibold text-lg leading-normal">
                     By: {{ $course->user->name }}
                 </p>
             </div>
             <div class="h-full  w-full grid gap-y-5 xl:gap-3  grid-cols-6 ">
                 @if ($videoToDisplay)
                     {{-- Video Section --}}
-                    <div class="col-span-full xl:col-span-4 space-y-5 ">
+                    <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="700"
+                        class="col-span-full xl:col-span-4 space-y-5 ">
                         <iframe id="video-{{ $videoToDisplay->id }}" data-user-id="{{ auth()->user()->id }}"
                             data-video-id="{{ $videoToDisplay->id }}"
                             class="lesson rounded-md w-full bg-gray-600 shadow-lg h-[450px]"
                             src="{{ str_replace('watch?v=', 'embed/', $videoToDisplay->youtube_url) }}?enablejsapi=1"
                             frameborder="0" allowfullscreen></iframe>
 
-                        <h4 class="text-xl text-gray-400 font-semibold border-l-4 border-orange-600 px-2">
+                        <h4 data-aos="fade-right" data-aos-duration="400" data-aos-delay="700"
+                            class="text-xl text-gray-400 font-semibold border-l-4 border-orange-600 px-2">
                             {{ $videoToDisplay->title }}</h4>
                     </div>
                     {{--  --}}
                     {{-- Playlists Section --}}
-                    <div class=" col-span-full xl:col-span-2 space-y-3  h-full overflow-y-scroll">
+                    <div class=" col-span-full xl:col-span-2 space-y-3  h-full overflow-y-scroll overflow-x-hidden">
                         @foreach ($course->playlists as $playlist)
                             @php
                                 $playlist = Playlist::with('videos')->find($playlist->id);
                             @endphp
 
                             {{-- ? Playlist section --}}
-                            <div class="col-span-2 p-4 space-y-5 bg-black/50 rounded-md">
+                            <div data-aos="fade-left" data-aos-duration="400" data-aos-delay="800"
+                                class="col-span-2 p-4 space-y-5 bg-black/50 rounded-md">
                                 <div class="playlist group w-full flex justify-between items-center  ">
                                     <h2
                                         class="text-md lg:text-lg text-gray-300 font-semibold border-l-4 border-orange-600 px-2">
@@ -103,7 +110,8 @@
                     </div>
                     {{--  --}}
                     {{-- comment form section --}}
-                    <div class="col-span-full xl:col-span-4 space-y-2 mt-6 px-0">
+                    <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="1000"
+                        class="col-span-full xl:col-span-4 space-y-2 mt-6 px-0">
                         <h2 class="font-semibold text-gray-300">
                             {{ $videoToDisplay->comments->where('course_id', $course->id)->count() }} Comments</h2>
                         <form method="POST"

@@ -53,11 +53,11 @@
             </ul>
             <div class=" w-full  grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-5 py-2 ">
                 @php
-                    $delay = 1400;
+                    $delay = 1000;
                 @endphp
                 @foreach ($myplaylists as $playlist)
                     @php
-                        $delay += 200;
+                        $delay += 100;
                     @endphp
                     <x-coachComponents.coach-playlist-item :delay="$delay" :playlist="$playlist" />
                 @endforeach

@@ -27,6 +27,11 @@
 </head>
 
 <style>
+    body {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
     .user-hero {
         background-image: url({{ asset('images/wall1.jpg') }});
         background-size: cover;

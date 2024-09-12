@@ -1,4 +1,9 @@
 <x-page>
+    {{-- Navigation --}}
+    <x-navigation-bar />
+
+    {{--  --}}
+
     <div class="bg-[#111827] w-full min-h-[100vh]">
         <section class="w-full max-w-7xl mx-auto py-10  ">
             <div class="  lg:space-y-5">

@@ -58,7 +58,7 @@
                     @endphp
                     @foreach ($myVideos as $video)
                         @php
-                            $delay += 100;
+                            $delay += 50;
                         @endphp
                         <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="{{ $delay }}"
                             class="flex flex-col sm:flex-row relative justify-between items-center space-x-4 w-full bg-white/10 hover:border-r-4 border-orange-600 rounded-md  transition-all ease-in ">

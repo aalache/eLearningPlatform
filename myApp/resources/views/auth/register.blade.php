@@ -49,12 +49,12 @@
             </div>
         </x-formComponents.form-field>
 
-        <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="1100">
+        <div data-aos="zoom-in" data-aos-duration="400" data-aos-delay="1100">
             <x-formComponents.form-button type="submit">Sign Up</x-formComponents.form-button>
         </div>
 
-        <p class="mt-5 text-center text-sm text-gray-600" data-aos="fade-right" data-aos-duration="400"
-            data-aos-delay="1200">
+        <p data-aos="zoom-in" data-aos-duration="400" data-aos-delay="1200"
+            class="mt-5 text-center text-sm text-gray-600">
             <a href="/login">I allready have account?</a>
         </p>
     </form>
